@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Semi Lab — Interactive Electronics Lab</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "primary-fixed-dim": "#93ccff",
+        "surface-variant": "#d3e4fe",
+        "on-tertiary-fixed": "#001e2f",
+        "surface-dim": "#cbdbf5",
+        "on-surface-variant": "#3f4850",
+        "tertiary": "#00628d",
+        "primary-fixed": "#cce5ff",
+        "primary-container": "#007bb9",
+        "secondary-fixed": "#dbe1ff",
+        "surface-canvas": "#F8FAFC",
+        "surface-container-lowest": "#ffffff",
+        "on-primary-fixed": "#001d31",
+        "surface-container": "#e5eeff",
+        "on-primary-container": "#fdfcff",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-tertiary": "#ffffff",
+        "primary": "#006194",
+        "inverse-on-surface": "#eaf1ff",
+        "surface-container-low": "#eff4ff",
+        "border-subtle": "#E2E8F0",
+        "on-primary-fixed-variant": "#004b73",
+        "surface-pure": "#FFFFFF",
+        "outline": "#707881",
+        "on-secondary-container": "#fefcff",
+        "surface-tint": "#006398",
+        "on-secondary-fixed-variant": "#003ea8",
+        "on-secondary-fixed": "#00174b",
+        "surface-container-high": "#dce9ff",
+        "secondary": "#0051d5",
+        "signal-pulse": "#0284C7",
+        "surface-muted": "#F1F5F9",
+        "error": "#ba1a1a",
+        "tertiary-container": "#007cb1",
+        "secondary-fixed-dim": "#b4c5ff",
+        "background": "#f8f9ff",
+        "outline-variant": "#bfc7d2",
+        "tertiary-fixed-dim": "#89ceff",
+        "power-vcc": "#EF4444",
+        "on-tertiary-fixed-variant": "#004c6e",
+        "surface-bright": "#f8f9ff",
+        "on-background": "#0b1c30",
+        "on-surface": "#0b1c30",
+        "on-error": "#ffffff",
+        "surface-container-highest": "#d3e4fe",
+        "on-tertiary-container": "#fcfcff",
+        "secondary-container": "#316bf3",
+        "tertiary-fixed": "#c9e6ff",
+        "on-error-container": "#93000a",
+        "inverse-surface": "#213145",
+        "surface": "#f8f9ff",
+        "ground-gnd": "#1E293B",
+        "analog-trace": "#10B981",
+        "on-primary": "#ffffff",
+        "inverse-primary": "#93ccff"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-sm": "0.5rem",
+        "space-md": "1rem",
+        "gutter-mobile": "1rem",
+        "gutter": "1.5rem",
+        "margin-mobile": "1rem",
+        "space-lg": "1.5rem",
+        "margin": "2rem",
+        "space-xl": "2.5rem",
+        "space-xs": "0.25rem"
+      },
+      "fontFamily": {
+        "body-sm": ["Inter"],
+        "body-md": ["Inter"],
+        "headline-xl-mobile": ["Inter"],
+        "label-sm": ["JetBrains Mono"],
+        "headline-sm": ["Inter"],
+        "label-lg": ["JetBrains Mono"],
+        "headline-md": ["Inter"],
+        "headline-lg": ["Inter"],
+        "label-md": ["JetBrains Mono"],
+        "headline-lg-mobile": ["Inter"],
+        "body-lg": ["Inter"],
+        "headline-xl": ["Inter"]
+      },
+      "fontSize": {
+        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "headline-xl-mobile": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "400"}],
+        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.025em", "fontWeight": "500"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-pure/90 backdrop-blur-md border-b border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 w-full max-w-[1600px] mx-auto px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><img alt="Semi Lab Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wz8U6Aaq35IQnYytpqlrIDKTxVynnAteRDtgqRQAjIFz0YfhVBNd7a7wvuCpzrgoHVJsYZU_t8JxrI57pGjtoqRNETZagz2ZaYb3zOs1DhtpjlTedKX7tNrQOZ5rXr4T8144xnd9HK6VqvNPe-wo15D5X4Ge6yLOTP8o3eiNvFrKGrmqgzXNXl7tvTgkriW4tZbu_Ta4mBJ8SWBEWrnuntunEneMnPnCzRNP2NIFk6Z0v0fxmS97DzSd8"/><div class="flex items-center gap-space-sm"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Semi Lab</span><span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary uppercase tracking-wide">Interactive PWM Lab</span></div></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm rounded-lg"><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="home" href="#">Home</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="fan-regulator" href="#">Fan Regulator</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-primary-container text-on-primary-container font-headline-sm rounded-lg" data-path="led-dimmer" href="#">LED Dimmer</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="mosfet" href="#">MOSFET</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="about" href="#">About</a></nav><div class="flex items-center gap-space-sm"><div class="hidden md:flex items-center p-0.5 bg-surface-muted rounded-full border border-border-subtle"><button class="px-space-sm py-1 rounded-full bg-surface-pure text-on-surface font-label-sm text-label-sm shadow-[0_1px_3px_rgba(15,23,42,0.06)] flex items-center gap-1" type="button"><span class="w-2 h-2 rounded-full bg-signal-pulse"></span>Light</button><button class="px-space-sm py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1" type="button"><span class="w-2 h-2 rounded-full bg-ground-gnd"></span>Dark</button><button class="px-space-sm py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1" type="button"><span class="w-2 h-2 rounded-full bg-analog-trace"></span>Trace</button></div><a class="p-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-muted transition-colors flex items-center justify-center" href="#" title="Documentation &amp; Circuit Notes"><span class="material-symbols-outlined text-[20px]">menu_book</span></a><a class="p-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-muted transition-colors flex items-center justify-center" href="#" title="Repository &amp; Hardware Schematics"><span class="material-symbols-outlined text-[20px]">code</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 flex-1 bg-surface-canvas"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1600px] mx-auto px-gutter py-space-md flex flex-col gap-space-lg">
+<!-- Lab Sub-Header Banner (Bespoke Laboratory Metadata Strip) -->
+<section class="w-full bg-surface-container-low rounded-xl p-space-lg shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md relative overflow-hidden">
+<div class="flex flex-col gap-space-xs z-10 max-w-3xl">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm uppercase tracking-wider">LAB BENCH 04 // OPTOELECTRONICS</span>
+<span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded bg-surface-pure shadow-sm font-label-sm text-label-sm text-analog-trace">
+<span class="w-2 h-2 rounded-full bg-analog-trace animate-pulse"></span>
+            ACTIVE SIMULATION
+          </span>
+<span class="font-label-sm text-label-sm text-outline">IC: NE555P // STMicroelectronics STD30NF06L</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">PWM LED Dimmer Lab</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Flicker-free solid state lighting control using high-frequency pulse width modulation with negligible thermal throttling. Explore perceived human optical response against linear forward current.
+        </p>
+</div>
+<!-- Quick Session Actions -->
+<div class="flex items-center gap-space-sm self-end lg:self-center z-10">
+<button class="px-space-sm py-1 rounded bg-surface-pure shadow-sm hover:bg-surface-container-high font-label-sm text-label-sm text-on-surface transition-all" id="preset-25">25% Low</button>
+<button class="px-space-sm py-1 rounded bg-surface-pure shadow-sm hover:bg-surface-container-high font-label-sm text-label-sm text-on-surface transition-all" id="preset-50">50% Mid</button>
+<button class="px-space-sm py-1 rounded bg-primary text-on-primary font-label-sm text-label-sm shadow-sm transition-all" id="preset-75">75% High</button>
+<button class="px-space-sm py-1 rounded bg-surface-pure shadow-sm hover:bg-surface-container-high font-label-sm text-label-sm text-on-surface transition-all" id="preset-100">100% Sat</button>
+</div>
+<div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-primary-fixed-dim/20 blur-3xl pointer-events-none"></div>
+</section>
+<!-- Row of 4 Real-time Readout Tiles -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md w-full">
+<!-- Tile 1 -->
+<div class="bg-surface-pure rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">PWM Duty Cycle (D)</span>
+<span class="material-symbols-outlined text-signal-pulse text-[20px]">tune</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-label-lg text-headline-lg text-on-surface font-semibold tracking-tight" id="readout-duty">75.0</span>
+<span class="font-label-md text-label-md text-on-surface-variant">%</span>
+</div>
+<div class="w-full bg-surface-muted h-1.5 rounded-full overflow-hidden mt-space-sm">
+<div class="h-full bg-signal-pulse rounded-full transition-all duration-75" id="readout-duty-bar" style="width: 75%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-space-xs" id="readout-timing">t_on: 521 µs / t_off: 173 µs</span>
+</div>
+<!-- Tile 2 -->
+<div class="bg-surface-pure rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Switching Frequency</span>
+<span class="material-symbols-outlined text-tertiary text-[20px]">speed</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-label-lg text-headline-lg text-on-surface font-semibold tracking-tight">1.44</span>
+<span class="font-label-md text-label-md text-on-surface-variant">kHz</span>
+</div>
+<div class="flex items-center gap-1.5 mt-space-sm">
+<span class="w-2 h-2 rounded-full bg-analog-trace"></span>
+<span class="font-label-sm text-label-sm text-analog-trace">Flicker-Free &gt; 1 kHz Band</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-space-xs">Period T = 694.4 µs</span>
+</div>
+<!-- Tile 3 -->
+<div class="bg-surface-pure rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Average Current (I_avg)</span>
+<span class="material-symbols-outlined text-power-vcc text-[20px]">electric_meter</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-label-lg text-headline-lg text-on-surface font-semibold tracking-tight" id="readout-current">262.5</span>
+<span class="font-label-md text-label-md text-on-surface-variant">mA</span>
+</div>
+<div class="w-full bg-surface-muted h-1.5 rounded-full overflow-hidden mt-space-sm">
+<div class="h-full bg-power-vcc rounded-full transition-all duration-75" id="readout-current-bar" style="width: 75%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-space-xs">Peak Forward Current: 350.0 mA</span>
+</div>
+<!-- Tile 4 -->
+<div class="bg-surface-pure rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Perceived Brightness</span>
+<span class="material-symbols-outlined text-signal-pulse text-[20px]">visibility</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-label-lg text-headline-lg text-on-surface font-semibold tracking-tight" id="readout-cie">89.4</span>
+<span class="font-label-md text-label-md text-on-surface-variant">%</span>
+</div>
+<div class="flex items-center gap-1.5 mt-space-sm">
+<span class="font-label-sm text-label-sm text-primary font-medium">Stevens’ Power Law (L* ≈ Y^(1/3))</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-space-xs">Linear vs Non-linear Optical Eye</span>
+</div>
+</section>
+<!-- Main 2-Column Interactive Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Card: Circuit Diagram & Visual Schematic (8 cols) -->
+<div class="lg:col-span-7 xl:col-span-8 bg-surface-pure rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm border-b border-border-subtle">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase text-outline">SCHEMATIC DIAGRAM</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">555 Timer Astable PWM Driver &amp; N-MOSFET Stage</span>
+</div>
+<span class="px-space-sm py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary">V_CC = +12.0 V</span>
+</div>
+<!-- Schematic SVG Canvas with High Precision Annotations -->
+<div class="w-full bg-surface-canvas rounded-xl p-space-md relative overflow-hidden flex flex-col items-center"><div class="w-full bg-surface-pure rounded-lg p-space-sm border border-border-subtle shadow-sm overflow-hidden flex flex-col items-center relative group"><img alt="NE555 Timer Astable PWM LED Dimmer Schematic" class="w-full h-auto max-h-[460px] object-contain rounded select-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbDAdwm0sBPKbrjQWCCcvXh0kex6j5UHZXGImVsrdafUlutCYa0QgICQK5Z2uFFhTUEKNltN61B6wMCZIiQpLNeNDEnfv_MYKJnKJ4iK6xSQWHfnp2l-H4hG-1Q5MA0WLmHDUIUT1LOEwsqMOS4raRXBBWNGUW-solTdYw4oAdDhxQPK3bo_qfmgMt014xIGNxfYMf8Y0B-eQbuKvTYU9kzqy4Pk-eOL4h423ayi18uK4-2ko1C1dKlbVuNeViFKAnlA"/><div class="absolute top-3 right-3 bg-surface-pure/90 backdrop-blur-sm px-space-sm py-1 rounded border border-border-subtle shadow-sm flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface"><span class="w-2 h-2 rounded-full bg-signal-pulse animate-pulse"></span><span class="">Circuit 02: LED Dimmer</span></div></div><div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-sm mt-space-sm border-t border-border-subtle text-on-surface-variant font-label-sm text-label-sm"><div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-ground-gnd"></span><span class="">Dots mark wires that join</span></div><div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-signal-pulse"></span><span class="text-signal-pulse font-medium">Blue: pulse path from pin 3 to gate &amp; LED</span></div><div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-analog-trace"></span><span class="">No flyback diode needed (LED is not inductive)</span></div></div></div>
+</div>
+<!-- Right Card: Control Dashboard (4 cols) -->
+<div class="lg:col-span-5 xl:col-span-4 bg-surface-pure rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm border-b border-border-subtle">
+<span class="font-label-sm text-label-sm uppercase text-outline">CONTROL CONSOLE</span>
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-analog-trace" id="status-indicator-dot"></span>
+<span class="font-label-sm text-label-sm text-analog-trace" id="status-indicator-text">SYSTEM READY</span>
+</div>
+</div>
+<!-- Master Power ON/OFF Toggle -->
+<div class="flex items-center justify-between p-space-md bg-surface-canvas rounded-xl">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-on-surface">V_CC Master Power</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Gate drive &amp; high power bus</span>
+</div>
+<button aria-checked="true" class="relative inline-flex h-7 w-12 items-center rounded-full bg-primary transition-colors focus:outline-none shadow-inner" id="master-toggle" role="switch" type="button">
+<span class="inline-block h-5 w-5 transform rounded-full bg-surface-pure transition-transform translate-x-6 shadow-sm" id="master-toggle-knob"></span>
+</button>
+</div>
+<!-- Automated Dimming Sweep Demo Control Widget -->
+<div class="flex flex-col gap-space-sm p-space-md bg-gradient-to-br from-surface-canvas to-surface-container-low rounded-xl border border-primary/20 shadow-xs relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-signal-pulse text-[18px]">autorenew</span>
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-on-surface">Auto Dimming Sweep</span>
+</div>
+<span class="px-space-xs py-0.5 rounded font-label-sm text-[10px] uppercase font-bold tracking-wider" id="sweep-badge">IDLE</span>
+</div>
+<!-- Sweep Action Button & Status -->
+<div class="flex items-center gap-space-sm">
+<button class="flex-1 py-1.5 px-space-md rounded-lg bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md font-semibold shadow-sm flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]" id="sweep-toggle-btn" type="button">
+<span class="material-symbols-outlined text-[18px]" id="sweep-btn-icon">play_arrow</span>
+<span id="sweep-btn-label">Auto Sweep Demo</span>
+</button>
+<div class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm bg-surface-pure px-2.5 py-1.5 rounded-lg border border-border-subtle" id="sweep-direction-indicator">
+<span class="material-symbols-outlined text-[16px] text-signal-pulse" id="sweep-dir-icon">sync_alt</span>
+<span class="font-medium text-on-surface" id="sweep-dir-text">Standby</span>
+</div>
+</div>
+<!-- Mode & Speed Selectors -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-[11px] text-outline" for="sweep-pattern-select">Pattern Mode</label>
+<select class="w-full text-label-sm font-label-sm bg-surface-pure border border-border-subtle rounded-md px-2 py-1 text-on-surface focus:border-signal-pulse focus:ring-0 outline-none cursor-pointer" id="sweep-pattern-select">
+<option selected="" value="triangle">Triangle (0% ⇋ 100%)</option>
+<option value="sawtooth">Sawtooth (0% → 100%)</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-[11px] text-outline">Sweep Speed</label>
+<div class="flex items-center p-0.5 bg-surface-pure rounded-md border border-border-subtle" id="speed-selector-group">
+<button class="flex-1 py-0.5 text-center font-label-sm text-[11px] rounded text-on-surface-variant hover:text-on-surface transition-colors" data-speed="0.5" type="button">0.5x</button>
+<button class="flex-1 py-0.5 text-center font-label-sm text-[11px] rounded bg-primary text-on-primary font-semibold shadow-xs" data-speed="1.0" type="button">1x</button>
+<button class="flex-1 py-0.5 text-center font-label-sm text-[11px] rounded text-on-surface-variant hover:text-on-surface transition-colors" data-speed="2.0" type="button">2x</button>
+</div>
+</div>
+</div>
+<!-- Sweep Realtime Progress / Cycle Bar -->
+<div class="flex flex-col gap-1 pt-1">
+<div class="flex items-center justify-between text-[11px] font-label-sm text-on-surface-variant">
+<span>Cycle Timeline</span>
+<span class="font-mono text-signal-pulse font-medium" id="sweep-progress-percent">0.0%</span>
+</div>
+<div class="w-full bg-surface-muted h-1.5 rounded-full overflow-hidden relative">
+<div class="h-full bg-gradient-to-r from-signal-pulse via-tertiary to-analog-trace rounded-full transition-none" id="sweep-progress-bar" style="width: 75%;"></div>
+</div>
+</div>
+</div>
+<!-- Circular Rotary Knob Dial Section -->
+<div class="flex flex-col items-center gap-space-md p-space-md bg-surface-canvas rounded-xl relative">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm uppercase text-outline">DUTY CYCLE POTENTIOMETER</span>
+<span class="font-label-sm text-label-sm text-signal-pulse font-semibold">100kΩ R_POT</span>
+</div>
+<!-- Interactive Knob UI -->
+<div class="relative w-48 h-48 flex items-center justify-center select-none" id="knob-container">
+<!-- Dial Scale Ticks SVG -->
+<svg class="absolute inset-0 w-full h-full transform -rotate-90 pointer-events-none" viewbox="0 0 200 200">
+<!-- Background arc -->
+<circle cx="100" cy="100" fill="none" r="76" stroke="#E2E8F0" stroke-dasharray="358" stroke-dashoffset="90" stroke-linecap="round" stroke-width="8"></circle>
+<!-- Active arc fill -->
+<circle class="transition-all duration-75" cx="100" cy="100" fill="none" id="knob-arc" r="76" stroke="#0284C7" stroke-dasharray="358" stroke-dashoffset="179" stroke-linecap="round" stroke-width="8" style="stroke-dashoffset: 156.625;"></circle>
+</svg>
+<!-- Rotary Body Outer -->
+<div class="w-32 h-32 rounded-full bg-surface-pure shadow-md flex items-center justify-center cursor-grab active:cursor-grabbing relative transform transition-transform duration-75" id="knob-dial" style="transform: rotate(67.5deg);">
+<!-- Grip Notch Indicator -->
+<div class="absolute top-2 w-2 h-6 rounded-full bg-signal-pulse shadow-sm"></div>
+<!-- Inner Cap Monogram -->
+<div class="w-16 h-16 rounded-full bg-surface-muted flex flex-col items-center justify-center shadow-inner">
+<span class="font-label-sm text-label-sm text-outline">PWM</span>
+</div>
+</div>
+<!-- Value Floating Overlay -->
+<div class="absolute -bottom-2 px-space-md py-0.5 rounded-full bg-surface-pure shadow-md border border-border-subtle flex items-center gap-1 pointer-events-none">
+<span class="font-label-lg text-label-lg font-bold text-signal-pulse" id="knob-val-display">75</span>
+<span class="font-label-sm text-label-sm text-outline">%</span>
+</div>
+</div>
+<!-- Fine-tune Step Buttons -->
+<div class="flex items-center justify-between w-full pt-space-xs gap-space-sm">
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-surface-pure shadow-sm hover:bg-surface-muted active:scale-95 transition-all text-on-surface font-label-md text-label-md flex items-center justify-center gap-1" id="step-down">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+              - 5%
+            </button>
+<input class="w-24 accent-signal-pulse cursor-pointer" id="duty-range-input" max="100" min="0" step="1" type="range" value="75"/>
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-surface-pure shadow-sm hover:bg-surface-muted active:scale-95 transition-all text-on-surface font-label-md text-label-md flex items-center justify-center gap-1" id="step-up">
+<span class="material-symbols-outlined text-[16px]">add</span>
+              + 5%
+            </button>
+</div>
+</div>
+<!-- Optical Glow Toggle & Simulation Options -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-signal-pulse text-[20px]">flare</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Show Optical Glow</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Real-time radiant photonic bloom</span>
+</div>
+</div>
+<input checked="" class="h-4 w-4 rounded text-signal-pulse focus:ring-0 cursor-pointer" id="glow-toggle" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[20px]">thermostat</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-on-surface">MOSFET Heat Estimation</span>
+<span class="font-label-sm text-label-sm text-analog-trace" id="mosfet-temp">34.2 °C (Safe, No Heatsink Req.)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Load Indicator: High-Fidelity Realistic LED Emitter graphic & Lux Chamber -->
+<section class="w-full bg-surface-pure rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-lg relative overflow-hidden">
+<!-- Left specs / lux meter -->
+<div class="flex flex-col gap-space-sm z-10 max-w-md w-full">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary uppercase">EMITTER BENCH</span>
+<span class="font-label-sm text-label-sm text-outline">COB OPTICAL INTEGRATION</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Radiant Flux &amp; Lux Chamber</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Simulated optical output measured at 0.5m distance in integrating sphere. As duty cycle varies, human retinal persistence blends the pulsed photon emission into perceived steady-state luminance.
+        </p>
+<!-- Dynamic Photometric Metrology Readout -->
+<div class="grid grid-cols-2 gap-space-sm mt-space-sm">
+<div class="bg-surface-canvas p-space-sm rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase">Luminous Flux</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-label-md text-headline-sm font-bold text-on-surface" id="lux-val">1,875</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">lm</span>
+</div>
+</div>
+<div class="bg-surface-canvas p-space-sm rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase">Retinal Illuminance</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-label-md text-headline-sm font-bold text-on-surface" id="retina-val">3,343</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">lux</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Center & Right: High-fidelity realistic LED Graphic with Halo Blooming -->
+<div class="flex-1 w-full flex items-center justify-center p-space-md min-h-[260px] relative">
+<!-- Ambient halo bloom container (interpolates with duty cycle and optical toggle) -->
+<div class="absolute w-56 h-56 rounded-full bg-signal-pulse/30 blur-3xl pointer-events-none transition-all duration-75" id="led-halo-outer" style="opacity: 0.675; transform: scale(1.325);"></div>
+<div class="absolute w-32 h-32 rounded-full bg-primary-fixed-dim/50 blur-xl pointer-events-none transition-all duration-75" id="led-halo-inner" style="opacity: 0.75; transform: scale(1.175);"></div>
+<!-- Physical Ceramic COB Emitter Carrier Card Graphic -->
+<div class="relative w-64 h-64 rounded-2xl bg-surface-muted shadow-md flex items-center justify-center border border-border-subtle z-10">
+<!-- PCB Substrate Screws -->
+<div class="absolute top-3 left-3 w-3 h-3 rounded-full bg-outline-variant shadow-inner flex items-center justify-center"><div class="w-2 h-0.5 bg-outline"></div></div>
+<div class="absolute top-3 right-3 w-3 h-3 rounded-full bg-outline-variant shadow-inner flex items-center justify-center"><div class="w-2 h-0.5 bg-outline"></div></div>
+<div class="absolute bottom-3 left-3 w-3 h-3 rounded-full bg-outline-variant shadow-inner flex items-center justify-center"><div class="w-2 h-0.5 bg-outline"></div></div>
+<div class="absolute bottom-3 right-3 w-3 h-3 rounded-full bg-outline-variant shadow-inner flex items-center justify-center"><div class="w-2 h-0.5 bg-outline"></div></div>
+<!-- Copper traces -->
+<div class="absolute top-10 left-4 text-power-vcc font-label-sm text-label-sm font-bold">+ DC</div>
+<div class="absolute top-10 right-4 text-ground-gnd font-label-sm text-label-sm font-bold">- MOS</div>
+<!-- Circular Yellow Phosphor Disc -->
+<div class="w-40 h-40 rounded-full bg-[#fcd34d] border-4 border-[#e2e8f0] shadow-inner flex items-center justify-center relative overflow-hidden transition-all duration-75" id="led-phosphor" style="box-shadow: rgba(234, 179, 8, 0.776) 0px 0px 32.5px inset;">
+<!-- Micro LED dies grid matrix -->
+<div class="grid grid-cols-4 gap-2 opacity-60">
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-pure shadow-sm"></div>
+</div>
+<!-- Intense White Center Filament Bloom (Scale/Opacity mapped to PWM) -->
+<div class="absolute inset-0 bg-surface-pure rounded-full transition-opacity duration-75" id="led-core-flare" style="opacity: 0.675; mix-blend-mode: screen;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Oscilloscope & Analysis Graph Card with Tabs -->
+<section class="w-full bg-surface-pure rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm pb-space-sm border-b border-border-subtle">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-signal-pulse text-[24px]">query_stats</span>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Waveform &amp; Photometric Analysis</h3>
+<span class="font-label-sm text-label-sm text-outline">Real-time Scope DSO Channel Simulation</span>
+</div>
+</div>
+<!-- Navigation Tab Selectors -->
+<div class="flex items-center p-0.5 bg-surface-muted rounded-lg border border-border-subtle">
+<button class="px-space-md py-1.5 rounded-md bg-surface-pure text-on-surface font-label-md text-label-md shadow-sm flex items-center gap-1.5 transition-all" id="tab-btn-scope">
+<span class="material-symbols-outlined text-[16px] text-signal-pulse">show_chart</span>
+            PWM Waveform
+          </button>
+<button class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all" id="tab-btn-cie">
+<span class="material-symbols-outlined text-[16px]">stacked_line_chart</span>
+            Perceived vs Measured Brightness
+          </button>
+</div>
+</div>
+<!-- Tab View 1: Oscilloscope Monitor -->
+<div class="w-full flex flex-col gap-space-md" id="tab-scope-content">
+<div class="w-full bg-inverse-surface rounded-xl p-space-md shadow-inner flex flex-col gap-space-sm">
+<!-- Oscilloscope Header Status Bar -->
+<div class="flex items-center justify-between text-surface-container-high font-label-sm text-label-sm px-space-xs">
+<div class="flex items-center gap-space-md">
+<span class="text-signal-pulse font-semibold">CH1: 5.00V / DIV</span>
+<span class="text-analog-trace font-semibold">CH2: 5.00V / DIV</span>
+<span class="">TIME: 100.0 µs / DIV</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-surface-variant">TRIGGER: CH1 POS EDGE</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-primary font-bold">RUNNING</span>
+</div>
+</div>
+<!-- Oscilloscope Screen Grid and SVG Paths -->
+<div class="w-full h-64 bg-slate-950 rounded-lg relative overflow-hidden flex items-center justify-center border border-slate-800">
+<svg class="w-full h-full" id="scope-svg" viewbox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="dso-grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(14, 165, 233, 0.12)" stroke-width="1"></path>
+</pattern>
+<!-- Center graticule ticks -->
+<pattern height="8" id="dso-ticks" patternunits="userSpaceOnUse" width="8">
+<circle cx="4" cy="4" fill="rgba(14, 165, 233, 0.2)" r="0.5"></circle>
+</pattern>
+</defs>
+<rect fill="#090E17" height="240" width="800"></rect>
+<rect fill="url(#dso-grid)" height="240" width="800"></rect>
+<rect fill="url(#dso-ticks)" height="240" width="800"></rect>
+<!-- Center crosshair axis -->
+<line stroke="rgba(14, 165, 233, 0.25)" stroke-dasharray="2 2" stroke-width="1" x1="0" x2="800" y1="120" y2="120"></line>
+<line stroke="rgba(14, 165, 233, 0.25)" stroke-dasharray="2 2" stroke-width="1" x1="400" x2="400" y1="0" y2="240"></line>
+<!-- CH1: Gate Voltage Trace (Electric Blue) -->
+<path d="M 0 160 L 0 160 L 3 60 L 150 60 L 153 160 L 200 160 L 200 160 L 203 60 L 350 60 L 353 160 L 400 160 L 400 160 L 403 60 L 550 60 L 553 160 L 600 160 L 600 160 L 603 60 L 750 60 L 753 160 L 800 160 " fill="none" id="waveform-ch1" stroke="#0284C7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- CH2: Drain Inverted Voltage Trace (Analog Emerald) -->
+<path d="M 0 50 L 0 50 L 3 170 L 150 170 L 153 50 L 200 50 L 200 50 L 203 170 L 350 170 L 353 50 L 400 50 L 400 50 L 403 170 L 550 170 L 553 50 L 600 50 L 600 50 L 603 170 L 750 170 L 753 50 L 800 50 " fill="none" id="waveform-ch2" opacity="0.85" stroke="#10B981" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<!-- On-screen Cursor Metrics Overlay -->
+<div class="absolute bottom-2 left-3 bg-slate-900/90 backdrop-blur-sm px-space-sm py-1 rounded text-surface-pure font-label-sm text-label-sm flex items-center gap-space-md border border-slate-700">
+<span class="text-signal-pulse">Rise Time t_r: 42 ns</span>
+<span class="text-signal-pulse">Fall Time t_f: 38 ns</span>
+<span class="text-analog-trace">MOSFET V_ds(on): 18 mV</span>
+</div>
+</div>
+<!-- Bottom Trigger & Horizontal Sliders Bar -->
+<div class="flex items-center justify-between text-surface-container-high font-label-sm text-label-sm px-space-xs pt-1">
+<span class="">CH1 V_pp: 11.8 V</span>
+<span class="">f_sw: 1.442 kHz</span>
+<span class="">Duty Cycle: <span class="" id="scope-duty-tag">75.0%</span></span>
+</div>
+</div>
+</div>
+<!-- Tab View 2: CIE 1931 Human Perception Curve Plot (Initially Hidden) -->
+<div class="w-full hidden flex flex-col gap-space-md" id="tab-cie-content">
+<div class="w-full bg-surface-canvas rounded-xl p-space-md flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-xs">
+<div>
+<span class="font-body-md text-body-md font-semibold text-on-surface">CIE 1931 Eye Lightness Response vs Electrical Duty Cycle</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Human eyes exhibit logarithmic sensitivity. A 20% electrical PWM signal is perceived as nearly 50% brightness!
+              </p>
+</div>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-1 bg-outline rounded-full"></span>
+<span class="">Linear PWM Duty (%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-1 bg-signal-pulse rounded-full"></span>
+<span class="">CIE 1931 Perceived L* (%)</span>
+</div>
+</div>
+</div>
+<!-- SVG Chart for Perception Curve -->
+<div class="w-full h-64 bg-surface-pure rounded-lg p-space-sm relative border border-border-subtle flex items-center justify-center">
+<svg class="w-full h-full select-none" viewbox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+<!-- Coordinate Grid -->
+<line stroke="#E2E8F0" stroke-width="1.5" x1="60" x2="60" y1="20" y2="180"></line>
+<line stroke="#E2E8F0" stroke-width="1.5" x1="60" x2="560" y1="180" y2="180"></line>
+<!-- Y Axis Ticks (Brightness 0 to 100%) -->
+<text class="font-label-sm text-label-sm" fill="#707881" text-anchor="end" x="45" y="185">0%</text>
+<text class="font-label-sm text-label-sm" fill="#707881" text-anchor="end" x="45" y="105">50%</text>
+<text class="font-label-sm text-label-sm" fill="#707881" text-anchor="end" x="45" y="25">100%</text>
+<!-- X Axis Ticks (Duty Cycle 0 to 100%) -->
+<text class="font-label-sm text-label-sm" fill="#707881" text-anchor="middle" x="60" y="200">0%</text>
+<text class="font-label-sm text-label-sm" fill="#707881" text-anchor="middle" x="310" y="200">50%</text>
+<text class="font-label-sm text-label-sm" fill="#707881" text-anchor="middle" x="560" y="200">100%</text>
+<!-- Linear 1:1 Line (Gray Dashed) -->
+<line stroke="#707881" stroke-dasharray="4 4" stroke-width="2" x1="60" x2="560" y1="180" y2="20"></line>
+<!-- CIE 1931 Stevens' Power Law Curve (Blue Bold Curve) -->
+<path d="M 60 180 Q 150 90, 310 58 T 560 20" fill="none" stroke="#0284C7" stroke-width="3.5"></path>
+<!-- Current Operating Marker Pin -->
+<g id="cie-marker-group" transform="translate(435, 36.97120898517744)">
+<line stroke="#EF4444" stroke-dasharray="2 2" stroke-width="1.5" x1="0" x2="0" y1="-10" y2="142"></line>
+<circle cx="0" cy="0" fill="#EF4444" r="5" stroke="#FFFFFF" stroke-width="2"></circle>
+<rect fill="#EF4444" height="18" rx="3" width="70" x="-35" y="-24"></rect>
+<text class="font-label-sm text-label-sm" fill="#FFFFFF" font-weight="600" text-anchor="middle" x="0" y="-12">D = 75%</text>
+</g>
+</svg>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Hardware Notes & Footnote Section -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-space-md pb-space-lg">
+<div class="bg-surface-pure rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-body-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+          Ballast Resistor Thermal Sizing
+        </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="ballast-note-text">
+          P_dissipation = I_rms² × R. At 75.0% duty cycle and 350mA peak pulse current, average thermal dissipation is 0.68W, requiring a 2W flameproof metal oxide resistor to ensure thermal safety margin.
+        </p>
+</div>
+<div class="bg-surface-pure rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-secondary font-body-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">memory</span>
+          MOSFET Gate Charge Dynamics
+        </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          NE555 output stage can source up to 200mA, rapidly charging the STD30NF06L Q_g (total gate charge 30nC) in ~150ns, keeping switching transition losses (E_sw) under 2.4 milliwatts.
+        </p>
+</div>
+<div class="bg-surface-pure rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-analog-trace font-body-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">center_focus_strong</span>
+          Stroboscopic Flicker Elimination
+        </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Operating at 1.44 kHz exceeds the Critical Flicker Fusion (CFF) threshold (60–90 Hz) and video rolling shutter artifacts, providing high-CRI illumination compliant with IEEE 1789 standards.
+        </p>
+</div>
+</section>
+</div>
+<!-- Client-side Logic Script for Dynamic Interactive Simulation -->
+<script>
+    (function initLedDimmer() {
+      let isPowered = true;
+      let dutyPercent = 75.0;
+      let showGlow = true;
+
+      // Sweep Demo State
+      let isSweepRunning = false;
+      let sweepMode = 'triangle'; // 'triangle' | 'sawtooth'
+      let sweepSpeedMultiplier = 1.0;
+      const basePeriodMs = 4000; // 4.0 seconds for 1x
+      let sweepPhase = 0.75; // normalized phase 0.0 to 1.0
+      let sweepDirection = 1; // 1 = increasing, -1 = decreasing
+      let sweepAnimFrameId = null;
+      let lastTimestamp = null;
+
+      // DOM Elements
+      const knobDial = document.getElementById('knob-dial');
+      const knobArc = document.getElementById('knob-arc');
+      const knobValDisplay = document.getElementById('knob-val-display');
+      const dutyRangeInput = document.getElementById('duty-range-input');
+      const stepDownBtn = document.getElementById('step-down');
+      const stepUpBtn = document.getElementById('step-up');
+      const preset25 = document.getElementById('preset-25');
+      const preset50 = document.getElementById('preset-50');
+      const preset75 = document.getElementById('preset-75');
+      const preset100 = document.getElementById('preset-100');
+      const masterToggle = document.getElementById('master-toggle');
+      const masterToggleKnob = document.getElementById('master-toggle-knob');
+      const glowToggle = document.getElementById('glow-toggle');
+      const mosfetTemp = document.getElementById('mosfet-temp');
+      const ballastNoteText = document.getElementById('ballast-note-text');
+
+      // Status indicator elements
+      const statusIndicatorDot = document.getElementById('status-indicator-dot');
+      const statusIndicatorText = document.getElementById('status-indicator-text');
+
+      // Sweep Demo UI Elements
+      const sweepToggleBtn = document.getElementById('sweep-toggle-btn');
+      const sweepBtnIcon = document.getElementById('sweep-btn-icon');
+      const sweepBtnLabel = document.getElementById('sweep-btn-label');
+      const sweepBadge = document.getElementById('sweep-badge');
+      const sweepDirText = document.getElementById('sweep-dir-text');
+      const sweepDirIcon = document.getElementById('sweep-dir-icon');
+      const sweepPatternSelect = document.getElementById('sweep-pattern-select');
+      const speedSelectorGroup = document.getElementById('speed-selector-group');
+      const sweepProgressBar = document.getElementById('sweep-progress-bar');
+      const sweepProgressPercent = document.getElementById('sweep-progress-percent');
+
+      // Metric Readouts
+      const readoutDuty = document.getElementById('readout-duty');
+      const readoutDutyBar = document.getElementById('readout-duty-bar');
+      const readoutTiming = document.getElementById('readout-timing');
+      const readoutCurrent = document.getElementById('readout-current');
+      const readoutCurrentBar = document.getElementById('readout-current-bar');
+      const readoutCie = document.getElementById('readout-cie');
+      const luxVal = document.getElementById('lux-val');
+      const retinaVal = document.getElementById('retina-val');
+      const scopeDutyTag = document.getElementById('scope-duty-tag');
+
+      // Visual LED Emitter Elements
+      const ledHaloOuter = document.getElementById('led-halo-outer');
+      const ledHaloInner = document.getElementById('led-halo-inner');
+      const ledPhosphor = document.getElementById('led-phosphor');
+      const ledCoreFlare = document.getElementById('led-core-flare');
+
+      // Tab controls
+      const tabBtnScope = document.getElementById('tab-btn-scope');
+      const tabBtnCie = document.getElementById('tab-btn-cie');
+      const tabScopeContent = document.getElementById('tab-scope-content');
+      const tabCieContent = document.getElementById('tab-cie-content');
+      const cieMarkerGroup = document.getElementById('cie-marker-group');
+
+      // Oscilloscope Path
+      const waveformCh1 = document.getElementById('waveform-ch1');
+      const waveformCh2 = document.getElementById('waveform-ch2');
+
+      // CIE 1931 Stevens lightness approximation function
+      function computeCieLightness(yPercent) {
+        if (yPercent <= 0) return 0;
+        const y = yPercent / 100;
+        let lStar;
+        if (y > 0.008856) {
+          lStar = 116 * Math.cbrt(y) - 16;
+        } else {
+          lStar = 903.3 * y;
+        }
+        return Math.min(100, Math.max(0, lStar));
+      }
+
+      function updateSimulationUI() {
+        const effectiveDuty = isPowered ? dutyPercent : 0;
+        const currentAvg = (effectiveDuty / 100) * 350;
+        const cieVal = computeCieLightness(effectiveDuty);
+
+        // Update Readout Values
+        readoutDuty.textContent = effectiveDuty.toFixed(1);
+        readoutDutyBar.style.width = Math.min(100, Math.max(0, effectiveDuty)) + '%';
+        readoutCurrent.textContent = currentAvg.toFixed(1);
+        readoutCurrentBar.style.width = Math.min(100, Math.max(0, effectiveDuty)) + '%';
+        readoutCie.textContent = cieVal.toFixed(1);
+
+        // Period T = 694.4 us
+        const tTotal = 694.4;
+        const tOn = (effectiveDuty / 100) * tTotal;
+        const tOff = tTotal - tOn;
+        if (readoutTiming) {
+          readoutTiming.textContent = `t_on: ${Math.round(tOn)} µs / t_off: ${Math.round(tOff)} µs`;
+        }
+
+        const calculatedLux = Math.round((effectiveDuty / 100) * 2500);
+        const calculatedRetina = Math.round((cieVal / 100) * 3740);
+        luxVal.textContent = calculatedLux.toLocaleString();
+        retinaVal.textContent = calculatedRetina.toLocaleString();
+
+        scopeDutyTag.textContent = effectiveDuty.toFixed(1) + '%';
+
+        // Update MOSFET thermal estimation & Ballast Resistor Note
+        const mosfetEstimatedTemp = (25 + (effectiveDuty / 100) * 12.3).toFixed(1);
+        mosfetTemp.textContent = `${mosfetEstimatedTemp} °C (Safe, No Heatsink Req.)`;
+        if (ballastNoteText) {
+          const pDiss = ((effectiveDuty / 100) * 0.91).toFixed(2);
+          ballastNoteText.textContent = `P_dissipation = I_rms² × R. At ${effectiveDuty.toFixed(1)}% duty cycle and 350mA peak pulse current, average thermal dissipation is ${pDiss}W, requiring a 2W flameproof metal oxide resistor to ensure thermal safety margin.`;
+        }
+
+        // Update Knob visual (rotation range from -135deg to +135deg)
+        const rotationDeg = -135 + (dutyPercent / 100) * 270;
+        knobDial.style.transform = `rotate(${rotationDeg}deg)`;
+        knobValDisplay.textContent = Math.round(dutyPercent);
+        dutyRangeInput.value = Math.round(dutyPercent);
+
+        // Update Arc: arc length = 358, active fill ranges across 270 degrees
+        const arcProgress = (dutyPercent / 100) * (358 * 0.75);
+        knobArc.style.strokeDashoffset = (358 - arcProgress);
+
+        // Update Sweep Progress & Direction Text
+        if (sweepProgressBar && sweepProgressPercent) {
+          sweepProgressBar.style.width = `${dutyPercent.toFixed(1)}%`;
+          sweepProgressPercent.textContent = `${dutyPercent.toFixed(1)}%`;
+        }
+
+        // Update LED graphic bloom
+        if (!isPowered || effectiveDuty === 0) {
+          ledHaloOuter.style.opacity = '0';
+          ledHaloInner.style.opacity = '0';
+          ledCoreFlare.style.opacity = '0';
+          ledPhosphor.style.boxShadow = 'inset 0 0 5px rgba(0,0,0,0.2)';
+        } else {
+          const glowMultiplier = showGlow ? 1 : 0.2;
+          const outerScale = 0.8 + (effectiveDuty / 100) * 0.7;
+          ledHaloOuter.style.transform = `scale(${outerScale})`;
+          ledHaloOuter.style.opacity = ((effectiveDuty / 100) * 0.9 * glowMultiplier).toString();
+
+          const innerScale = 0.8 + (effectiveDuty / 100) * 0.5;
+          ledHaloInner.style.transform = `scale(${innerScale})`;
+          ledHaloInner.style.opacity = ((effectiveDuty / 100) * 1.0 * glowMultiplier).toString();
+
+          ledCoreFlare.style.opacity = (effectiveDuty / 100 * 0.9).toString();
+          ledPhosphor.style.boxShadow = `inset 0 0 ${10 + (effectiveDuty / 100) * 30}px rgba(234, 179, 8, ${0.4 + effectiveDuty/200})`;
+        }
+
+        // Update CIE Chart Marker position
+        // X ranges from 60 to 560 (width 500), Y ranges from 180 to 20
+        const markerX = 60 + (dutyPercent / 100) * 500;
+        const markerY = 180 - (cieVal / 100) * 160;
+        cieMarkerGroup.setAttribute('transform', `translate(${markerX}, ${markerY})`);
+        const markerText = cieMarkerGroup.querySelector('text');
+        if (markerText) {
+          markerText.textContent = `D = ${Math.round(dutyPercent)}%`;
+        }
+
+        // Draw Oscilloscope Waveforms
+        drawOscilloscopeWaveforms(effectiveDuty);
+      }
+
+      function drawOscilloscopeWaveforms(duty) {
+        // SVG width = 800, height = 240
+        const periodWidth = 200;
+        const clampedDuty = Math.max(0.5, Math.min(99.5, duty));
+        const highWidth = (clampedDuty / 100) * periodWidth;
+
+        let ch1Path = 'M 0 160 ';
+        let ch2Path = 'M 0 50 ';
+
+        if (duty <= 0.5) {
+          ch1Path = 'M 0 160 L 800 160';
+          ch2Path = 'M 0 50 L 800 50';
+        } else if (duty >= 99.5) {
+          ch1Path = 'M 0 60 L 800 60';
+          ch2Path = 'M 0 170 L 800 170';
+        } else {
+          for (let i = 0; i < 4; i++) {
+            const startX = i * periodWidth;
+            const riseX = startX + 3;
+            const fallX = startX + highWidth;
+
+            // CH1 (Gate Pulse: High = 60, Low = 160)
+            ch1Path += `L ${startX} 160 L ${riseX} 60 L ${fallX} 60 L ${fallX + 3} 160 L ${startX + periodWidth} 160 `;
+
+            // CH2 (Inverted Drain Voltage: Low = 170 when ON, High = 50 when OFF)
+            ch2Path += `L ${startX} 50 L ${riseX} 170 L ${fallX} 170 L ${fallX + 3} 50 L ${startX + periodWidth} 50 `;
+          }
+        }
+
+        waveformCh1.setAttribute('d', ch1Path);
+        waveformCh2.setAttribute('d', ch2Path);
+      }
+
+      // ============================================
+      // SWEEP DEMO ANIMATION LOOP ENGINE
+      // ============================================
+      function startSweep() {
+        if (isSweepRunning) return;
+        isSweepRunning = true;
+        lastTimestamp = null;
+        sweepPhase = dutyPercent / 100;
+
+        // UI state update
+        sweepBtnIcon.textContent = 'pause';
+        sweepBtnLabel.textContent = 'Pause Sweep';
+        sweepToggleBtn.classList.remove('bg-primary');
+        sweepToggleBtn.classList.add('bg-secondary-container');
+        sweepBadge.textContent = 'RUNNING';
+        sweepBadge.className = 'px-space-xs py-0.5 rounded font-label-sm text-[10px] uppercase font-bold tracking-wider bg-analog-trace/20 text-analog-trace';
+
+        statusIndicatorDot.className = 'w-2 h-2 rounded-full bg-signal-pulse animate-pulse';
+        statusIndicatorText.className = 'font-label-sm text-label-sm text-signal-pulse font-medium';
+        statusIndicatorText.textContent = 'SWEEP ACTIVE';
+
+        updateSweepDirectionUI();
+        sweepAnimFrameId = requestAnimationFrame(sweepLoop);
+      }
+
+      function pauseSweep(reason = 'manual') {
+        if (!isSweepRunning) return;
+        isSweepRunning = false;
+        if (sweepAnimFrameId) {
+          cancelAnimationFrame(sweepAnimFrameId);
+          sweepAnimFrameId = null;
+        }
+
+        sweepBtnIcon.textContent = 'play_arrow';
+        sweepBtnLabel.textContent = reason === 'override' ? 'Resume Sweep' : 'Auto Sweep Demo';
+        sweepToggleBtn.classList.remove('bg-secondary-container');
+        sweepToggleBtn.classList.add('bg-primary');
+        sweepBadge.textContent = 'PAUSED';
+        sweepBadge.className = 'px-space-xs py-0.5 rounded font-label-sm text-[10px] uppercase font-bold tracking-wider bg-outline-variant/30 text-outline';
+
+        statusIndicatorDot.className = 'w-2 h-2 rounded-full bg-analog-trace';
+        statusIndicatorText.className = 'font-label-sm text-label-sm text-analog-trace';
+        statusIndicatorText.textContent = 'SYSTEM READY';
+
+        sweepDirIcon.textContent = 'pause_circle';
+        sweepDirText.textContent = 'Paused';
+      }
+
+      function updateSweepDirectionUI() {
+        if (!isSweepRunning) return;
+        if (sweepMode === 'triangle') {
+          if (sweepDirection === 1) {
+            sweepDirIcon.textContent = 'arrow_upward';
+            sweepDirIcon.className = 'material-symbols-outlined text-[16px] text-signal-pulse animate-bounce';
+            sweepDirText.textContent = 'Ramping Up';
+          } else {
+            sweepDirIcon.textContent = 'arrow_downward';
+            sweepDirIcon.className = 'material-symbols-outlined text-[16px] text-power-vcc animate-bounce';
+            sweepDirText.textContent = 'Ramping Down';
+          }
+        } else {
+          // Sawtooth
+          sweepDirIcon.textContent = 'trending_up';
+          sweepDirIcon.className = 'material-symbols-outlined text-[16px] text-analog-trace';
+          sweepDirText.textContent = 'Sawtooth Ramp';
+        }
+      }
+
+      function sweepLoop(timestamp) {
+        if (!isSweepRunning) return;
+
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        const elapsed = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
+
+        const effectivePeriod = basePeriodMs / sweepSpeedMultiplier;
+        const deltaFraction = elapsed / effectivePeriod;
+
+        if (sweepMode === 'triangle') {
+          sweepPhase += sweepDirection * deltaFraction;
+          if (sweepPhase >= 1.0) {
+            sweepPhase = 1.0;
+            sweepDirection = -1;
+            updateSweepDirectionUI();
+          } else if (sweepPhase <= 0.0) {
+            sweepPhase = 0.0;
+            sweepDirection = 1;
+            updateSweepDirectionUI();
+          }
+        } else if (sweepMode === 'sawtooth') {
+          sweepPhase += deltaFraction;
+          if (sweepPhase >= 1.0) {
+            sweepPhase = 0.0; // reset instant jump
+          }
+          sweepDirection = 1;
+        }
+
+        dutyPercent = Math.max(0, Math.min(100, sweepPhase * 100));
+        updateSimulationUI();
+
+        sweepAnimFrameId = requestAnimationFrame(sweepLoop);
+      }
+
+      // Sweep Event Handlers
+      sweepToggleBtn.addEventListener('click', () => {
+        if (isSweepRunning) {
+          pauseSweep('manual');
+        } else {
+          startSweep();
+        }
+      });
+
+      sweepPatternSelect.addEventListener('change', (e) => {
+        sweepMode = e.target.value;
+        if (sweepMode === 'sawtooth') {
+          sweepDirection = 1;
+        }
+        updateSweepDirectionUI();
+      });
+
+      // Speed Buttons
+      const speedButtons = speedSelectorGroup.querySelectorAll('button[data-speed]');
+      speedButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          speedButtons.forEach(b => {
+            b.className = 'flex-1 py-0.5 text-center font-label-sm text-[11px] rounded text-on-surface-variant hover:text-on-surface transition-colors';
+          });
+          btn.className = 'flex-1 py-0.5 text-center font-label-sm text-[11px] rounded bg-primary text-on-primary font-semibold shadow-xs';
+          sweepSpeedMultiplier = parseFloat(btn.getAttribute('data-speed'));
+        });
+      });
+
+      // Helper for manual user interruption
+      function manualDutyCycleChange(newVal) {
+        if (isSweepRunning) {
+          pauseSweep('override');
+        }
+        dutyPercent = newVal;
+        sweepPhase = dutyPercent / 100;
+        updateSimulationUI();
+      }
+
+      // Manual Slider input
+      dutyRangeInput.addEventListener('input', (e) => {
+        manualDutyCycleChange(parseInt(e.target.value, 10));
+      });
+
+      stepDownBtn.addEventListener('click', () => {
+        manualDutyCycleChange(Math.max(0, dutyPercent - 5));
+      });
+
+      stepUpBtn.addEventListener('click', () => {
+        manualDutyCycleChange(Math.min(100, dutyPercent + 5));
+      });
+
+      function setPreset(val) {
+        manualDutyCycleChange(val);
+      }
+
+      preset25.addEventListener('click', () => setPreset(25));
+      preset50.addEventListener('click', () => setPreset(50));
+      preset75.addEventListener('click', () => setPreset(75));
+      preset100.addEventListener('click', () => setPreset(100));
+
+      masterToggle.addEventListener('click', () => {
+        isPowered = !isPowered;
+        if (isPowered) {
+          masterToggle.classList.remove('bg-surface-variant');
+          masterToggle.classList.add('bg-primary');
+          masterToggleKnob.classList.remove('translate-x-1');
+          masterToggleKnob.classList.add('translate-x-6');
+          masterToggle.setAttribute('aria-checked', 'true');
+        } else {
+          masterToggle.classList.remove('bg-primary');
+          masterToggle.classList.add('bg-surface-variant');
+          masterToggleKnob.classList.remove('translate-x-6');
+          masterToggleKnob.classList.add('translate-x-1');
+          masterToggle.setAttribute('aria-checked', 'false');
+        }
+        updateSimulationUI();
+      });
+
+      glowToggle.addEventListener('change', (e) => {
+        showGlow = e.target.checked;
+        updateSimulationUI();
+      });
+
+      // Rotary Knob Interactive Dragging / Rotating logic
+      let isDragging = false;
+      let startY = 0;
+      let startDuty = 75;
+
+      knobDial.addEventListener('mousedown', (e) => {
+        if (isSweepRunning) {
+          pauseSweep('override');
+        }
+        isDragging = true;
+        startY = e.clientY;
+        startDuty = dutyPercent;
+        document.body.style.userSelect = 'none';
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const deltaY = startY - e.clientY;
+        let newDuty = Math.round(startDuty + deltaY * 0.7);
+        newDuty = Math.max(0, Math.min(100, newDuty));
+        if (newDuty !== dutyPercent) {
+          dutyPercent = newDuty;
+          sweepPhase = dutyPercent / 100;
+          updateSimulationUI();
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDragging) {
+          isDragging = false;
+          document.body.style.userSelect = '';
+        }
+      });
+
+      // Tabs switcher
+      tabBtnScope.addEventListener('click', () => {
+        tabBtnScope.classList.add('bg-surface-pure', 'text-on-surface', 'shadow-sm');
+        tabBtnScope.classList.remove('text-on-surface-variant');
+        tabBtnCie.classList.remove('bg-surface-pure', 'text-on-surface', 'shadow-sm');
+        tabBtnCie.classList.add('text-on-surface-variant');
+
+        tabScopeContent.classList.remove('hidden');
+        tabCieContent.classList.add('hidden');
+      });
+
+      tabBtnCie.addEventListener('click', () => {
+        tabBtnCie.classList.add('bg-surface-pure', 'text-on-surface', 'shadow-sm');
+        tabBtnCie.classList.remove('text-on-surface-variant');
+        tabBtnScope.classList.remove('bg-surface-pure', 'text-on-surface', 'shadow-sm');
+        tabBtnScope.classList.add('text-on-surface-variant');
+
+        tabCieContent.classList.remove('hidden');
+        tabScopeContent.classList.add('hidden');
+      });
+
+      // Initial render run
+      updateSimulationUI();
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-pure border-t border-border-subtle py-space-lg"><div class="w-full max-w-[1600px] mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col gap-space-xs text-center md:text-left"><p class="font-body-md text-body-md text-on-surface">Semi Lab — Interactive Electronics &amp; Semiconductor Education.</p><p class="font-body-sm text-body-sm text-on-surface-variant">Built for 555 Timer, MOSFET &amp; PWM simulation. Clinical precision workbench UI.</p></div><div class="flex items-center gap-space-lg font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="hover:text-primary transition-colors" data-path="about" href="#">About</a><a class="hover:text-primary transition-colors" href="#">Documentation</a><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></div><div class="font-label-sm text-label-sm text-outline">© 2025 Semi Lab. All rights reserved.</div></div></footer>
+</body></html>

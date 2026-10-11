@@ -1,0 +1,721 @@
+<!DOCTYPE html><html lang="en" style=""><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Semi Lab — Interactive Electronics Lab</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "primary-fixed-dim": "#93ccff",
+        "surface-variant": "#d3e4fe",
+        "on-tertiary-fixed": "#001e2f",
+        "surface-dim": "#cbdbf5",
+        "on-surface-variant": "#3f4850",
+        "tertiary": "#00628d",
+        "primary-fixed": "#cce5ff",
+        "primary-container": "#007bb9",
+        "secondary-fixed": "#dbe1ff",
+        "surface-canvas": "#F8FAFC",
+        "surface-container-lowest": "#ffffff",
+        "on-primary-fixed": "#001d31",
+        "surface-container": "#e5eeff",
+        "on-primary-container": "#fdfcff",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-tertiary": "#ffffff",
+        "primary": "#006194",
+        "inverse-on-surface": "#eaf1ff",
+        "surface-container-low": "#eff4ff",
+        "border-subtle": "#E2E8F0",
+        "on-primary-fixed-variant": "#004b73",
+        "surface-pure": "#FFFFFF",
+        "outline": "#707881",
+        "on-secondary-container": "#fefcff",
+        "surface-tint": "#006398",
+        "on-secondary-fixed-variant": "#003ea8",
+        "on-secondary-fixed": "#00174b",
+        "surface-container-high": "#dce9ff",
+        "secondary": "#0051d5",
+        "signal-pulse": "#0284C7",
+        "surface-muted": "#F1F5F9",
+        "error": "#ba1a1a",
+        "tertiary-container": "#007cb1",
+        "secondary-fixed-dim": "#b4c5ff",
+        "background": "#f8f9ff",
+        "outline-variant": "#bfc7d2",
+        "tertiary-fixed-dim": "#89ceff",
+        "power-vcc": "#EF4444",
+        "on-tertiary-fixed-variant": "#004c6e",
+        "surface-bright": "#f8f9ff",
+        "on-background": "#0b1c30",
+        "on-surface": "#0b1c30",
+        "on-error": "#ffffff",
+        "surface-container-highest": "#d3e4fe",
+        "on-tertiary-container": "#fcfcff",
+        "secondary-container": "#316bf3",
+        "tertiary-fixed": "#c9e6ff",
+        "on-error-container": "#93000a",
+        "inverse-surface": "#213145",
+        "surface": "#f8f9ff",
+        "ground-gnd": "#1E293B",
+        "analog-trace": "#10B981",
+        "on-primary": "#ffffff",
+        "inverse-primary": "#93ccff"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-sm": "0.5rem",
+        "space-md": "1rem",
+        "gutter-mobile": "1rem",
+        "gutter": "1.5rem",
+        "margin-mobile": "1rem",
+        "space-lg": "1.5rem",
+        "margin": "2rem",
+        "space-xl": "2.5rem",
+        "space-xs": "0.25rem"
+      },
+      "fontFamily": {
+        "body-sm": ["Inter"],
+        "body-md": ["Inter"],
+        "headline-xl-mobile": ["Inter"],
+        "label-sm": ["JetBrains Mono"],
+        "headline-sm": ["Inter"],
+        "label-lg": ["JetBrains Mono"],
+        "headline-md": ["Inter"],
+        "headline-lg": ["Inter"],
+        "label-md": ["JetBrains Mono"],
+        "headline-lg-mobile": ["Inter"],
+        "body-lg": ["Inter"],
+        "headline-xl": ["Inter"]
+      },
+      "fontSize": {
+        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "headline-xl-mobile": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "400"}],
+        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.025em", "fontWeight": "500"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-pure/90 backdrop-blur-md border-b border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.03)]"></header><main class="w-full pt-16 flex-1 bg-surface-canvas"><div class="flex flex-col w-full relative min-h-[calc(100vh-4rem)] items-center justify-between pb-space-xl overflow-hidden selection:bg-signal-pulse selection:text-white">
+<!-- Minimal Blueprint Precision Dot Grid -->
+<div class="absolute inset-0 pointer-events-none -z-10 bg-[radial-gradient(#94A3B8_1.25px,transparent_1.25px)] [background-size:28px_28px] opacity-30"></div>
+<!-- Ambient Laboratory Glow Accent -->
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-gradient-to-b from-primary-fixed/40 via-surface-variant/20 to-transparent blur-3xl pointer-events-none -z-10 rounded-full"></div>
+<!-- Upper Navigation & Context Indicator -->
+
+<!-- Hero Typography Section -->
+<div class="w-full max-w-[1200px] mx-auto px-gutter text-center mt-space-lg mb-space-md flex flex-col items-center">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+      Welcome to <span class="text-signal-pulse font-headline-xl">Semi Lab</span>
+</h1>
+<p class="mt-space-xs font-body-lg text-body-lg text-on-surface-variant tracking-normal">
+      Simulate. Control. Understand.
+    </p>
+</div>
+<!-- Main Central Interactive Workbench 3D Stage Card -->
+<div class="w-full max-w-[1180px] mx-auto px-gutter my-space-xs">
+<div class="bg-surface-pure rounded-3xl p-space-lg md:p-space-xl shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06),0_20px_48px_-12px_rgba(15,23,42,0.08)] relative flex flex-col transition-all">
+<!-- Interactive 3D Orbit Badge Header -->
+<div class="w-full flex items-center justify-between pb-space-sm mb-space-xs border-b border-border-subtle/60">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-muted font-label-sm text-label-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-analog-trace"></span>
+            SCHEMATIC TELEMETRY: ACTIVE
+          </span>
+<span class="hidden sm:inline-block font-label-sm text-label-sm text-outline">NE555 + IRFZ44N STAGE</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-primary">
+<span class="material-symbols-outlined text-[15px]">3d_rotation</span>
+<span class="">Drag to rotate 3D workbench • 360° interactive view</span>
+</div>
+</div>
+<!-- 3D ThreeJS Scene Container with Visual Component Callouts -->
+<div class="relative w-full h-[410px] md:h-[440px] rounded-2xl overflow-hidden bg-surface-canvas/60 flex items-center justify-center">
+<!-- ThreeJS Scene Custom Element -->
+<!-- STITCH_THREEJS_START:ANIMATION_21 class="w-full h-full rounded-2xl relative z-0" -->
+<div class="w-full h-full rounded-2xl relative z-0" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_21" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_21');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Interactive Three.js 3D Circuit Workbench
+// Represents the reference schematic elements in 3D:
+// 1. Knob (potentiometer), 2. DIP-8 555 Timer IC with pins and notch,
+// 3. TO-220 MOSFET with heatsink tab, 4. 3D Cooling Fan with spinning blades,
+// 5. LED with dynamic radiant glow, and glowing animated circuit traces/pulses.
+
+const containerEl = container;
+const w = containerEl.clientWidth || window.innerWidth;
+const h = containerEl.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+scene.background = null; // transparent background
+
+const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 1000);
+camera.position.set(0, 5.5, 11);
+camera.lookAt(0, -0.2, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(w, h);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+containerEl.appendChild(renderer.domElement);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+scene.add(ambientLight);
+
+const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+dirLight.position.set(6, 12, 8);
+dirLight.castShadow = true;
+dirLight.shadow.mapSize.width = 1024;
+dirLight.shadow.mapSize.height = 1024;
+scene.add(dirLight);
+
+const blueAccentLight = new THREE.PointLight(0x0284c7, 2.5, 15);
+blueAccentLight.position.set(0, 2, 2);
+scene.add(blueAccentLight);
+
+// Group holding the entire interactive assembly
+const boardGroup = new THREE.Group();
+scene.add(boardGroup);
+
+// Materials
+const pcbMat = new THREE.MeshPhongMaterial({
+  color: 0xffffff,
+  specular: 0x111111,
+  shininess: 30,
+});
+const chipMat = new THREE.MeshPhongMaterial({
+  color: 0x0f172a, // dark sleek matte black
+  specular: 0x334155,
+  shininess: 40
+});
+const metalPinMat = new THREE.MeshStandardMaterial({
+  color: 0xd1d5db,
+  roughness: 0.3,
+  metalness: 0.8
+});
+const traceMat = new THREE.MeshBasicMaterial({
+  color: 0x0284c7,
+  transparent: true,
+  opacity: 0.85
+});
+const pulseMat = new THREE.MeshBasicMaterial({
+  color: 0x38bdf8,
+  transparent: true,
+  opacity: 0.95
+});
+const heatsinkMat = new THREE.MeshStandardMaterial({
+  color: 0x94a3b8,
+  metalness: 0.9,
+  roughness: 0.2
+});
+const bluePlasticMat = new THREE.MeshPhongMaterial({
+  color: 0x0284c7,
+  specular: 0x60a5fa,
+  shininess: 80
+});
+
+// 1. PCB Base Plate (Sleek minimalist white lab slab)
+const slabGeo = new THREE.BoxGeometry(11, 0.2, 5.5);
+const slab = new THREE.Mesh(slabGeo, pcbMat);
+slab.position.y = -0.5;
+slab.receiveShadow = true;
+boardGroup.add(slab);
+
+// Add subtle bevel / rim line
+const rimGeo = new THREE.BoxGeometry(11.08, 0.05, 5.58);
+const rimMat = new THREE.MeshBasicMaterial({ color: 0xe2e8f0 });
+const rim = new THREE.Mesh(rimGeo, rimMat);
+rim.position.y = -0.58;
+boardGroup.add(rim);
+
+// --- Component 1: Rotary Knob (X: -3.8) ---
+const knobGroup = new THREE.Group();
+knobGroup.position.set(-3.8, -0.35, 0);
+
+const knobBase = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.75, 0.8, 0.35, 32),
+  new THREE.MeshPhongMaterial({ color: 0xf1f5f9, specular: 0x94a3b8 })
+);
+knobBase.castShadow = true;
+knobGroup.add(knobBase);
+
+const knobDial = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.65, 0.65, 0.45, 32),
+  new THREE.MeshPhongMaterial({ color: 0x0f172a, specular: 0x475569 })
+);
+knobDial.position.y = 0.2;
+knobDial.castShadow = true;
+knobGroup.add(knobDial);
+
+// Indicator notch on knob
+const notch = new THREE.Mesh(
+  new THREE.BoxGeometry(0.1, 0.48, 0.4),
+  new THREE.MeshBasicMaterial({ color: 0x0284c7 })
+);
+notch.position.set(0, 0.2, -0.4);
+knobGroup.add(notch);
+
+boardGroup.add(knobGroup);
+
+// --- Component 2: 555 Timer DIP-8 IC (X: -1.3) ---
+const chipGroup = new THREE.Group();
+chipGroup.position.set(-1.3, -0.2, 0);
+
+const icBody = new THREE.Mesh(
+  new THREE.BoxGeometry(1.6, 0.5, 1.8),
+  chipMat
+);
+icBody.castShadow = true;
+chipGroup.add(icBody);
+
+// Notch on pin 1 end
+const chipNotch = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.25, 0.25, 0.52, 16, 1, false, 0, Math.PI),
+  new THREE.MeshBasicMaterial({ color: 0x1e293b })
+);
+chipNotch.rotation.x = Math.PI / 2;
+chipNotch.position.set(-0.8, 0.01, 0);
+chipGroup.add(chipNotch);
+
+// DIP Pins (4 on left, 4 on right)
+for (let i = 0; i < 4; i++) {
+  const zPos = -0.65 + i * 0.43;
+  // Left pin
+  const pinL = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.08, 0.12), metalPinMat);
+  pinL.position.set(-0.92, -0.15, zPos);
+  chipGroup.add(pinL);
+  // Right pin
+  const pinR = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.08, 0.12), metalPinMat);
+  pinR.position.set(0.92, -0.15, zPos);
+  chipGroup.add(pinR);
+}
+
+// Glowing cyan badge/dot on pin 1
+const pin1Dot = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.08, 0.08, 0.52, 16),
+  new THREE.MeshBasicMaterial({ color: 0x38bdf8 })
+);
+pin1Dot.position.set(-0.55, 0.01, -0.6);
+chipGroup.add(pin1Dot);
+
+boardGroup.add(chipGroup);
+
+// --- Component 3: N-Channel MOSFET TO-220 (X: 1.0) ---
+const mosfetGroup = new THREE.Group();
+mosfetGroup.position.set(1.0, -0.1, 0);
+
+// TO-220 epoxy package
+const mosfetBody = new THREE.Mesh(
+  new THREE.BoxGeometry(0.35, 0.9, 1.1),
+  chipMat
+);
+mosfetBody.castShadow = true;
+mosfetGroup.add(mosfetBody);
+
+// TO-220 metal back tab heatsink
+const heatsinkTab = new THREE.Mesh(
+  new THREE.BoxGeometry(0.08, 1.25, 1.1),
+  heatsinkMat
+);
+heatsinkTab.position.set(-0.16, 0.15, 0);
+heatsinkTab.castShadow = true;
+mosfetGroup.add(heatsinkTab);
+
+// Mounting hole in tab
+const tabHole = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.18, 0.18, 0.1, 16),
+  new THREE.MeshBasicMaterial({ color: 0x475569 })
+);
+tabHole.rotation.z = Math.PI / 2;
+tabHole.position.set(-0.16, 0.55, 0);
+mosfetGroup.add(tabHole);
+
+// 3 Leads (Gate, Drain, Source)
+for (let j = -1; j <= 1; j++) {
+  const lead = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.45, 12), metalPinMat);
+  lead.position.set(0, -0.55, j * 0.32);
+  mosfetGroup.add(lead);
+}
+
+boardGroup.add(mosfetGroup);
+
+// --- Component 4: DC Cooling Fan (X: 3.6, Z: -1.1) ---
+const fanGroup = new THREE.Group();
+fanGroup.position.set(3.6, 0.1, -1.1);
+
+// Fan circular housing bezel
+const fanFrame = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.95, 0.95, 0.35, 32, 1, true),
+  new THREE.MeshPhongMaterial({ color: 0xf8fafc, side: THREE.DoubleSide })
+);
+fanFrame.rotation.x = Math.PI / 2;
+fanGroup.add(fanFrame);
+
+// Fan center hub
+const fanHub = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.32, 0.32, 0.4, 24),
+  new THREE.MeshPhongMaterial({ color: 0x0f172a })
+);
+fanHub.rotation.x = Math.PI / 2;
+fanGroup.add(fanHub);
+
+// Fan spinning blades container
+const bladesGroup = new THREE.Group();
+bladesGroup.position.set(0, 0, 0);
+
+for (let b = 0; b < 5; b++) {
+  const angle = (b / 5) * Math.PI * 2;
+  const bladeGeo = new THREE.BoxGeometry(0.6, 0.16, 0.04);
+  const blade = new THREE.Mesh(bladeGeo, bluePlasticMat);
+  blade.position.set(Math.cos(angle) * 0.5, Math.sin(angle) * 0.5, 0);
+  blade.rotation.z = angle;
+  blade.rotation.x = 0.4; // pitch
+  bladesGroup.add(blade);
+}
+fanGroup.add(bladesGroup);
+boardGroup.add(fanGroup);
+
+// --- Component 5: High-Brightness LED (X: 3.6, Z: 1.1) ---
+const ledGroup = new THREE.Group();
+ledGroup.position.set(3.6, -0.15, 1.1);
+
+const ledLens = new THREE.Mesh(
+  new THREE.SphereGeometry(0.48, 24, 24, 0, Math.PI * 2, 0, Math.PI * 0.55),
+  new THREE.MeshPhongMaterial({
+    color: 0x0284c7,
+    emissive: 0x0284c7,
+    emissiveIntensity: 0.8,
+    transparent: true,
+    opacity: 0.92,
+    shininess: 90
+  })
+);
+ledLens.position.y = 0.1;
+ledGroup.add(ledLens);
+
+const ledBaseRing = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.55, 0.55, 0.12, 24),
+  new THREE.MeshPhongMaterial({ color: 0x0284c7, specular: 0x38bdf8 })
+);
+ledGroup.add(ledBaseRing);
+
+// Glowing optical aura disk
+const glowRing = new THREE.Mesh(
+  new THREE.RingGeometry(0.6, 1.1, 32),
+  new THREE.MeshBasicMaterial({
+    color: 0x38bdf8,
+    transparent: true,
+    opacity: 0.35,
+    side: THREE.DoubleSide
+  })
+);
+glowRing.rotation.x = -Math.PI / 2;
+glowRing.position.y = -0.22;
+ledGroup.add(glowRing);
+
+boardGroup.add(ledGroup);
+
+// --- Circuit Traces on PCB ---
+function makeTrace(points) {
+  const curve = new THREE.CatmullRomCurve3(points);
+  const tube = new THREE.TubeGeometry(curve, 32, 0.035, 8, false);
+  return new THREE.Mesh(tube, traceMat);
+}
+
+// 1. Knob to 555
+boardGroup.add(makeTrace([
+  new THREE.Vector3(-3.0, -0.38, 0),
+  new THREE.Vector3(-2.2, -0.38, 0)
+]));
+
+// 2. 555 output to MOSFET Gate
+boardGroup.add(makeTrace([
+  new THREE.Vector3(-0.4, -0.38, 0),
+  new THREE.Vector3(0.7, -0.38, 0)
+]));
+
+// 3. MOSFET Drain branching to Fan and LED
+boardGroup.add(makeTrace([
+  new THREE.Vector3(1.2, -0.38, 0),
+  new THREE.Vector3(2.3, -0.38, 0),
+  new THREE.Vector3(2.3, -0.38, -1.1),
+  new THREE.Vector3(2.7, -0.38, -1.1)
+]));
+
+boardGroup.add(makeTrace([
+  new THREE.Vector3(2.3, -0.38, 0),
+  new THREE.Vector3(2.3, -0.38, 1.1),
+  new THREE.Vector3(2.9, -0.38, 1.1)
+]));
+
+// Animated signal pulse particles
+const pulseCount = 14;
+const pulseMeshes = [];
+for (let p = 0; p < pulseCount; p++) {
+  const pMesh = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), pulseMat);
+  boardGroup.add(pMesh);
+  pulseMeshes.push({
+    mesh: pMesh,
+    progress: Math.random(),
+    speed: 0.005 + Math.random() * 0.004,
+    branch: Math.random() > 0.5 ? 1 : 0
+  });
+}
+
+// Interactive Rotation Drag & Mouse Tracking
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+let targetRotX = 0.22;
+let targetRotY = -0.15;
+
+const onMouseDown = (e) => {
+  isDragging = true;
+  previousMousePosition = { x: e.clientX, y: e.clientY };
+};
+const onMouseMove = (e) => {
+  if (isDragging) {
+    const deltaX = e.clientX - previousMousePosition.x;
+    const deltaY = e.clientY - previousMousePosition.y;
+    targetRotY += deltaX * 0.006;
+    targetRotX += deltaY * 0.006;
+    targetRotX = Math.max(-0.4, Math.min(0.65, targetRotX));
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+  }
+};
+const onMouseUp = () => { isDragging = false; };
+
+window.addEventListener('mousedown', onMouseDown);
+window.addEventListener('mousemove', onMouseMove);
+window.addEventListener('mouseup', onMouseUp);
+
+// Responsive window resize
+window.addEventListener('resize', () => {
+  const currentW = containerEl.clientWidth || window.innerWidth;
+  const currentH = containerEl.clientHeight || window.innerHeight;
+  camera.aspect = currentW / currentH;
+  camera.updateProjectionMatrix();
+  renderer.setSize(currentW, currentH);
+});
+
+// Animation Loop
+let clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsedTime = clock.getElapsedTime();
+
+  // Smooth camera / board tilt
+  boardGroup.rotation.y += (targetRotY - boardGroup.rotation.y) * 0.05;
+  boardGroup.rotation.x += (targetRotX - boardGroup.rotation.x) * 0.05;
+
+  // Gentle ambient float
+  boardGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.08;
+
+  // Spin Fan blades at 2160 RPM speed modulation
+  bladesGroup.rotation.z += 0.35;
+
+  // Modulate LED and light pulses
+  const pulseFactor = 0.75 + Math.sin(elapsedTime * 8.0) * 0.25;
+  ledLens.material.emissiveIntensity = pulseFactor * 1.2;
+  glowRing.scale.setScalar(0.95 + pulseFactor * 0.15);
+
+  // Knob rotation idle response
+  knobDial.rotation.y = 1.8 + Math.sin(elapsedTime * 0.6) * 0.25;
+
+  // Animate pulse particles flowing from Knob -> 555 -> MOSFET -> Fan/LED
+  pulseMeshes.forEach(item => {
+    item.progress = (item.progress + item.speed) % 1.0;
+    const t = item.progress;
+
+    if (t < 0.28) {
+      // Trace 1: Knob to 555
+      const u = t / 0.28;
+      item.mesh.position.set(-3.0 + u * 1.7, -0.36, 0);
+    } else if (t < 0.58) {
+      // Trace 2: 555 to MOSFET
+      const u = (t - 0.28) / 0.30;
+      item.mesh.position.set(-0.4 + u * 1.5, -0.36, 0);
+    } else {
+      // Trace 3: MOSFET to Fan or LED
+      const u = (t - 0.58) / 0.42;
+      const targetZ = item.branch === 1 ? -1.1 : 1.1;
+      const cornerX = 2.3;
+      if (u < 0.5) {
+        const seg = u / 0.5;
+        item.mesh.position.set(1.2 + seg * 1.1, -0.36, seg * targetZ);
+      } else {
+        const seg = (u - 0.5) / 0.5;
+        item.mesh.position.set(cornerX + seg * (item.branch === 1 ? 0.6 : 0.8), -0.36, targetZ);
+      }
+    }
+  });
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_21 -->
+<!-- Interactive Micro-Overlay Badges for Component Nodes -->
+<div class="absolute top-8 left-14 z-10 flex flex-col items-center pointer-events-none group">
+<div class="w-8 h-8 rounded-full bg-surface-pure/95 shadow-md flex items-center justify-center text-signal-pulse backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">adjust</span>
+</div>
+<span class="mt-1 font-label-md text-label-md text-on-surface font-semibold bg-surface-pure/90 px-2 py-0.5 rounded shadow-sm">Knob</span>
+<span class="font-label-sm text-label-sm text-outline">10kΩ Potentiometer</span>
+</div>
+<div class="absolute top-10 left-[35%] -translate-x-1/2 z-10 flex flex-col items-center pointer-events-none">
+<div class="px-3 py-1 rounded-lg bg-surface-pure/95 shadow-md flex items-center gap-1.5 text-signal-pulse backdrop-blur-sm">
+<span class="material-symbols-outlined text-[16px]">memory</span>
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">555</span>
+</div>
+<span class="mt-1 font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-medium">TIMER CORE</span>
+<span class="font-label-sm text-label-sm text-analog-trace">Astable 25.0 kHz</span>
+</div>
+<div class="absolute top-10 left-[58%] -translate-x-1/2 z-10 flex flex-col items-center pointer-events-none">
+<div class="px-2.5 py-1 rounded-lg bg-surface-pure/95 shadow-md flex items-center gap-1 text-on-surface backdrop-blur-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary">power</span>
+<span class="font-label-md text-label-md font-semibold">MOSFET</span>
+</div>
+<span class="mt-1 font-label-sm text-label-sm text-outline">IRFZ44N N-Ch</span>
+</div>
+<div class="absolute top-6 right-16 z-10 flex flex-col items-center pointer-events-none">
+<div class="w-10 h-10 rounded-full bg-surface-pure/95 shadow-md flex items-center justify-center text-signal-pulse animate-spin" style="animation-duration: 0.8s;">
+<span class="material-symbols-outlined text-[24px]">mode_fan</span>
+</div>
+<span class="mt-1 font-label-md text-label-md text-on-surface font-semibold">Fan Load</span>
+<span class="font-label-sm text-label-sm text-signal-pulse font-medium">2160 RPM</span>
+</div>
+<div class="absolute bottom-8 right-20 z-10 flex flex-col items-center pointer-events-none">
+<div class="w-9 h-9 rounded-full bg-signal-pulse shadow-[0_0_20px_rgba(2,132,199,0.7)] flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+</div>
+<span class="mt-1 font-label-md text-label-md text-on-surface font-semibold">LED Array</span>
+<span class="font-label-sm text-label-sm text-signal-pulse font-medium">Duty: 90%</span>
+</div>
+<!-- Touch/Click Orbit Hint -->
+<div class="absolute bottom-3 left-4 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-pure/80 backdrop-blur-md text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">pan_tool</span>
+<span class="">Left-click + drag to orbit • Scroll to zoom</span>
+</div>
+</div>
+<!-- Oscilloscope PWM Waveform Digital Channel Monitor -->
+<div class="mt-space-md pt-space-sm bg-surface-canvas rounded-xl p-space-md shadow-inner flex flex-col gap-space-xs">
+<div class="w-full flex items-center justify-between font-label-sm text-label-sm">
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<span class="w-2.5 h-2.5 rounded-sm bg-signal-pulse inline-block"></span>
+<span class="font-semibold text-on-surface">CH 1: Gate signal</span>
+<span class="text-outline">V<sub>GS</sub> (Peak 11.8V)</span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface">
+<span class="text-signal-pulse font-medium">Duty 90%</span>
+<span class="text-outline">•</span>
+<span class="font-medium">Fan 2160 RPM</span>
+<span class="text-outline">•</span>
+<span class="text-analog-trace font-medium">Eff: 98.4%</span>
+</div>
+</div>
+<!-- Crisp PWM Digital Train Pulse SVG (90% High, 10% Low Repeated) -->
+<div class="w-full h-14 bg-surface-pure rounded-lg p-2 flex items-center overflow-hidden shadow-sm">
+<svg class="w-full h-full text-signal-pulse" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 48">
+<defs>
+<linearGradient id="gateGlow" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#0284c7" stop-opacity="0.0"></stop>
+</linearGradient>
+</defs>
+<!-- Shaded Pulse Area for visual fidelity -->
+<path d="M 0 42 L 10 42 L 10 8 L 90 8 L 90 42 L 110 42 L 110 8 L 190 8 L 190 42 L 210 42 L 210 8 L 290 8 L 290 42 L 310 42 L 310 8 L 390 8 L 390 42 L 410 42 L 410 8 L 490 8 L 490 42 L 510 42 L 510 8 L 590 8 L 590 42 L 610 42 L 610 8 L 690 8 L 690 42 L 710 42 L 710 8 L 790 8 L 790 42 L 810 42 L 810 8 L 890 8 L 890 42 L 910 42 L 910 8 L 990 8 L 990 42 L 1000 42 L 1000 46 L 0 46 Z" fill="url(#gateGlow)"></path>
+<!-- High Contrast Signal Line Trace -->
+<path d="M 0 42 L 10 42 L 10 8 L 90 8 L 90 42 L 110 42 L 110 8 L 190 8 L 190 42 L 210 42 L 210 8 L 290 8 L 290 42 L 310 42 L 310 8 L 390 8 L 390 42 L 410 42 L 410 8 L 490 8 L 490 42 L 510 42 L 510 8 L 590 8 L 590 42 L 610 42 L 610 8 L 690 8 L 690 42 L 710 42 L 710 8 L 790 8 L 790 42 L 810 42 L 810 8 L 890 8 L 890 42 L 910 42 L 910 8 L 990 8 L 990 42 L 1000 42" stroke="#0284c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Interactive Actions & Lab Entry Section -->
+<div class="w-full max-w-[560px] mx-auto px-gutter flex flex-col items-center mt-space-md gap-space-sm text-center">
+<!-- Progress Indicator Bar -->
+<div class="w-full flex flex-col gap-1.5">
+<div class="w-full h-1.5 bg-surface-muted rounded-full overflow-hidden shadow-inner">
+<div class="h-full bg-signal-pulse rounded-full transition-all duration-700 w-full shadow-[0_0_8px_rgba(2,132,199,0.5)]" id="sim-progress-bar"></div>
+</div>
+<div class="w-full flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1.5" id="sim-status-label">
+<span class="w-1.5 h-1.5 rounded-full bg-analog-trace"></span>
+          Ready. Welcome to the lab.
+        </span>
+<span class="font-semibold text-on-surface" id="sim-percent-label">100%</span>
+</div>
+</div>
+<!-- Primary Electric Blue CTA Button -->
+<div class="mt-space-xs w-full flex justify-center">
+<a class="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-secondary-container hover:bg-primary-container text-white rounded-full font-headline-sm text-headline-sm transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-[0_4px_16px_rgba(49,107,243,0.3)] hover:shadow-[0_8px_24px_rgba(49,107,243,0.4)]" data-path="fan-regulator" href="#" id="btn-enter-lab">
+<span class="">Enter Semi Lab</span>
+<span class="material-symbols-outlined text-[20px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<!-- Secondary Replay Animation Link -->
+<button class="font-body-md text-body-md text-on-surface-variant hover:text-signal-pulse transition-colors mt-space-xs inline-flex items-center gap-1" id="btn-replay-anim" type="button">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+<span class="">Replay animation</span>
+</button>
+</div>
+</div>
+<script>
+  (function initSemiLabWelcome() {
+    const replayBtn = document.getElementById('btn-replay-anim');
+    const progressBar = document.getElementById('sim-progress-bar');
+    const percentLabel = document.getElementById('sim-percent-label');
+    const statusLabel = document.getElementById('sim-status-label');
+
+    if (replayBtn && progressBar) {
+      replayBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Reset state
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+        percentLabel.textContent = '0%';
+        statusLabel.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-signal-pulse animate-ping"></span> Initializing circuit components...';
+
+        let current = 0;
+        setTimeout(function() {
+          progressBar.style.transition = 'width 1800ms cubic-bezier(0.16, 1, 0.3, 1)';
+          progressBar.style.width = '100%';
+
+          const interval = setInterval(function() {
+            current += 5;
+            if (current >= 100) {
+              current = 100;
+              clearInterval(interval);
+              statusLabel.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-analog-trace"></span> Ready. Welcome to the lab.';
+            }
+            percentLabel.textContent = current + '%';
+          }, 80);
+        }, 80);
+      });
+    }
+  })();
+</script></main><footer class="w-full bg-surface-pure border-t border-border-subtle py-space-lg"><div class="w-full max-w-[1600px] mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col gap-space-xs text-center md:text-left"><p class="font-body-md text-body-md text-on-surface">Semi Lab — Interactive Electronics &amp; Semiconductor Education.</p><p class="font-body-sm text-body-sm text-on-surface-variant">Built for 555 Timer, MOSFET &amp; PWM simulation. Clinical precision workbench UI.</p></div><div class="flex items-center gap-space-lg font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="hover:text-primary transition-colors" data-path="about" href="#">About</a><a class="hover:text-primary transition-colors" href="#">Documentation</a><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></div><div class="font-label-sm text-label-sm text-outline">© 2025 Semi Lab. All rights reserved.</div></div></footer></body></html>

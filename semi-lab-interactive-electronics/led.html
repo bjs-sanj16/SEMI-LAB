@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWM LED Dimmer Lab – Semi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <!-- Shared Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);">
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <path d="M6 12h4m4 0h4"></path>
+          <path d="M10 9v6"></path>
+        </svg>
+        <span>Semi Lab</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">3D Lab</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="fan.html">Fan Regulator</a></li>
+        <li><a href="led.html" class="active">LED Dimmer</a></li>
+        <li><a href="mosfet.html">MOSFET</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="theme-switcher">
+        <button class="theme-btn" data-theme="light" title="Light Theme" aria-label="Light Theme">☀️</button>
+        <button class="theme-btn" data-theme="dark" title="Dark Theme" aria-label="Dark Theme">🌙</button>
+        <button class="theme-btn" data-theme="blue" title="Blue Theme" aria-label="Blue Theme">🔷</button>
+        <button class="theme-btn" data-theme="green" title="Green Theme" aria-label="Green Theme">🌿</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="home.html">Semi Lab</a> / <span>Experiments</span> / <span>LED Dimmer</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span class="tag">LAB #05 • OPTICAL ACTUATION</span>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">Topology: 555 Astable + IRFZ44N + High-Power LED</span>
+            </div>
+            <h1>PWM LED Dimmer Lab</h1>
+            <p>Flicker-free solid-state lighting control using high-frequency pulse-width modulation. Explore human retinal persistence, Stevens' power law for perceived brightness, and ballast thermal dissipation.</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-small" id="btnResetAll">Reset Lab</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="padding-top:24px; padding-bottom:60px;">
+
+      <!-- Telemetry Readouts -->
+      <div class="readout-grid">
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Effective duty cycle percentage of the pulse wave">PWM Duty Cycle</div>
+          <div class="readout-value" id="readoutDuty">75.0<span class="readout-unit">%</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Oscillator switching frequency. Must be >100Hz to eliminate visible flicker.">Switching Freq</div>
+          <div class="readout-value" id="readoutFreq">1.44<span class="readout-unit">kHz</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Average forward current drawn by the LED array: I_avg = Duty * I_peak">Average Current</div>
+          <div class="readout-value" id="readoutCurrent">262.5<span class="readout-unit">mA</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Human eye perceived brightness based on non-linear logarithmic retinal response">Perceived Brightness</div>
+          <div class="readout-value" id="readoutPerceived">89.4<span class="readout-unit">%</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Simulated optical luminous output measured in lumens">Luminous Flux</div>
+          <div class="readout-value" id="readoutLux">1,875<span class="readout-unit">lm</span></div>
+        </div>
+      </div>
+
+      <!-- Flicker Warning Banner -->
+      <div class="flicker-warning" id="flickerWarning">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span><strong>Flicker Warning:</strong> Oscillator frequency is below the Critical Flicker Fusion Threshold (~80–100 Hz). The human retina can resolve individual pulse transitions, causing visible strobe-effect flickering!</span>
+      </div>
+
+      <!-- Main Workbench Layout: Left = Schematic & 555 Telemetry, Right = Controls & LED Chamber & Charts -->
+      <div class="grid grid-2" style="align-items:start;">
+
+        <!-- LEFT COLUMN: Schematic Diagram & Internal 555 Logic -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+
+          <!-- 1. Inline SVG Circuit Schematic -->
+          <div class="circuit-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div>
+                <h3 style="margin-bottom:2px;">Interactive Schematic Diagram</h3>
+                <span style="font-size:0.75rem; color:var(--text-secondary);">555 Astable Oscillator with Current-Limiting Ballast Stage</span>
+              </div>
+              <span class="tag" id="circuitStateBadge">Active</span>
+            </div>
+
+            <!-- SVG Circuit -->
+            <svg class="circuit-svg" viewBox="0 0 760 480" id="circuitSvg" aria-label="LED Dimmer Schematic Diagram">
+              <!-- Top Power Rail (VCC) -->
+              <line x1="40" y1="40" x2="720" y2="40" class="wire" stroke-width="3"/>
+              <text x="45" y="32" font-weight="bold" fill="var(--danger)" id="svgVccText">+12V (VCC)</text>
+              <circle cx="50" cy="40" r="4" fill="var(--danger)"/>
+
+              <!-- Bottom Ground Rail (GND) -->
+              <line x1="40" y1="440" x2="720" y2="440" class="wire" stroke-width="3"/>
+              <text x="45" y="460" font-weight="bold">GND (0V)</text>
+              <circle cx="50" cy="440" r="4" fill="var(--wire)"/>
+
+              <!-- Switch SW1 -->
+              <g id="svgSwitch" style="cursor:pointer;">
+                <line x1="80" y1="40" x2="105" y2="40" class="wire"/>
+                <circle cx="105" cy="40" r="3" fill="var(--wire)"/>
+                <line x1="105" y1="40" x2="135" y2="28" stroke="var(--wire)" stroke-width="2.5" id="svgSwitchBlade"/>
+                <circle cx="140" cy="40" r="3" fill="var(--wire)"/>
+                <line x1="140" y1="40" x2="180" y2="40" class="wire"/>
+                <text x="110" y="20" class="label">SW1</text>
+              </g>
+
+              <!-- 555 IC Body -->
+              <rect x="260" y="140" width="160" height="200" rx="8" class="component-body" stroke-width="2"/>
+              <text x="340" y="175" text-anchor="middle" font-size="16" font-weight="bold" fill="var(--accent)">NE555P</text>
+              <text x="340" y="195" text-anchor="middle" font-size="10" fill="var(--text-muted)">LED PWM OSCILLATOR</text>
+
+              <!-- Pins -->
+              <line x1="340" y1="40" x2="340" y2="140" class="wire"/>
+              <text x="345" y="130" class="label">8 VCC</text>
+              <line x1="380" y1="40" x2="380" y2="140" class="wire"/>
+              <text x="385" y="130" class="label">4 RST</text>
+              <line x1="340" y1="340" x2="340" y2="440" class="wire"/>
+              <text x="345" y="355" class="label">1 GND</text>
+
+              <!-- Pin 5 Control with Cap -->
+              <line x1="380" y1="340" x2="380" y2="390" class="wire"/>
+              <line x1="370" y1="390" x2="390" y2="390" stroke="var(--wire)" stroke-width="2"/>
+              <line x1="370" y1="396" x2="390" y2="396" stroke="var(--wire)" stroke-width="2"/>
+              <line x1="380" y1="396" x2="380" y2="440" class="wire"/>
+              <text x="395" y="396" class="value-label">C2 10nF</text>
+              <text x="385" y="355" class="label">5 CV</text>
+
+              <!-- Pin 3 Output -->
+              <line x1="420" y1="240" x2="520" y2="240" class="wire" id="wirePin3" stroke-width="2.5"/>
+              <text x="400" y="244" class="label" fill="var(--accent)" font-weight="bold">3 OUT</text>
+
+              <!-- Gate Resistor -->
+              <rect x="450" y="234" width="36" height="12" class="component"/>
+              <text x="468" y="230" text-anchor="middle" class="value-label">Rg 100Ω</text>
+
+              <!-- Gate pull-down -->
+              <line x1="510" y1="240" x2="510" y2="320" class="wire"/>
+              <rect x="504" y="320" width="12" height="30" class="component"/>
+              <text x="522" y="338" class="value-label">10k</text>
+              <line x1="510" y1="350" x2="510" y2="440" class="wire"/>
+
+              <!-- Pin 7 Discharge -->
+              <line x1="260" y1="200" x2="200" y2="200" class="wire"/>
+              <text x="265" y="204" class="label">7 DIS</text>
+
+              <!-- Pin 6 & 2 tied -->
+              <line x1="260" y1="270" x2="220" y2="270" class="wire"/>
+              <text x="265" y="274" class="label">6 THR</text>
+              <line x1="260" y1="310" x2="220" y2="310" class="wire"/>
+              <text x="265" y="314" class="label">2 TRG</text>
+              <line x1="220" y1="270" x2="220" y2="310" class="wire"/>
+              <circle cx="220" cy="290" r="3" fill="var(--wire)"/>
+
+              <line x1="220" y1="290" x2="160" y2="290" class="wire"/>
+              <line x1="160" y1="290" x2="160" y2="350" class="wire"/>
+              <line x1="150" y1="350" x2="170" y2="350" stroke="var(--wire)" stroke-width="2.5"/>
+              <line x1="150" y1="358" x2="170" y2="358" stroke="var(--wire)" stroke-width="2.5"/>
+              <text x="175" y="357" class="value-label" font-weight="bold">C1 10nF</text>
+              <line x1="160" y1="358" x2="160" y2="440" class="wire"/>
+
+              <!-- Potentiometer -->
+              <line x1="160" y1="40" x2="160" y2="80" class="wire"/>
+              <rect x="154" y="80" width="12" height="80" class="component"/>
+              <text x="135" y="115" class="value-label" text-anchor="end">R_pot</text>
+              <text x="135" y="130" class="value-label" text-anchor="end">100 kΩ</text>
+
+              <!-- Wiper tap -->
+              <line x1="166" y1="120" x2="200" y2="120" class="wire" stroke-dasharray="2 2"/>
+              <polygon points="166,120 172,116 172,124" fill="var(--accent)"/>
+              <line x1="200" y1="120" x2="200" y2="200" class="wire"/>
+              <circle cx="200" cy="200" r="3" fill="var(--wire)"/>
+
+              <!-- Diodes D1 & D2 -->
+              <g id="svgDiode1">
+                <line x1="160" y1="80" x2="120" y2="80" class="wire"/>
+                <line x1="120" y1="80" x2="120" y2="150" class="wire"/>
+                <polygon points="114,150 126,150 120,162" class="component" id="diodeD1Poly"/>
+                <line x1="113" y1="162" x2="127" y2="162" stroke="var(--wire)" stroke-width="2"/>
+                <text x="96" y="158" class="label" font-weight="bold">D1</text>
+                <text x="96" y="170" class="value-label">1N4148</text>
+                <line x1="120" y1="162" x2="120" y2="290" class="wire"/>
+                <line x1="120" y1="290" x2="160" y2="290" class="wire"/>
+              </g>
+
+              <g id="svgDiode2">
+                <line x1="160" y1="160" x2="160" y2="210" class="wire"/>
+                <polygon points="154,230 166,230 160,218" class="component" id="diodeD2Poly"/>
+                <line x1="153" y1="218" x2="167" y2="218" stroke="var(--wire)" stroke-width="2"/>
+                <text x="175" y="224" class="label" font-weight="bold">D2</text>
+                <text x="175" y="236" class="value-label">1N4148</text>
+                <line x1="160" y1="230" x2="160" y2="290" class="wire"/>
+              </g>
+
+              <!-- MOSFET IRFZ44N -->
+              <g id="svgMosfet" transform="translate(540, 240)">
+                <line x1="-20" y1="0" x2="0" y2="0" stroke="var(--wire)" stroke-width="2.5"/>
+                <line x1="0" y1="-25" x2="0" y2="25" stroke="var(--wire)" stroke-width="3" id="mosfetGatePlate"/>
+                <line x1="6" y1="-24" x2="6" y2="-10" stroke="var(--wire)" stroke-width="3"/>
+                <line x1="6" y1="-6" x2="6" y2="6" stroke="var(--wire)" stroke-width="3"/>
+                <line x1="6" y1="10" x2="6" y2="24" stroke="var(--wire)" stroke-width="3"/>
+                <rect x="5" y="-24" width="3" height="48" fill="var(--accent)" id="mosfetInversionChannel" opacity="0.1"/>
+
+                <!-- Drain -->
+                <line x1="6" y1="-18" x2="25" y2="-18" stroke="var(--wire)" stroke-width="2"/>
+                <line x1="25" y1="-18" x2="25" y2="-60" stroke="var(--wire)" stroke-width="2.5"/>
+
+                <!-- Source -->
+                <line x1="6" y1="18" x2="25" y2="18" stroke="var(--wire)" stroke-width="2"/>
+                <line x1="25" y1="18" x2="25" y2="200" stroke="var(--wire)" stroke-width="2.5"/>
+
+                <!-- Body -->
+                <line x1="6" y1="0" x2="25" y2="0" stroke="var(--wire)" stroke-width="1.5"/>
+                <polygon points="16,0 24,-4 24,4" fill="var(--wire)"/>
+                <line x1="25" y1="0" x2="25" y2="18" stroke="var(--wire)" stroke-width="1.5"/>
+
+                <text x="35" y="-5" font-weight="bold" font-size="12">Q1 IRFZ44N</text>
+                <text x="35" y="10" class="value-label">Power Switch</text>
+              </g>
+
+              <!-- Ballast Resistor (R_ballast) -->
+              <g transform="translate(565, 60)">
+                <line x1="0" y1="-20" x2="0" y2="0" class="wire"/>
+                <rect x="-8" y="0" width="16" height="35" class="component"/>
+                <text x="14" y="18" font-weight="bold" class="label">R_ballast</text>
+                <text x="14" y="30" class="value-label">10Ω (5W)</text>
+                <line x1="0" y1="35" x2="0" y2="55" class="wire"/>
+              </g>
+
+              <!-- High-Power LED Array Symbol -->
+              <g id="svgLedSymbol" transform="translate(565, 135)">
+                <!-- Triangle pointing DOWN toward drain -->
+                <polygon points="-16,-10 16,-10 0,10" class="component" id="svgLedPoly" fill="#fbbf24"/>
+                <line x1="-16" y1="10" x2="16" y2="10" stroke="var(--wire)" stroke-width="2.5"/>
+                <!-- Emitting photon arrows -->
+                <line x1="12" y1="-4" x2="24" y2="-16" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-hi)"/>
+                <line x1="16" y1="4" x2="28" y2="-8" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-hi)"/>
+                <text x="34" y="2" font-weight="bold" font-size="12">LED Emitter</text>
+                <text x="34" y="14" class="value-label">Vf = 9.0V, 350mA</text>
+                <line x1="0" y1="10" x2="0" y2="45" class="wire"/>
+              </g>
+
+              <!-- Animated Current Dots -->
+              <g id="animatedCurrentDots">
+                <circle id="dotCharge1" class="current-dot" cx="120" cy="100" r="3"/>
+                <circle id="dotCharge2" class="current-dot" cx="120" cy="220" r="3"/>
+                <circle id="dotDischarge1" class="current-dot" cx="160" cy="260" r="3"/>
+                <circle id="dotGate1" class="current-dot" cx="440" cy="240" r="3"/>
+                <circle id="dotLed1" class="current-dot" cx="565" cy="50" r="3.5" fill="#f59e0b"/>
+                <circle id="dotLed2" class="current-dot" cx="565" cy="165" r="3.5" fill="#f59e0b"/>
+              </g>
+            </svg>
+          </div>
+
+          <!-- 2. Internal 555 Telemetry -->
+          <div class="internal-view">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h3>555 Oscillator Core Status</h3>
+              <span class="mono" id="internalVcapText" style="font-size:0.85rem; font-weight:700; color:var(--accent);">VC = 6.80 V</span>
+            </div>
+            
+            <div class="grid grid-3" style="gap:12px; margin-bottom:16px;">
+              <div class="card" style="padding:12px; text-align:center;">
+                <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Upper Comparator</div>
+                <div style="font-size:0.85rem; font-weight:700; margin:4px 0;">Pin 6 &gt; 2/3 VCC</div>
+                <span class="tag" id="badgeCompUpper" style="font-size:0.7rem;">RESET: OFF</span>
+              </div>
+              <div class="card" style="padding:12px; text-align:center;">
+                <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Lower Comparator</div>
+                <div style="font-size:0.85rem; font-weight:700; margin:4px 0;">Pin 2 &lt; 1/3 VCC</div>
+                <span class="tag" id="badgeCompLower" style="font-size:0.7rem;">SET: OFF</span>
+              </div>
+              <div class="card" style="padding:12px; text-align:center;">
+                <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Flip-Flop Output</div>
+                <div style="font-size:0.85rem; font-weight:700; margin:4px 0;" id="latchStatusText">Q = 1 • HIGH</div>
+                <span class="tag" id="badgeDischargeTransistor" style="font-size:0.7rem;">Disch: OFF</span>
+              </div>
+            </div>
+
+            <!-- Timing Cap Bar -->
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-bottom:4px;">
+                <span>0V</span>
+                <span id="label13Vcc">1/3 VCC (4.0V)</span>
+                <span id="label23Vcc">2/3 VCC (8.0V)</span>
+                <span id="labelVcc">VCC (12.0V)</span>
+              </div>
+              <div style="height:12px; background:var(--bg-secondary); border-radius:6px; overflow:hidden; position:relative; border:1px solid var(--border);">
+                <div style="position:absolute; left:33.33%; top:0; bottom:0; width:2px; background:var(--border);"></div>
+                <div style="position:absolute; left:66.66%; top:0; bottom:0; width:2px; background:var(--border);"></div>
+                <div id="vcapProgressBar" style="height:100%; width:50%; background:linear-gradient(90deg, #fef08a, #eab308);"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Component List -->
+          <div class="component-list">
+            <h3>Components &amp; Thermal Sizing</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Component</th>
+                  <th>Value</th>
+                  <th>Thermal Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>LED</strong></td>
+                  <td>High-Power COB Emitter Array</td>
+                  <td>3x3 LED matrix (9.0V Vf, 350mA)</td>
+                  <td>Mounted on aluminum heatsink star</td>
+                </tr>
+                <tr>
+                  <td><strong>R_ballast</strong></td>
+                  <td>Metal Oxide Power Resistor</td>
+                  <td>10 Ω (5 Watt rated)</td>
+                  <td>Dissipates (Vcc - Vf - Vds) * I during pulse</td>
+                </tr>
+                <tr>
+                  <td><strong>Q1</strong></td>
+                  <td>IRFZ44N N-MOSFET</td>
+                  <td>55V, 49A, 17.5mΩ</td>
+                  <td>P_cond = I^2 * Rds(on) = 1.2 mW (runs cold)</td>
+                </tr>
+                <tr>
+                  <td><strong>U1</strong></td>
+                  <td>NE555P Timer</td>
+                  <td>8-Pin DIP</td>
+                  <td>Standard 1.44 kHz pulse generator</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Controls, LED Glowing Chamber, Charts -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+
+          <!-- 1. Parameter Modulation Deck -->
+          <div class="controls-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h3 style="margin:0;">Dimming Controls</h3>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.8rem; font-weight:600;" id="labelMasterPower">LED POWER: ON</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="togglePower" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Rotary Knob -->
+            <div class="knob-container">
+              <div class="knob-wrapper">
+                <div class="knob" id="dutyKnob" tabindex="0" role="slider" aria-valuemin="1" aria-valuemax="99" aria-valuenow="75" aria-label="LED Dimmer Duty Knob">
+                  <div class="knob-inner">
+                    <div class="knob-indicator" id="knobIndicator"></div>
+                    <div style="text-align:center;">
+                      <div class="knob-label">BRIGHTNESS</div>
+                      <div class="knob-value-display" id="knobValueText">75%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:0.75rem; color:var(--text-muted); text-align:center;">
+                Drag or scroll to rotate • Use Arrow keys [← / →]
+              </div>
+            </div>
+
+            <!-- Slider fallback -->
+            <div class="control-group" style="margin-top:16px;">
+              <div class="control-label">
+                <span>Duty Cycle Slider</span>
+                <span class="control-value" id="dutySliderVal">75%</span>
+              </div>
+              <input type="range" id="dutySlider" min="1" max="99" value="75">
+            </div>
+
+            <!-- Presets -->
+            <div class="control-group">
+              <span class="control-label">Dimming Presets:</span>
+              <div class="preset-group">
+                <button class="preset-btn" data-duty="5">Night (5%)</button>
+                <button class="preset-btn" data-duty="25">Low (25%)</button>
+                <button class="preset-btn" data-duty="50">Balanced (50%)</button>
+                <button class="preset-btn" data-duty="75">High (75%)</button>
+                <button class="preset-btn" data-duty="99">Full (99%)</button>
+              </div>
+            </div>
+
+            <!-- Frequency Mode Selector (Flicker Demo!) -->
+            <div class="control-group">
+              <div class="control-label">
+                <span data-tooltip="Switch frequency to test the Critical Flicker Fusion threshold of the human eye!">Frequency Mode:</span>
+                <span class="control-value" id="freqModeText">1.44 kHz (Smooth)</span>
+              </div>
+              <div class="preset-group">
+                <button class="voltage-btn active" id="btnFreqHigh">1.44 kHz (High-Speed PWM)</button>
+                <button class="voltage-btn" id="btnFreqLow">25 Hz (Strobe / Flicker Demo)</button>
+              </div>
+            </div>
+
+            <!-- Supply Voltage -->
+            <div class="control-group">
+              <div class="control-label">
+                <span>Supply Voltage (VCC):</span>
+                <span class="control-value" id="voltageDisplay">12.0 V</span>
+              </div>
+              <div class="voltage-selector">
+                <button class="voltage-btn" data-volt="9">9V Min</button>
+                <button class="voltage-btn active" data-volt="12">12V Standard</button>
+                <button class="voltage-btn" data-volt="15">15V Overdrive</button>
+              </div>
+            </div>
+
+            <!-- Animation and Playback controls -->
+            <div style="border-top:1px solid var(--border); padding-top:16px; margin-top:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <label style="font-size:0.85rem; font-weight:500; cursor:pointer;" for="toggleAnimation">Show Current Flow Dots</label>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggleAnimation" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="playback-controls">
+                <button class="btn btn-secondary btn-small" id="btnPlayPause">⏸ Pause</button>
+                <button class="btn btn-secondary btn-small" id="btnStep">⏭ Step</button>
+                <div style="display:flex; align-items:center; gap:6px; margin-left:auto;">
+                  <span style="font-size:0.75rem; color:var(--text-secondary);">Speed:</span>
+                  <input type="range" id="speedSlider" min="0.2" max="2.5" step="0.1" value="1.0" class="speed-slider">
+                  <span style="font-size:0.75rem; font-family:'JetBrains Mono',monospace;" id="speedText">1.0x</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Radiant Flux & Lux Chamber Visualization -->
+          <div class="card led-visual">
+            <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+              <h3 style="margin:0;">Radiant Flux &amp; Lux Chamber</h3>
+              <span class="tag" id="opticalStateBadge" style="background:rgba(245,158,11,0.15); color:var(--warning);">Illuminated</span>
+            </div>
+
+            <!-- Glowing LED Array Visualizer -->
+            <div style="padding:24px 0; display:flex; justify-content:center; align-items:center; width:100%;">
+              <div id="ledChamberBox" style="width:160px; height:160px; border-radius:50%; background:#1e293b; display:flex; justify-content:center; align-items:center; position:relative; box-shadow:0 0 40px rgba(251,191,36,0.3); transition:box-shadow 0.15s, background 0.15s;">
+                <!-- 3x3 LED Chip Matrix -->
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; z-index:2;">
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                  <div class="led-die" style="width:18px; height:18px; border-radius:3px; background:#fbbf24;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-around; width:100%; border-top:1px solid var(--border); padding-top:12px;">
+              <div>
+                <div style="font-size:0.7rem; color:var(--text-secondary);">ILLUMINANCE</div>
+                <div style="font-weight:700; font-family:'JetBrains Mono',monospace;" id="illuminanceReadout">3,140 lux</div>
+              </div>
+              <div>
+                <div style="font-size:0.7rem; color:var(--text-secondary);">BALLAST POWER</div>
+                <div style="font-weight:700; font-family:'JetBrains Mono',monospace;" id="resistorPowerReadout">0.69 W</div>
+              </div>
+              <div>
+                <div style="font-size:0.7rem; color:var(--text-secondary);">EYE PERCEPTION</div>
+                <div style="font-weight:700; font-family:'JetBrains Mono',monospace; color:var(--accent);" id="eyePerceptionReadout">Logarithmic</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Oscilloscope Waveform Chart -->
+          <div class="chart-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="margin:0;">Live Optical Pulse Train (Oscilloscope)</h3>
+              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">Scale: 200 µs/div</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="ledPwmChart"></canvas>
+            </div>
+          </div>
+
+          <!-- 4. Brightness vs Duty Curve (Linear Measured vs Human Eye CIE) -->
+          <div class="chart-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="margin:0;">Perceived vs Measured Brightness (Stevens' Law)</h3>
+              <span class="tag" style="font-size:0.7rem;">CIE 1931 Lightness</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="brightnessCurveChart"></canvas>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:8px;">
+              <span style="color:#f59e0b;">■ Perceived Brightness (Eye: B ≈ D^0.4)</span>
+              <span style="color:#2563eb;">■ Measured Radiant Flux (Linear: L ∝ D)</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Did You Know Tip -->
+      <div class="did-you-know animate-on-scroll">
+        <strong>Did you know?</strong> Human vision response to light intensity is non-linear and approximately logarithmic (following Stevens' Power Law: <i>B</i> &prop; <i>L</i><sup>0.4</sup>). At only <strong>25% PWM duty cycle</strong>, the human eye perceives the light as nearly <strong>60% bright!</strong> In contrast, varying current linearly with a resistor shifts the LED's spectral wavelength and color temperature, which is why PWM dimming is universally preferred in cinema and surgical lighting.
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <strong>Semi Lab</strong> — Interactive Electronics & Semiconductor Education
+        <p>Built for 555 Timer, MOSFET & PWM simulation. Precision workbench UI.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">3D Lab</a>
+        <a href="home.html">Home</a>
+        <a href="fan.html">Fan Regulator</a>
+        <a href="led.html">LED Dimmer</a>
+        <a href="mosfet.html">MOSFET</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-copy">
+        <p>© 2026 Semi Lab. Plain HTML/CSS/JS. No backend required.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/led.js"></script>
+</body>
+</html>

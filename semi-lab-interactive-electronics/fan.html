@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWM Fan Regulator Lab – Semi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <!-- Shared Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);">
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <path d="M6 12h4m4 0h4"></path>
+          <path d="M10 9v6"></path>
+        </svg>
+        <span>Semi Lab</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">3D Lab</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="fan.html" class="active">Fan Regulator</a></li>
+        <li><a href="led.html">LED Dimmer</a></li>
+        <li><a href="mosfet.html">MOSFET</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="theme-switcher">
+        <button class="theme-btn" data-theme="light" title="Light Theme" aria-label="Light Theme">☀️</button>
+        <button class="theme-btn" data-theme="dark" title="Dark Theme" aria-label="Dark Theme">🌙</button>
+        <button class="theme-btn" data-theme="blue" title="Blue Theme" aria-label="Blue Theme">🔷</button>
+        <button class="theme-btn" data-theme="green" title="Green Theme" aria-label="Green Theme">🌿</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="home.html">Semi Lab</a> / <span>Experiments</span> / <span>Fan Regulator</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span class="tag">LAB #04 • PWM ACTUATION</span>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">Core Topology: NE555 Astable + IRFZ44N N-MOSFET</span>
+            </div>
+            <h1>PWM Fan Regulator Lab</h1>
+            <p>Control a 12V brushless DC cooling fan using an astable 555 timer with 1N4148 steering diodes and a power MOSFET switch. Modulate pulse width without sacrificing torque or changing frequency.</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-small" id="btnResetAll" title="Reset all controls to standard 50% default">Reset Lab</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="padding-top:24px; padding-bottom:60px;">
+      
+      <!-- Telemetry Readouts -->
+      <div class="readout-grid">
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Ratio of pulse duration to cycle period: D = Ra / (Ra + Rb)">Duty Cycle (D)</div>
+          <div class="readout-value" id="readoutDuty">65.0<span class="readout-unit">%</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Oscillator frequency: f = 1.44 / (R_pot * C1)">Frequency (f)</div>
+          <div class="readout-value" id="readoutFreq">1.44<span class="readout-unit">kHz</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Effective average DC voltage delivered to load: Vavg = D * Vcc">Avg Voltage (Vavg)</div>
+          <div class="readout-value" id="readoutVavg">7.80<span class="readout-unit">V</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Average current drawn by fan motor during switching">Est. Current</div>
+          <div class="readout-value" id="readoutCurrent">195<span class="readout-unit">mA</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Actual impeller speed with motor inertia lag. Stalls below ~18% duty.">Fan Velocity</div>
+          <div class="readout-value" id="readoutRpm">1,863<span class="readout-unit">RPM</span></div>
+        </div>
+      </div>
+
+      <!-- Main Workbench Layout: Left = Circuit + Internals, Right = Controls + Fan + Visuals -->
+      <div class="grid grid-2" style="align-items:start;">
+
+        <!-- LEFT COLUMN: Schematics & 555 State -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+
+          <!-- 1. Inline SVG Circuit Schematic -->
+          <div class="circuit-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div>
+                <h3 style="margin-bottom:2px;">Interactive Circuit Schematic</h3>
+                <span style="font-size:0.75rem; color:var(--text-secondary);">555 Astable Multivibrator + IRFZ44N Driver Stage</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="tag" id="circuitStateBadge" style="background:var(--accent-glow); color:var(--accent);">Active</span>
+              </div>
+            </div>
+
+            <!-- SVG Circuit -->
+            <svg class="circuit-svg" viewBox="0 0 760 480" id="circuitSvg" aria-label="Fan Regulator Circuit Schematic">
+              <defs>
+                <!-- Arrowhead marker -->
+                <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--wire)"/>
+                </marker>
+                <marker id="arrow-hi" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+                </marker>
+              </defs>
+
+              <!-- Top Power Rail (VCC) -->
+              <line x1="40" y1="40" x2="720" y2="40" class="wire" id="railVcc" stroke-width="3" />
+              <text x="45" y="32" font-weight="bold" fill="var(--danger)" id="svgVccText">+12V (VCC)</text>
+              <circle cx="50" cy="40" r="4" fill="var(--danger)"/>
+
+              <!-- Bottom Ground Rail (GND) -->
+              <line x1="40" y1="440" x2="720" y2="440" class="wire" id="railGnd" stroke-width="3" />
+              <text x="45" y="460" font-weight="bold">GND (0V)</text>
+              <circle cx="50" cy="440" r="4" fill="var(--wire)"/>
+
+              <!-- Main Power Switch SW1 -->
+              <g id="svgSwitch" style="cursor:pointer;">
+                <line x1="80" y1="40" x2="105" y2="40" class="wire"/>
+                <circle cx="105" cy="40" r="3" fill="var(--wire)"/>
+                <line x1="105" y1="40" x2="135" y2="28" stroke="var(--wire)" stroke-width="2.5" id="svgSwitchBlade"/>
+                <circle cx="140" cy="40" r="3" fill="var(--wire)"/>
+                <line x1="140" y1="40" x2="180" y2="40" class="wire"/>
+                <text x="110" y="20" class="label">SW1</text>
+              </g>
+
+              <!-- 555 IC Body -->
+              <rect x="260" y="140" width="160" height="200" rx="8" class="component-body" stroke-width="2"/>
+              <text x="340" y="175" text-anchor="middle" font-size="16" font-weight="bold" fill="var(--accent)">NE555P</text>
+              <text x="340" y="195" text-anchor="middle" font-size="10" fill="var(--text-muted)">PRECISION TIMER</text>
+
+              <!-- 555 Pin Labels & Leads -->
+              <!-- Pin 8: VCC (Top) -->
+              <line x1="340" y1="40" x2="340" y2="140" class="wire"/>
+              <text x="345" y="130" class="label">8 VCC</text>
+
+              <!-- Pin 4: RESET (tied to VCC) -->
+              <line x1="380" y1="40" x2="380" y2="140" class="wire"/>
+              <text x="385" y="130" class="label">4 RST</text>
+
+              <!-- Pin 1: GND (Bottom) -->
+              <line x1="340" y1="340" x2="340" y2="440" class="wire"/>
+              <text x="345" y="355" class="label">1 GND</text>
+
+              <!-- Pin 5: Control Voltage (with C2 = 10nF to GND) -->
+              <line x1="380" y1="340" x2="380" y2="390" class="wire"/>
+              <line x1="370" y1="390" x2="390" y2="390" stroke="var(--wire)" stroke-width="2"/>
+              <line x1="370" y1="396" x2="390" y2="396" stroke="var(--wire)" stroke-width="2"/>
+              <line x1="380" y1="396" x2="380" y2="440" class="wire"/>
+              <text x="395" y="396" class="value-label">C2 10nF</text>
+              <text x="385" y="355" class="label">5 CV</text>
+
+              <!-- Pin 3: OUTPUT (Right) -->
+              <line x1="420" y1="240" x2="520" y2="240" class="wire" id="wirePin3" stroke-width="2.5"/>
+              <text x="400" y="244" class="label" fill="var(--accent)" font-weight="bold">3 OUT</text>
+
+              <!-- Gate Resistor R_gate (100 Ohm) -->
+              <rect x="450" y="234" width="36" height="12" class="component"/>
+              <text x="468" y="230" text-anchor="middle" class="value-label">Rg 100Ω</text>
+
+              <!-- Pull-down resistor Rgs (10k to GND) -->
+              <line x1="510" y1="240" x2="510" y2="320" class="wire"/>
+              <rect x="504" y="320" width="12" height="30" class="component"/>
+              <text x="522" y="338" class="value-label">10k</text>
+              <line x1="510" y1="350" x2="510" y2="440" class="wire"/>
+
+              <!-- Pin 7: DISCHARGE (Left) -->
+              <line x1="260" y1="200" x2="200" y2="200" class="wire" id="wirePin7"/>
+              <text x="265" y="204" class="label">7 DIS</text>
+
+              <!-- Pin 6: THRESHOLD & Pin 2: TRIGGER tied together -->
+              <line x1="260" y1="270" x2="220" y2="270" class="wire"/>
+              <text x="265" y="274" class="label">6 THR</text>
+              <line x1="260" y1="310" x2="220" y2="310" class="wire"/>
+              <text x="265" y="314" class="label">2 TRG</text>
+              <line x1="220" y1="270" x2="220" y2="310" class="wire"/>
+              <circle cx="220" cy="290" r="3" fill="var(--wire)"/>
+
+              <!-- Timing Node: Connection from junction to Timing Cap C1 -->
+              <line x1="220" y1="290" x2="160" y2="290" class="wire"/>
+              <line x1="160" y1="290" x2="160" y2="350" class="wire"/>
+              <!-- Timing Capacitor C1 (0.1 uF or 10nF) -->
+              <line x1="150" y1="350" x2="170" y2="350" stroke="var(--wire)" stroke-width="2.5"/>
+              <line x1="150" y1="358" x2="170" y2="358" stroke="var(--wire)" stroke-width="2.5"/>
+              <text x="175" y="357" class="value-label" font-weight="bold">C1 10nF</text>
+              <line x1="160" y1="358" x2="160" y2="440" class="wire"/>
+
+              <!-- LEFT: Potentiometer & Steering Diodes Subcircuit -->
+              <!-- Potentiometer Body -->
+              <line x1="160" y1="40" x2="160" y2="80" class="wire"/>
+              <rect x="154" y="80" width="12" height="80" class="component" id="svgPotBody"/>
+              <text x="135" y="115" class="value-label" text-anchor="end">R_pot</text>
+              <text x="135" y="130" class="value-label" text-anchor="end">100 kΩ</text>
+              
+              <!-- Wiper tap -->
+              <line x1="166" y1="120" x2="200" y2="120" class="wire" stroke-dasharray="2 2"/>
+              <polygon points="166,120 172,116 172,124" fill="var(--accent)"/>
+              <line x1="200" y1="120" x2="200" y2="200" class="wire" id="wireWiperToPin7"/>
+              <circle cx="200" cy="200" r="3" fill="var(--wire)"/>
+
+              <!-- Diode D1 (Steers Charging into Pin 6/2 & C1) -->
+              <g id="svgDiode1">
+                <line x1="160" y1="80" x2="120" y2="80" class="wire"/>
+                <line x1="120" y1="80" x2="120" y2="150" class="wire" id="pathChargeWire"/>
+                <!-- Diode Symbol D1 pointing down (forward into timing node) -->
+                <polygon points="114,150 126,150 120,162" class="component" id="diodeD1Poly"/>
+                <line x1="113" y1="162" x2="127" y2="162" stroke="var(--wire)" stroke-width="2"/>
+                <text x="96" y="158" class="label" font-weight="bold">D1</text>
+                <text x="96" y="170" class="value-label">1N4148</text>
+                <line x1="120" y1="162" x2="120" y2="290" class="wire"/>
+                <line x1="120" y1="290" x2="160" y2="290" class="wire"/>
+              </g>
+
+              <!-- Diode D2 (Steers Discharging from C1 into Pin 7) -->
+              <g id="svgDiode2">
+                <line x1="160" y1="160" x2="160" y2="210" class="wire"/>
+                <!-- Diode Symbol D2 pointing UP (forward into wiper/pin 7) -->
+                <polygon points="154,230 166,230 160,218" class="component" id="diodeD2Poly"/>
+                <line x1="153" y1="218" x2="167" y2="218" stroke="var(--wire)" stroke-width="2"/>
+                <text x="175" y="224" class="label" font-weight="bold">D2</text>
+                <text x="175" y="236" class="value-label">1N4148</text>
+                <line x1="160" y1="230" x2="160" y2="290" class="wire" id="pathDischargeWire"/>
+              </g>
+
+              <!-- RIGHT: Power Stage (IRFZ44N MOSFET + DC Fan Load + Flyback Diode) -->
+              <!-- MOSFET IRFZ44N Symbol -->
+              <g id="svgMosfet" transform="translate(540, 240)">
+                <!-- Gate terminal -->
+                <line x1="-20" y1="0" x2="0" y2="0" stroke="var(--wire)" stroke-width="2.5"/>
+                <!-- Gate Plate -->
+                <line x1="0" y1="-25" x2="0" y2="25" stroke="var(--wire)" stroke-width="3" id="mosfetGatePlate"/>
+                <!-- Channel Oxide Gap (3px) -->
+                <!-- Channel Segments (Drain, Center/Bulk, Source) -->
+                <line x1="6" y1="-24" x2="6" y2="-10" stroke="var(--wire)" stroke-width="3"/>
+                <line x1="6" y1="-6" x2="6" y2="6" stroke="var(--wire)" stroke-width="3"/>
+                <line x1="6" y1="10" x2="6" y2="24" stroke="var(--wire)" stroke-width="3"/>
+                <!-- Inversion Channel visual (appears when gate HIGH) -->
+                <rect x="5" y="-24" width="3" height="48" fill="var(--accent)" id="mosfetInversionChannel" opacity="0.1"/>
+
+                <!-- Drain Terminal (Top) -->
+                <line x1="6" y1="-18" x2="25" y2="-18" stroke="var(--wire)" stroke-width="2"/>
+                <line x1="25" y1="-18" x2="25" y2="-60" stroke="var(--wire)" stroke-width="2.5" id="mosfetDrainLead"/>
+
+                <!-- Source Terminal (Bottom) -->
+                <line x1="6" y1="18" x2="25" y2="18" stroke="var(--wire)" stroke-width="2"/>
+                <line x1="25" y1="18" x2="25" y2="200" stroke="var(--wire)" stroke-width="2.5" id="mosfetSourceLead"/>
+
+                <!-- Body / Substrate Arrow (pointing inward to channel = N-channel) -->
+                <line x1="6" y1="0" x2="25" y2="0" stroke="var(--wire)" stroke-width="1.5"/>
+                <polygon points="16,0 24,-4 24,4" fill="var(--wire)"/>
+                <line x1="25" y1="0" x2="25" y2="18" stroke="var(--wire)" stroke-width="1.5"/>
+
+                <text x="35" y="-5" font-weight="bold" font-size="12" fill="var(--text-primary)">Q1 IRFZ44N</text>
+                <text x="35" y="10" class="value-label">N-Channel Power</text>
+                <text x="35" y="24" class="value-label">Rds(on) 17.5mΩ</text>
+              </g>
+
+              <!-- DC Fan Load (between +VCC and MOSFET Drain) -->
+              <g id="svgFanLoad" transform="translate(565, 110)">
+                <circle cx="0" cy="0" r="26" class="component-body" stroke-width="2"/>
+                <circle cx="0" cy="0" r="8" fill="var(--accent)"/>
+                <!-- 3 Blades -->
+                <path d="M0,0 C-12,-18 -4,-24 0,-24 C4,-24 12,-18 0,0" fill="var(--accent)" id="svgFanBlade1"/>
+                <path d="M0,0 C18,-8 24,-2 24,0 C24,4 18,12 0,0" fill="var(--accent)" id="svgFanBlade2"/>
+                <path d="M0,0 C-10,18 -18,12 -18,8 C-18,4 -10,-4 0,0" fill="var(--accent)" id="svgFanBlade3"/>
+                <text x="36" y="-6" font-weight="bold" font-size="12">12V DC Fan</text>
+                <text x="36" y="8" class="value-label">Brushless 0.25A</text>
+                <line x1="0" y1="-70" x2="0" y2="-26" class="wire" stroke-width="2.5"/>
+                <line x1="0" y1="26" x2="0" y2="70" class="wire" stroke-width="2.5"/>
+              </g>
+
+              <!-- Flyback Diode across DC Fan (Cathode to Vcc, Anode to Drain) -->
+              <g id="svgFlybackDiode" transform="translate(640, 110)">
+                <line x1="-75" y1="-70" x2="0" y2="-70" class="wire"/>
+                <line x1="0" y1="-70" x2="0" y2="-12" class="wire"/>
+                <!-- Diode points UP (cathode at +VCC) -->
+                <polygon points="-8,10 8,10 0,-4" class="component" id="flybackPoly"/>
+                <line x1="-9" y1="-4" x2="9" y2="-4" stroke="var(--wire)" stroke-width="2"/>
+                <text x="14" y="2" class="label" font-weight="bold">D3 Flyback</text>
+                <text x="14" y="14" class="value-label">1N4007 Clamp</text>
+                <line x1="0" y1="10" x2="0" y2="70" class="wire"/>
+                <line x1="0" y1="70" x2="-75" y2="70" class="wire"/>
+              </g>
+
+              <!-- Animated Current Dots (moving along SVG paths) -->
+              <g id="animatedCurrentDots">
+                <!-- Will be dynamically driven by js/fan.js -->
+                <circle id="dotCharge1" class="current-dot" cx="120" cy="100" r="3"/>
+                <circle id="dotCharge2" class="current-dot" cx="120" cy="220" r="3"/>
+                <circle id="dotDischarge1" class="current-dot" cx="160" cy="260" r="3"/>
+                <circle id="dotGate1" class="current-dot" cx="440" cy="240" r="3"/>
+                <circle id="dotFan1" class="current-dot" cx="565" cy="70" r="3.5" fill="var(--danger)"/>
+                <circle id="dotFan2" class="current-dot" cx="565" cy="155" r="3.5" fill="var(--danger)"/>
+                <circle id="dotFlyback1" class="current-dot" cx="640" cy="30" r="3" fill="var(--warning)" opacity="0"/>
+              </g>
+            </svg>
+
+            <!-- Schematic Legend / Active Path Status -->
+            <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:12px; font-size:0.75rem; border-top:1px solid var(--border); padding-top:10px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="width:10px; height:10px; border-radius:50%; background:var(--accent);"></span>
+                <span id="labelChargeState">Charging: Through Ra & D1 into C1 (Gate HIGH)</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="width:10px; height:10px; border-radius:50%; background:var(--warning);"></span>
+                <span id="labelFlybackState">Flyback Diode: Clamps Inductive Kickback</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Internal 555 View & State Machine -->
+          <div class="internal-view">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h3>555 Timer Internal Subsystem Telemetry</h3>
+              <span class="mono" id="internalVcapText" style="font-size:0.85rem; font-weight:700; color:var(--accent);">VC = 6.40 V</span>
+            </div>
+            
+            <div class="grid grid-3" style="gap:12px; margin-bottom:16px;">
+              <!-- Comparator A (Upper: Threshold vs 2/3 Vcc) -->
+              <div class="card" id="compUpperCard" style="padding:12px; text-align:center; transition:background 0.2s;">
+                <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Upper Comparator</div>
+                <div style="font-size:0.85rem; font-weight:700; margin:4px 0;">Pin 6 (THR) &gt; 2/3 VCC</div>
+                <span class="tag" id="badgeCompUpper" style="font-size:0.7rem; background:var(--bg-secondary); color:var(--text-muted);">RESET: OFF</span>
+              </div>
+
+              <!-- Comparator B (Lower: Trigger vs 1/3 Vcc) -->
+              <div class="card" id="compLowerCard" style="padding:12px; text-align:center; transition:background 0.2s;">
+                <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">Lower Comparator</div>
+                <div style="font-size:0.85rem; font-weight:700; margin:4px 0;">Pin 2 (TRG) &lt; 1/3 VCC</div>
+                <span class="tag" id="badgeCompLower" style="font-size:0.7rem; background:var(--bg-secondary); color:var(--text-muted);">SET: OFF</span>
+              </div>
+
+              <!-- Flip-Flop & Discharge NPN -->
+              <div class="card" id="flipFlopCard" style="padding:12px; text-align:center;">
+                <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase;">SR Latch &amp; Q7</div>
+                <div style="font-size:0.85rem; font-weight:700; margin:4px 0;" id="latchStatusText">Q = 1 • Out = HIGH</div>
+                <span class="tag" id="badgeDischargeTransistor" style="font-size:0.7rem; background:var(--bg-secondary); color:var(--text-muted);">Disch NPN: OFF</span>
+              </div>
+            </div>
+
+            <!-- Cap Voltage Ramp Visualizer Bar -->
+            <div style="margin-bottom:8px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-bottom:4px;">
+                <span>0V (GND)</span>
+                <span id="label13Vcc">1/3 VCC (4.0V)</span>
+                <span id="label23Vcc">2/3 VCC (8.0V)</span>
+                <span id="labelVcc">VCC (12.0V)</span>
+              </div>
+              <div style="height:12px; background:var(--bg-secondary); border-radius:6px; overflow:hidden; position:relative; border:1px solid var(--border);">
+                <!-- Marker lines for 1/3 and 2/3 -->
+                <div style="position:absolute; left:33.33%; top:0; bottom:0; width:2px; background:var(--border);"></div>
+                <div style="position:absolute; left:66.66%; top:0; bottom:0; width:2px; background:var(--border);"></div>
+                <!-- Dynamic capacitor charge level -->
+                <div id="vcapProgressBar" style="height:100%; width:50%; background:linear-gradient(90deg, var(--accent-light), var(--accent)); transition:width 0.05s linear;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Component Bill of Materials Table -->
+          <div class="component-list">
+            <h3>Circuit Components &amp; Specifications</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Component</th>
+                  <th>Value / Spec</th>
+                  <th>Role in Circuit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>U1</strong></td>
+                  <td>NE555P Precision Timer</td>
+                  <td>DIP-8, 4.5V–16V</td>
+                  <td>Generates fixed-frequency astable PWM pulse train</td>
+                </tr>
+                <tr>
+                  <td><strong>Q1</strong></td>
+                  <td>IRFZ44N Power MOSFET</td>
+                  <td>N-Ch, 55V, 49A, 17.5mΩ</td>
+                  <td>High-efficiency low-side electronic power switch</td>
+                </tr>
+                <tr>
+                  <td><strong>D1, D2</strong></td>
+                  <td>1N4148 Fast Switching</td>
+                  <td>75V, 150mA, 4ns recovery</td>
+                  <td>Steers charge &amp; discharge paths through potentiometer</td>
+                </tr>
+                <tr>
+                  <td><strong>D3</strong></td>
+                  <td>1N4007 / Fast Schottky</td>
+                  <td>1000V, 1A (or 1N5819)</td>
+                  <td>Flyback clamp: absorbs motor inductive back-EMF spikes</td>
+                </tr>
+                <tr>
+                  <td><strong>RV1</strong></td>
+                  <td>Linear Potentiometer</td>
+                  <td>100 kΩ total</td>
+                  <td>Wiper divides resistance into Ra and Rb for duty control</td>
+                </tr>
+                <tr>
+                  <td><strong>C1</strong></td>
+                  <td>Ceramic Timing Cap</td>
+                  <td>10 nF (0.01 µF)</td>
+                  <td>Oscillation timing capacitor (ramps 1/3 to 2/3 Vcc)</td>
+                </tr>
+                <tr>
+                  <td><strong>FAN</strong></td>
+                  <td>Brushless DC Fan</td>
+                  <td>12V DC, 250mA, 2400 RPM</td>
+                  <td>Inductive mechanical load modulated by PWM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Controls, Rotary Knob, Fan Visual, Oscilloscope, RPM Curve -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+
+          <!-- 1. Parameter Modulation Deck (Rotary Knob & Controls) -->
+          <div class="controls-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h3 style="margin:0;">Modulation Deck</h3>
+              <!-- Master Power Toggle -->
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.8rem; font-weight:600;" id="labelMasterPower">VCC POWER: ON</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="togglePower" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Rotary Knob -->
+            <div class="knob-container">
+              <div class="knob-wrapper">
+                <div class="knob" id="dutyKnob" tabindex="0" role="slider" aria-valuemin="1" aria-valuemax="99" aria-valuenow="65" aria-label="Duty Cycle Potentiometer Knob">
+                  <div class="knob-inner">
+                    <div class="knob-indicator" id="knobIndicator"></div>
+                    <div style="text-align:center;">
+                      <div class="knob-label">DUTY</div>
+                      <div class="knob-value-display" id="knobValueText">65%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:0.75rem; color:var(--text-muted); text-align:center;">
+                Drag or scroll to rotate • Use Arrow keys [← / →]
+              </div>
+            </div>
+
+            <!-- Slider fallback & Presets -->
+            <div class="control-group" style="margin-top:16px;">
+              <div class="control-label">
+                <span>Duty Cycle Slider</span>
+                <span class="control-value" id="dutySliderVal">65%</span>
+              </div>
+              <input type="range" id="dutySlider" min="1" max="99" value="65">
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="control-group">
+              <span class="control-label">Quick Presets:</span>
+              <div class="preset-group">
+                <button class="preset-btn" data-duty="15">Stall (15%)</button>
+                <button class="preset-btn" data-duty="35">Low (35%)</button>
+                <button class="preset-btn" data-duty="50">Medium (50%)</button>
+                <button class="preset-btn" data-duty="75">High (75%)</button>
+                <button class="preset-btn" data-duty="95">Max (95%)</button>
+              </div>
+            </div>
+
+            <!-- Supply Voltage Selector -->
+            <div class="control-group">
+              <div class="control-label">
+                <span data-tooltip="Sets supply rail voltage VCC. Higher voltage increases maximum RPM and peak current.">Supply Voltage (VCC):</span>
+                <span class="control-value" id="voltageDisplay">12.0 V</span>
+              </div>
+              <div class="voltage-selector">
+                <button class="voltage-btn" data-volt="5">5V USB</button>
+                <button class="voltage-btn" data-volt="9">9V Rail</button>
+                <button class="voltage-btn active" data-volt="12">12V Rated</button>
+              </div>
+            </div>
+
+            <!-- Toggles & Playback Speed -->
+            <div style="border-top:1px solid var(--border); padding-top:16px; margin-top:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <label style="font-size:0.85rem; font-weight:500; cursor:pointer;" for="toggleAnimation">Show Current Flow Dots</label>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggleAnimation" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <!-- Play / Pause / Step Controls -->
+              <div class="playback-controls">
+                <button class="btn btn-secondary btn-small" id="btnPlayPause">⏸ Pause</button>
+                <button class="btn btn-secondary btn-small" id="btnStep">⏭ Step</button>
+                <div style="display:flex; align-items:center; gap:6px; margin-left:auto;">
+                  <span style="font-size:0.75rem; color:var(--text-secondary);">Speed:</span>
+                  <input type="range" id="speedSlider" min="0.2" max="2.5" step="0.1" value="1.0" class="speed-slider">
+                  <span style="font-size:0.75rem; font-family:'JetBrains Mono',monospace;" id="speedText">1.0x</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Live Tachometer & Fan Spin Visual -->
+          <div class="card fan-visual">
+            <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+              <h3 style="margin:0;">Tachometer &amp; Load Spin</h3>
+              <span class="tag" id="stallBadge" style="background:rgba(22,163,74,0.12); color:var(--success);">Running</span>
+            </div>
+
+            <!-- Rotating Fan Graphic -->
+            <div style="width:160px; height:160px; position:relative; margin:10px 0;">
+              <svg viewBox="0 0 160 160" width="160" height="160" id="fanSpinnerSvg" style="transform-origin:center center;">
+                <circle cx="80" cy="80" r="72" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="2"/>
+                <circle cx="80" cy="80" r="22" fill="var(--wire)"/>
+                <!-- 5 aerodynamic blades -->
+                <g fill="var(--accent)">
+                  <path d="M80,80 C60,40 50,20 80,12 C100,20 95,45 80,80"/>
+                  <path d="M80,80 C120,60 140,50 148,80 C140,100 115,95 80,80"/>
+                  <path d="M80,80 C100,120 110,140 80,148 C60,140 65,115 80,80"/>
+                  <path d="M80,80 C40,100 20,110 12,80 C20,60 45,65 80,80"/>
+                </g>
+                <circle cx="80" cy="80" r="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+              </svg>
+            </div>
+
+            <div style="display:flex; justify-content:space-around; width:100%; border-top:1px solid var(--border); padding-top:12px;">
+              <div>
+                <div style="font-size:0.7rem; color:var(--text-secondary);">AIRFLOW</div>
+                <div style="font-weight:700; font-family:'JetBrains Mono',monospace;" id="airflowReadout">28.4 CFM</div>
+              </div>
+              <div>
+                <div style="font-size:0.7rem; color:var(--text-secondary);">ACOUSTIC NOISE</div>
+                <div style="font-weight:700; font-family:'JetBrains Mono',monospace;" id="noiseReadout">33.7 dBA</div>
+              </div>
+              <div>
+                <div style="font-size:0.7rem; color:var(--text-secondary);">TORQUE REGIME</div>
+                <div style="font-weight:700; font-family:'JetBrains Mono',monospace; color:var(--accent);" id="torqueReadout">Dynamic</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Real-Time Oscilloscope Chart -->
+          <div class="chart-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="margin:0;">Live Oscilloscope: PWM Gate &amp; Load Voltage</h3>
+              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">Scale: 200 µs/div</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="pwmWaveformChart"></canvas>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:8px;">
+              <span style="color:#2563eb;">■ Gate Signal (Vgs, 0–12V)</span>
+              <span style="color:#f59e0b;">- - Filtered DC Average</span>
+              <span style="color:#10b981;">■ Motor Current (Id)</span>
+            </div>
+          </div>
+
+          <!-- 4. RPM vs Duty Cycle Transfer Curve Chart -->
+          <div class="chart-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="margin:0;">RPM vs Duty Cycle Transfer Characteristic</h3>
+              <span class="tag" style="font-size:0.7rem;">Stall Zone &lt; 18%</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="rpmCurveChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Did You Know Tip -->
+      <div class="did-you-know animate-on-scroll">
+        <strong>Did you know?</strong> An electric motor is an <em>inductive load</em> (<i>v</i> = <i>L</i> &middot; <span class="inline-frac"><span class="num">d<i>i</i></span><span class="den">d<i>t</i></span></span>). When the MOSFET turns off in microseconds, the collapsing magnetic field in the motor windings generates a reverse voltage spike that can exceed 100V! The <strong>flyback diode (D3)</strong> provides a safe return path for this recirculating current, clamping the drain voltage and shielding the MOSFET from destructive avalanche breakdown.
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <strong>Semi Lab</strong> — Interactive Electronics & Semiconductor Education
+        <p>Built for 555 Timer, MOSFET & PWM simulation. Precision workbench UI.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">3D Lab</a>
+        <a href="home.html">Home</a>
+        <a href="fan.html">Fan Regulator</a>
+        <a href="led.html">LED Dimmer</a>
+        <a href="mosfet.html">MOSFET</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-copy">
+        <p>© 2026 Semi Lab. Plain HTML/CSS/JS. No backend required.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/fan.js"></script>
+</body>
+</html>

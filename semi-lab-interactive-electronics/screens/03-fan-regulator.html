@@ -1,0 +1,1589 @@
+<!DOCTYPE html><html lang="en" style=""><head></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col"><svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Semi Lab — Interactive Electronics Lab</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "primary-fixed-dim": "#93ccff",
+        "surface-variant": "#d3e4fe",
+        "on-tertiary-fixed": "#001e2f",
+        "surface-dim": "#cbdbf5",
+        "on-surface-variant": "#3f4850",
+        "tertiary": "#00628d",
+        "primary-fixed": "#cce5ff",
+        "primary-container": "#007bb9",
+        "secondary-fixed": "#dbe1ff",
+        "surface-canvas": "#F8FAFC",
+        "surface-container-lowest": "#ffffff",
+        "on-primary-fixed": "#001d31",
+        "surface-container": "#e5eeff",
+        "on-primary-container": "#fdfcff",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-tertiary": "#ffffff",
+        "primary": "#006194",
+        "inverse-on-surface": "#eaf1ff",
+        "surface-container-low": "#eff4ff",
+        "border-subtle": "#E2E8F0",
+        "on-primary-fixed-variant": "#004b73",
+        "surface-pure": "#FFFFFF",
+        "outline": "#707881",
+        "on-secondary-container": "#fefcff",
+        "surface-tint": "#006398",
+        "on-secondary-fixed-variant": "#003ea8",
+        "on-secondary-fixed": "#00174b",
+        "surface-container-high": "#dce9ff",
+        "secondary": "#0051d5",
+        "signal-pulse": "#0284C7",
+        "surface-muted": "#F1F5F9",
+        "error": "#ba1a1a",
+        "tertiary-container": "#007cb1",
+        "secondary-fixed-dim": "#b4c5ff",
+        "background": "#f8f9ff",
+        "outline-variant": "#bfc7d2",
+        "tertiary-fixed-dim": "#89ceff",
+        "power-vcc": "#EF4444",
+        "on-tertiary-fixed-variant": "#004c6e",
+        "surface-bright": "#f8f9ff",
+        "on-background": "#0b1c30",
+        "on-surface": "#0b1c30",
+        "on-error": "#ffffff",
+        "surface-container-highest": "#d3e4fe",
+        "on-tertiary-container": "#fcfcff",
+        "secondary-container": "#316bf3",
+        "tertiary-fixed": "#c9e6ff",
+        "on-error-container": "#93000a",
+        "inverse-surface": "#213145",
+        "surface": "#f8f9ff",
+        "ground-gnd": "#1E293B",
+        "analog-trace": "#10B981",
+        "on-primary": "#ffffff",
+        "inverse-primary": "#93ccff"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-sm": "0.5rem",
+        "space-md": "1rem",
+        "gutter-mobile": "1rem",
+        "gutter": "1.5rem",
+        "margin-mobile": "1rem",
+        "space-lg": "1.5rem",
+        "margin": "2rem",
+        "space-xl": "2.5rem",
+        "space-xs": "0.25rem"
+      },
+      "fontFamily": {
+        "body-sm": ["Inter"],
+        "body-md": ["Inter"],
+        "headline-xl-mobile": ["Inter"],
+        "label-sm": ["JetBrains Mono"],
+        "headline-sm": ["Inter"],
+        "label-lg": ["JetBrains Mono"],
+        "headline-md": ["Inter"],
+        "headline-lg": ["Inter"],
+        "label-md": ["JetBrains Mono"],
+        "headline-lg-mobile": ["Inter"],
+        "body-lg": ["Inter"],
+        "headline-xl": ["Inter"]
+      },
+      "fontSize": {
+        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "headline-xl-mobile": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "400"}],
+        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.025em", "fontWeight": "500"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script><header class="fixed top-0 left-0 right-0 z-50 bg-surface-pure/90 backdrop-blur-md border-b border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 w-full max-w-[1600px] mx-auto px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><img alt="Semi Lab Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wz8U6Aaq35IQnYytpqlrIDKTxVynnAteRDtgqRQAjIFz0YfhVBNd7a7wvuCpzrgoHVJsYZU_t8JxrI57pGjtoqRNETZagz2ZaYb3zOs1DhtpjlTedKX7tNrQOZ5rXr4T8144xnd9HK6VqvNPe-wo15D5X4Ge6yLOTP8o3eiNvFrKGrmqgzXNXl7tvTgkriW4tZbu_Ta4mBJ8SWBEWrnuntunEneMnPnCzRNP2NIFk6Z0v0fxmS97DzSd8"><div class="flex items-center gap-space-sm"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Semi Lab</span><span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary uppercase tracking-wide">Interactive PWM Lab</span></div></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm rounded-lg"><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-primary-container text-on-primary-container font-headline-sm rounded-lg" data-path="fan-regulator" href="#">Fan Regulator</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="led-dimmer" href="#">LED Dimmer</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="mosfet" href="#">MOSFET</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-muted rounded-lg font-body-md text-body-md transition-colors" data-path="about" href="#">About</a></nav><div class="flex items-center gap-space-sm"><div class="hidden md:flex items-center p-0.5 bg-surface-muted rounded-full border border-border-subtle"><button class="px-space-sm py-1 rounded-full bg-surface-pure text-on-surface font-label-sm text-label-sm shadow-[0_1px_3px_rgba(15,23,42,0.06)] flex items-center gap-1" type="button"><span class="w-2 h-2 rounded-full bg-signal-pulse"></span>Light</button><button class="px-space-sm py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1" type="button"><span class="w-2 h-2 rounded-full bg-ground-gnd"></span>Dark</button><button class="px-space-sm py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1" type="button"><span class="w-2 h-2 rounded-full bg-analog-trace"></span>Trace</button></div><a class="p-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-muted transition-colors flex items-center justify-center" href="#" title="Documentation &amp; Circuit Notes"><span class="material-symbols-outlined text-[20px]">menu_book</span></a><a class="p-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-muted transition-colors flex items-center justify-center" href="#" title="Repository &amp; Hardware Schematics"><span class="material-symbols-outlined text-[20px]">code</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 flex-1 bg-surface-canvas"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1600px] mx-auto px-gutter py-space-lg flex flex-col gap-space-lg">
+<!-- Lab Intro Banner -->
+<div class="relative overflow-hidden rounded-xl bg-surface-pure shadow-sm p-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md relative z-10">
+<div class="flex flex-col gap-space-xs max-w-3xl">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary uppercase">Lab #04 — PWM Actuation</span>
+<span class="w-1.5 h-1.5 rounded-full bg-analog-trace"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Core Topology: NE555 + IRFZ44N</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">PWM Fan Regulator Lab</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Control a 12V brushless DC cooling fan using an astable 555 timer with 1N4148 steering diodes and an N-channel power MOSFET. Adjust duty cycle to modulate effective coil current while maintaining switching frequency.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm self-start lg:self-center">
+<div class="flex items-center gap-2 px-space-md py-space-xs rounded-lg bg-surface-container-low">
+<span class="w-2.5 h-2.5 rounded-full bg-analog-trace animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface uppercase" id="sim-status-pill">12.0V Active (PWM)</span>
+</div>
+<button class="px-space-md py-space-xs rounded-lg bg-surface-pure text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-muted transition-all" id="reset-defaults-btn" type="button">
+            Reset 65%
+          </button>
+</div>
+</div>
+</div>
+<!-- 4 Real-time Telemetry Readout Tiles -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Readout 1 -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Duty Cycle (D)</span>
+<span class="material-symbols-outlined text-signal-pulse text-[18px]">tune</span>
+</div>
+<div class="my-space-xs">
+<div class="font-label-lg text-headline-lg text-signal-pulse font-bold tracking-tight" id="readout-duty">65.0 %</div>
+</div>
+<div class="w-full bg-surface-muted h-1.5 rounded-full overflow-hidden">
+<div class="bg-signal-pulse h-full transition-all duration-150" id="meter-duty" style="width: 65%;"></div>
+</div>
+</div>
+<!-- Readout 2 -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Frequency (f_osc)</span>
+<span class="material-symbols-outlined text-analog-trace text-[18px]">waves</span>
+</div>
+<div class="my-space-xs">
+<div class="font-label-lg text-headline-lg text-on-surface font-bold tracking-tight" id="readout-freq">1.44 kHz</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">C1 = 0.1 µF | R_pot = 100 kΩ</span>
+</div>
+<!-- Readout 3 -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Avg DC Voltage</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">electric_bolt</span>
+</div>
+<div class="my-space-xs">
+<div class="font-label-lg text-headline-lg text-signal-pulse font-bold tracking-tight" id="readout-volts">7.80 V</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">V_eff = D × 12.0 V</span>
+</div>
+<!-- Readout 4 -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Fan Velocity</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">mode_fan</span>
+</div>
+<div class="my-space-xs">
+<div class="font-label-lg text-headline-lg text-on-surface font-bold tracking-tight" id="readout-rpm">1,863 RPM</div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span class="">Stall: &lt;20%</span>
+<span class="" id="readout-dba">33.7 dBA</span>
+</div>
+</div>
+</div>
+<!-- Main Workbench Area (2 Columns) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT: Circuit Diagram Interactive Card (7 cols) -->
+<div class="xl:col-span-7 rounded-xl bg-surface-pure shadow-sm p-space-lg flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">schema</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Interactive Schematic Diagram</h2>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hover components for topology info</span>
+</div>
+</div>
+<!-- SVG Schematic Canvas -->
+<div class="relative w-full rounded-xl bg-surface-canvas p-space-sm overflow-hidden flex flex-col items-center"><div class="w-full flex flex-col items-center justify-center p-2"><img alt="555 Timer PWM Fan Regulator Schematic Diagram" class="w-full h-auto max-h-[460px] object-contain rounded-lg shadow-sm border border-border-subtle bg-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZl2Z6mjNhlTYJLjvC64_YzjyYbIcmElqgbGoJH9mHLx9Y9N6X6jR9IghvUdoGsoAG3zXMITlQ3JcBCBnBG722cFJISOjLUNqiSObYedVJQHkXKcwcaILd16SC2BgG1dvSYT5pE5P7mvD41sO6imjK-iRfQ9PgqlhiGTC9FlVk_E8CfOcYhL9Jft29fB5Mvy4OfobZyQcFRdO47CfGkNHyV-YLm39H4IW8uBZbdsOl-Vcucdzl7wurvoqbimoPqUYKsw"><div class="w-full mt-space-sm px-space-sm py-1.5 rounded-lg bg-surface-pure border border-border-subtle flex flex-wrap items-center justify-between gap-2 font-label-sm text-[11px] text-on-surface-variant"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-ground-gnd"></span><span class="">Dots mark wires that join</span></div><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-signal-pulse"></span><span class="text-signal-pulse font-medium">Blue: pulse path from pin 3 to the gate, and the fan</span></div><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-analog-trace"></span><span class="">Wiper down: wider pulse, faster fan</span></div></div></div></div>
+<!-- Technical Notes Micro-Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">CHARGE PATH (Ton)</span>
+<span class="font-body-sm text-body-sm text-on-surface">VCC → R_pot(left) → D1 → C1</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">DISCHARGE (Toff)</span>
+<span class="font-body-sm text-body-sm text-on-surface">C1 → D2 → R_pot(right) → Pin 7 (GND)</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">INDUCTIVE CLAMP</span>
+<span class="font-body-sm text-body-sm text-on-surface">1N4007 safely recirculates V=-L(di/dt)</span>
+</div>
+</div>
+</div>
+<!-- RIGHT: Control Dashboard & Fan Visualizer Card (5 cols) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Control Console -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-signal-pulse text-[20px]">equalizer</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Parameter Modulation Deck</h2>
+</div>
+<!-- Master Power Toggle -->
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">12V PWR</span>
+<div class="relative">
+<input checked="" class="sr-only peer" id="power-toggle" type="checkbox">
+<div class="w-11 h-6 bg-surface-muted peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-signal-pulse"></div>
+</div>
+</label>
+</div>
+<!-- Acoustic Motor Audio Feedback Strip -->
+<div class="p-space-sm rounded-lg bg-surface-container-low border border-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-lg bg-surface-pure shadow-xs flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer" id="audio-toggle-btn" title="Toggle Acoustic Pitch Feedback" type="button">
+<span class="material-symbols-outlined text-[19px]" id="audio-icon">volume_off</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Acoustic Motor Audio</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-mono uppercase bg-surface-muted text-on-surface-variant" id="audio-badge">Muted</span>
+</div>
+<span class="text-[11px] text-on-surface-variant leading-tight">Dual-Osc: RPM Hum (~30–180Hz) + 1.44kHz PWM Harmonics</span>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-center">
+<span class="font-label-sm text-[11px] text-on-surface-variant">Vol</span>
+<input class="w-20 h-1.5 bg-surface-muted rounded-lg appearance-none cursor-pointer accent-signal-pulse" id="audio-volume" max="100" min="0" step="5" type="range" value="50">
+<span class="font-label-sm text-[11px] text-on-surface min-w-[28px] text-right" id="audio-volume-text">50%</span>
+</div>
+</div>
+<!-- Rotary Dial & Slider Control -->
+<div class="flex flex-col items-center justify-center py-space-sm">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<!-- Rotary SVG background track & active ring -->
+<svg class="w-full h-full transform -rotate-90 select-none" viewBox="0 0 160 160">
+<!-- Track ring -->
+<circle cx="80" cy="80" fill="none" r="66" stroke="#E2E8F0" stroke-dasharray="414.69" stroke-dashoffset="103.67" stroke-linecap="round" stroke-width="10"></circle>
+<!-- Value Arc (max 75% arc around 270 deg) -->
+<circle class="transition-all duration-75" cx="80" cy="80" fill="none" id="dial-progress-arc" r="66" stroke="#0284C7" stroke-dasharray="414.69" stroke-dashoffset="210" stroke-linecap="round" stroke-width="10" style="stroke-dashoffset: 212.529;"></circle>
+</svg>
+<!-- Central physical knob face -->
+<div class="absolute w-28 h-28 rounded-full bg-surface-pure shadow-md flex flex-col items-center justify-center cursor-grab active:cursor-grabbing select-none transition-transform" id="rotary-knob" style="transform: rotate(40.5deg);">
+<div class="w-2.5 h-2.5 rounded-full bg-signal-pulse mb-1"></div>
+<span class="font-label-lg text-headline-sm text-on-surface font-bold" id="knob-value-display">65%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="pot-wiper-text">65% Wiper</span>
+<!-- Indicator notch on the knob -->
+<div class="absolute top-2 w-1.5 h-3 bg-signal-pulse rounded-full"></div>
+</div>
+</div>
+<!-- Precision Horizontal Range Slider -->
+<div class="w-full mt-space-md flex flex-col gap-space-xs">
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface-variant">
+<span class="">0% (Off / Stall)</span>
+<span class="text-primary font-bold">Scrub Potentiometer</span>
+<span class="">100% (Full Rail)</span>
+</div>
+<input class="w-full h-2 bg-surface-muted rounded-lg appearance-none cursor-pointer accent-signal-pulse" id="duty-slider" max="100" min="0" step="1" type="range" value="65">
+</div>
+</div>
+<!-- Quick Preset Buttons -->
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="preset-btn px-3 py-1.5 rounded-lg bg-surface-muted hover:bg-surface-container font-label-sm text-label-sm text-on-surface transition-all flex-1" data-val="0" type="button">0%</button>
+<button class="preset-btn px-3 py-1.5 rounded-lg bg-surface-muted hover:bg-surface-container font-label-sm text-label-sm text-on-surface transition-all flex-1" data-val="25" type="button">25% Low</button>
+<button class="preset-btn px-3 py-1.5 rounded-lg bg-surface-container text-primary font-bold font-label-sm text-label-sm transition-all flex-1" data-val="65" type="button">65% Opt</button>
+<button class="preset-btn px-3 py-1.5 rounded-lg bg-surface-muted hover:bg-surface-container font-label-sm text-label-sm text-on-surface transition-all flex-1" data-val="90" type="button">90% High</button>
+<button class="preset-btn px-3 py-1.5 rounded-lg bg-surface-muted hover:bg-surface-container font-label-sm text-label-sm text-on-surface transition-all flex-1" data-val="100" type="button">100% Max</button>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded text-primary focus:ring-0 w-4 h-4" id="toggle-anim" type="checkbox">
+<span class="font-body-sm text-body-sm text-on-surface">Show Live Fan Spin &amp; Waveflow</span>
+</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="fet-state-label">MOSFET Switching OK</span>
+</div>
+</div>
+<!-- AUTO SWEEP CONTROLLER PANEL -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-md flex flex-col gap-space-sm border border-border-subtle" id="auto-sweep-panel">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-signal-pulse text-[18px]">autorenew</span>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold tracking-tight uppercase">Auto Sweep Controller</h3>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-slate-400" id="sweep-status-dot"></span>
+<span class="font-mono text-[11px] uppercase font-bold text-on-surface-variant tracking-wider" id="sweep-status-badge">IDLE</span>
+</div>
+</div>
+<!-- Play / Pause Action Bar -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+<button class="flex-1 px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold hover:bg-primary-container transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer select-none" id="sweep-play-btn" type="button">
+<span class="material-symbols-outlined text-[18px]" id="sweep-play-icon">play_arrow</span>
+<span id="sweep-play-text" class="">▶ Auto Sweep Demo</span>
+</button>
+<div class="flex items-center gap-1 bg-surface-muted p-1 rounded-lg border border-border-subtle shrink-0 justify-center">
+<span class="font-label-sm text-[11px] text-on-surface-variant px-1 font-medium">Speed:</span>
+<button class="sweep-speed-btn px-2 py-1 rounded text-[11px] font-mono font-medium text-on-surface-variant hover:text-on-surface transition-all cursor-pointer" data-speed="0.5" id="speed-05x" type="button">0.5x</button>
+<button class="sweep-speed-btn px-2 py-1 rounded text-[11px] font-mono font-bold bg-surface-pure text-primary shadow-xs transition-all cursor-pointer" data-speed="1.0" id="speed-1x" type="button">1x</button>
+<button class="sweep-speed-btn px-2 py-1 rounded text-[11px] font-mono font-medium text-on-surface-variant hover:text-on-surface transition-all cursor-pointer" data-speed="2.0" id="speed-2x" type="button">2x</button>
+</div>
+</div>
+<!-- Pattern Mode Selector Buttons -->
+<div class="grid grid-cols-2 gap-2">
+<button class="sweep-pattern-btn px-2.5 py-1.5 rounded-lg border border-signal-pulse bg-surface-container-low text-primary font-label-sm text-[11px] font-semibold flex items-center justify-center gap-1 transition-all cursor-pointer" data-pattern="triangle" id="pattern-triangle-btn" type="button">
+<span class="material-symbols-outlined text-[15px]">swap_horiz</span>
+<span class="">Triangle (0% ⇋ 100%)</span>
+</button>
+<button class="sweep-pattern-btn px-2.5 py-1.5 rounded-lg border border-border-subtle bg-surface-pure text-on-surface-variant hover:text-on-surface font-label-sm text-[11px] font-medium flex items-center justify-center gap-1 transition-all cursor-pointer" data-pattern="sawtooth" id="pattern-sawtooth-btn" type="button">
+<span class="material-symbols-outlined text-[15px]">trending_up</span>
+<span class="">Sawtooth (0% → 100%)</span>
+</button>
+</div>
+<!-- Cycle Timeline Visual Progress Bar -->
+<div class="flex flex-col gap-1 pt-0.5">
+<div class="flex justify-between items-center font-mono text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-signal-pulse">timeline</span>
+<span class="">Cycle Timeline</span>
+</span>
+<span class="font-bold text-signal-pulse" id="sweep-cycle-val">Phase: 65% (D = 65.0%)</span>
+</div>
+<div class="w-full bg-surface-muted h-2 rounded-full overflow-hidden relative border border-border-subtle">
+<!-- Background markers at 20% stall -->
+<div class="absolute left-[20%] top-0 bottom-0 w-0.5 bg-error/40 z-10" title="Stall boundary (20%)"></div>
+<div class="bg-gradient-to-r from-signal-pulse to-analog-trace h-full transition-all duration-75 relative" id="sweep-progress-bar" style="width: 65%;">
+<span class="absolute right-0 top-0 bottom-0 w-1 bg-white shadow-xs"></span>
+</div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-mono text-on-surface-variant">
+<span class="">0% Stall Floor</span>
+<span class="text-error font-medium">20% Torque Threshold</span>
+<span class="">100% Saturation</span>
+</div>
+</div>
+</div>
+<!-- Prominent Animated 3-Blade DC Fan Graphic Card -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-lg flex flex-col items-center justify-center relative overflow-hidden">
+<div class="w-full flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider font-semibold">Tachometer &amp; Load Spin</span>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-signal-pulse animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-signal-pulse font-bold" id="fan-status-badge">1,863 RPM Running</span>
+</div>
+</div>
+<!-- Dynamic Vector Airflow Lines & 3-Blade Fan -->
+<div class="relative w-48 h-48 my-space-xs flex items-center justify-center">
+<!-- Airflow rings behind blades -->
+<div class="absolute inset-0 rounded-full bg-surface-container-low scale-110 opacity-70 transition-all duration-300" id="airflow-ring-1"></div>
+<div class="absolute inset-2 rounded-full bg-surface-container scale-105 opacity-50 transition-all duration-300" id="airflow-ring-2"></div>
+<!-- Fan outer shroud cage -->
+<div class="absolute inset-0 rounded-full border-4 border-surface-container-highest shadow-inner flex items-center justify-center">
+<!-- Structural struts -->
+<div class="absolute w-full h-0.5 bg-border-subtle"></div>
+<div class="absolute h-full w-0.5 bg-border-subtle"></div>
+</div>
+<!-- Spinning Fan Rotor Group -->
+<div class="relative w-36 h-36 flex items-center justify-center origin-center transition-transform" id="fan-rotor" style="transform: rotate(211.95deg);">
+<svg class="w-full h-full drop-shadow-md select-none" viewBox="0 0 120 120">
+<!-- Blade 1 -->
+<path d="M 60 60 C 65 35, 90 20, 85 5 C 75 0, 50 25, 60 60 Z" fill="#0051D5" opacity="0.9"></path>
+<!-- Blade 2 (Rotated 120 deg) -->
+<path d="M 60 60 C 80 75, 95 102, 85 115 C 73 118, 55 90, 60 60 Z" fill="#006194" opacity="0.9"></path>
+<!-- Blade 3 (Rotated 240 deg) -->
+<path d="M 60 60 C 35 68, 12 55, 6 40 C 8 28, 42 45, 60 60 Z" fill="#0284C7" opacity="0.9"></path>
+<!-- Center Rotor Hub -->
+<circle cx="60" cy="60" fill="#0F172A" r="14"></circle>
+<circle cx="60" cy="60" fill="#93CCFF" r="6"></circle>
+</svg>
+</div>
+</div>
+<!-- Airflow Velocity & Acoustic Gauge -->
+<div class="w-full flex items-center justify-between pt-space-xs font-label-sm text-label-sm text-on-surface-variant flex-wrap gap-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">air</span>
+<span class="" id="fan-cfm">Airflow: 36.3 CFM</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary">volume_up</span>
+<span class="" id="fan-noise">Sound: 33.7 dBA</span>
+</div>
+<div class="hidden items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-primary text-[10px] font-mono tracking-tight" id="sound-indicator-badge">
+<div class="flex items-end gap-0.5 h-3 w-3 pb-0.5">
+<span class="w-0.5 bg-signal-pulse animate-pulse h-1.5"></span>
+<span class="w-0.5 bg-signal-pulse animate-pulse h-3"></span>
+<span class="w-0.5 bg-signal-pulse animate-pulse h-2"></span>
+</div>
+<span class="" id="sound-indicator-text">Active: 98 Hz Hum + 1.44 kHz</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Diagnostic Graph Card with Tabs (Oscilloscope vs Transfer Curve vs FFT Spectrum) -->
+<div class="rounded-xl bg-surface-pure shadow-sm p-space-lg flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container text-primary font-label-md text-label-md font-bold transition-all" id="tab-btn-scope" type="button">
+            PWM Waveform (Oscilloscope)
+          </button>
+<button class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all" id="tab-btn-curve" type="button">
+            RPM vs Duty Cycle Transfer Curve
+          </button>
+<button class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-1.5" id="tab-btn-fft" type="button">
+<span class="material-symbols-outlined text-[16px]">equalizer</span>
+            FFT Spectrum Analysis
+          </button>
+</div>
+<!-- Scope / Curve Trace Badges -->
+<div class="flex items-center gap-space-md font-label-sm text-label-sm" id="trace-legend-default">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-signal-pulse inline-block"></span>
+<span class="text-on-surface">V_Gate (Ch1 5V/div)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-analog-trace inline-block"></span>
+<span class="text-on-surface">V_Cap C1 (Ch2)</span>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-mono text-primary" id="timebase-label">Timebase: 200 µs/div</span>
+</div>
+<!-- FFT Specific Controls Bar -->
+<div class="hidden flex-wrap items-center gap-space-sm font-label-sm text-label-sm" id="trace-legend-fft">
+<div class="flex items-center gap-1.5 bg-surface-muted px-2 py-1 rounded-lg border border-border-subtle">
+<span class="text-on-surface-variant font-medium">Window:</span>
+<select class="bg-transparent font-mono text-[11px] text-on-surface focus:outline-none cursor-pointer" id="fft-window-select">
+<option selected="" value="hanning">Hanning</option>
+<option value="blackman">Blackman-Harris</option>
+<option value="flattop">Flat Top</option>
+</select>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-muted px-2 py-1 rounded-lg border border-border-subtle">
+<span class="text-on-surface-variant font-medium">Source:</span>
+<select class="bg-transparent font-mono text-[11px] text-on-surface focus:outline-none cursor-pointer" id="fft-source-select">
+<option selected="" value="auto">Auto (Live/Synth)</option>
+<option value="electrical">Electrical Gate (PWM)</option>
+<option value="acoustic">Acoustic Motor BPF</option>
+</select>
+</div>
+<label class="flex items-center gap-1.5 cursor-pointer select-none">
+<input checked="" class="rounded text-primary focus:ring-0 w-3.5 h-3.5" id="fft-peak-detect" type="checkbox">
+<span class="text-on-surface">Peak Markers</span>
+</label>
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-mono text-primary text-[11px]" id="fft-rbw-badge">RBW: 19.5 Hz</span>
+</div>
+</div>
+<!-- Tab 1: Oscilloscope View Screen -->
+<div class="w-full h-72 rounded-xl bg-ground-gnd p-space-md relative overflow-hidden flex flex-col justify-between" id="tab-scope-content">
+<!-- Oscilloscope Grid Background -->
+<svg class="w-full h-full" id="oscilloscope-svg" preserveAspectRatio="none" viewBox="0 0 900 240">
+<defs>
+<pattern height="40" id="scope-grid" patternUnits="userSpaceOnUse" width="75">
+<path d="M 75 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-dasharray="2,3" stroke-width="0.8"></path>
+</pattern>
+</defs>
+<rect fill="#0F172A" height="240" width="900"></rect>
+<rect fill="url(#scope-grid)" height="240" width="900"></rect>
+<!-- Center Reference crosshairs -->
+<line stroke="#475569" stroke-width="1" x1="0" x2="900" y1="120" y2="120"></line>
+<line stroke="#475569" stroke-width="1" x1="450" x2="450" y1="0" y2="240"></line>
+<!-- Dynamic Waveforms -->
+<!-- Ch 1: Square PWM Waveform -->
+<path d="M 0 45 L 0 45 L 117 45 L 117 200 L 180 200 L 180 45 L 297 45 L 297 200 L 360 200 L 360 45 L 477 45 L 477 200 L 540 200 L 540 45 L 657 45 L 657 200 L 720 200 L 720 45 L 837 45 L 837 200 L 900 200" fill="none" id="wave-pwm" stroke="#0284C7" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- Ch 2: Capacitor Charge/Discharge Exponential ramp -->
+<path d="M 0 150 Q 46.800000000000004 80, 117 90 Q 148.5 160, 180 150 Q 226.8 80, 297 90 Q 328.5 160, 360 150 Q 406.8 80, 477 90 Q 508.5 160, 540 150 Q 586.8 80, 657 90 Q 688.5 160, 720 150 Q 766.8 80, 837 90 Q 868.5 160, 900 150" fill="none" id="wave-cap" opacity="0.85" stroke="#10B981" stroke-linejoin="round" stroke-width="2"></path>
+<!-- Voltage Markers -->
+<text fill="#94A3B8" font-family="monospace" font-size="10" x="15" y="45">12.0V VCC</text>
+<text fill="#94A3B8" font-family="monospace" font-size="10" x="15" y="125">6.0V</text>
+<text fill="#94A3B8" font-family="monospace" font-size="10" x="15" y="205">0.0V GND</text>
+<!-- Dynamic Ton/Toff markers -->
+<g id="scope-annotations">
+<line id="ton-marker-line" marker-end="url(#arrow)" stroke="#93CCFF" stroke-width="1.5" x1="100" x2="217" y1="215" y2="215"></line>
+<text fill="#93CCFF" font-family="monospace" font-size="10" id="ton-text" text-anchor="middle" x="158.5" y="228">Ton: 451 µs (65%)</text>
+<text fill="#94A3B8" font-family="monospace" font-size="10" id="toff-text" text-anchor="middle" x="260" y="228">Toff: 243 µs (35%)</text>
+</g>
+</svg>
+<div class="absolute bottom-2 right-4 flex items-center gap-3 font-label-sm text-label-sm text-slate-400">
+<span class="">V_peak: 12.0 V</span>
+<span class="">T_total: 694 µs</span>
+<span class="text-analog-trace">Trigger: AUTO CH1</span>
+</div>
+</div>
+<!-- Tab 2: Transfer Curve (Hidden by default) -->
+<div class="w-full h-72 rounded-xl bg-surface-canvas p-space-md relative overflow-hidden hidden flex-col justify-between" id="tab-curve-content">
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 900 240">
+<!-- Axes -->
+<line stroke="#707881" stroke-width="1.5" x1="80" x2="80" y1="20" y2="200"></line>
+<line stroke="#707881" stroke-width="1.5" x1="80" x2="860" y1="200" y2="200"></line>
+<!-- Axis Labels -->
+<text fill="#0B1C30" font-size="10" font-weight="600" x="40" y="30">3000 RPM</text>
+<text fill="#707881" font-size="10" x="40" y="115">1500 RPM</text>
+<text fill="#707881" font-size="10" x="50" y="200">0 RPM</text>
+<text fill="#707881" font-size="10" x="80" y="218">0%</text>
+<text fill="#EF4444" font-size="10" x="236" y="218">20% Stall</text>
+<text fill="#707881" font-size="10" x="470" y="218">50%</text>
+<text fill="#0284C7" font-size="10" font-weight="700" x="587" y="218">65% Active</text>
+<text fill="#707881" font-size="10" x="840" y="218">100%</text>
+<!-- Stall Zone Highlight -->
+<rect fill="#EF4444" fill-opacity="0.05" height="180" width="156" x="80" y="20"></rect>
+<line stroke="#EF4444" stroke-dasharray="3,3" stroke-width="1" x1="236" x2="236" y1="20" y2="200"></line>
+<!-- Nonlinear RPM Transfer Curve: Flat 0 until 20%, then linear rise up to 3000 -->
+<path d="M 80 200 L 236 200 C 260 195, 300 175, 340 160 L 860 25" fill="none" stroke="#0051D5" stroke-width="3"></path>
+<circle cx="587" cy="91.35416666666666" fill="#0284C7" id="curve-operating-point" r="6" stroke="#FFFFFF" stroke-width="2"></circle>
+<line id="curve-crosshair-v" stroke="#0284C7" stroke-dasharray="2,2" stroke-width="1.2" x1="587" x2="587" y1="20" y2="200"></line>
+</svg>
+</div>
+<!-- Tab 3: FFT Spectrum Analysis Screen (Hidden by default) -->
+<div class="w-full h-80 rounded-xl bg-ground-gnd p-space-sm sm:p-space-md relative overflow-hidden hidden flex-col justify-between" id="tab-fft-content">
+<!-- Top Telemetry Pill Strip for FFT Analysis -->
+<div class="flex flex-wrap items-center justify-between gap-2 z-10 pointer-events-none mb-1">
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-white font-mono text-[11px] shadow-xs">
+<span class="w-2 h-2 rounded-full bg-signal-pulse animate-pulse"></span>
+<span class="text-slate-400">Carrier f0:</span>
+<span class="font-bold text-signal-pulse" id="fft-carrier-badge">1.44 kHz (-5.8 dB)</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-white font-mono text-[11px] shadow-xs">
+<span class="w-2 h-2 rounded-full bg-analog-trace"></span>
+<span class="text-slate-400">Motor BPF:</span>
+<span class="font-bold text-analog-trace" id="fft-bpf-badge">98 Hz (-14.2 dB)</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-white font-mono text-[11px] shadow-xs">
+<span class="text-slate-400">THD:</span>
+<span class="font-bold text-amber-400" id="fft-thd-badge">24.6 %</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-white font-mono text-[11px] shadow-xs">
+<span class="text-slate-400">Floor:</span>
+<span class="font-bold text-slate-300" id="fft-floor-badge">-74.0 dB</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-slate-400 font-mono text-[10px]">
+<span class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-cyan-400" id="fft-engine-mode">Synthesized Live FFT</span>
+<span class="">Log Scale (0–20 kHz)</span>
+</div>
+</div>
+<!-- High Precision Interactive FFT Spectrum Canvas -->
+<div class="relative w-full flex-1 min-h-[190px]">
+<canvas class="w-full h-full block rounded-lg cursor-crosshair" id="fft-canvas"></canvas>
+<!-- Hover Tooltip Overlay -->
+<div class="absolute hidden pointer-events-none px-2 py-1 rounded bg-slate-900/95 border border-cyan-500/50 text-[11px] font-mono text-cyan-300 shadow-lg transform -translate-x-1/2 -translate-y-full" id="fft-tooltip">
+<span class="" id="fft-tooltip-text">1.44 kHz: -6.2 dB</span>
+</div>
+</div>
+<!-- FFT Frequency X-Axis Bottom Markers -->
+<div class="w-full flex justify-between items-center text-[10px] font-mono text-slate-400 pt-1 border-t border-slate-800">
+<span class="">0 Hz (DC)</span>
+<span class="text-emerald-400">100 Hz (BPF)</span>
+<span class="text-cyan-400">1.44 kHz (f0)</span>
+<span class="text-cyan-300">2.88 kHz (2f0)</span>
+<span class="text-cyan-300">4.32 kHz (3f0)</span>
+<span class="">10 kHz</span>
+<span class="">20 kHz</span>
+</div>
+</div>
+<!-- Graph Bottom Legend / Takeaway -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between text-body-sm font-body-sm text-on-surface-variant pt-space-xs">
+<p class="" id="bottom-insight-text">
+<strong class="text-on-surface">Engineering Insight:</strong> Below 20% duty cycle, brushless motor stator coils do not receive adequate starting torque to overcome static bearing friction, resulting in rotor stall.
+        </p>
+<span class="font-label-sm text-label-sm text-primary shrink-0" id="bottom-freq-badge">1.44 kHz eliminates audible coil whine</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initPwmFanLab() {
+    // State variables
+    let dutyCycle = 65;
+    let isPowered = true;
+    let isAnimated = true;
+    let fanAngle = 0;
+    let animFrameId = null;
+    let activeTab = 'scope'; // 'scope' | 'curve' | 'fft'
+
+    // Auto Sweep Controller State
+    let isAutoSweeping = false;
+    let sweepPattern = 'triangle'; // 'triangle' | 'sawtooth'
+    let sweepSpeedMultiplier = 1.0; // 0.5x, 1x, 2x
+    let sweepBaseDurationMs = 4000; // 4 seconds nominal
+    let sweepStartTime = null;
+    let sweepPhase = 0.65; // Normalized progress [0, 1]
+
+    // FFT & Analysis Parameters
+    let fftWindowType = 'hanning';
+    let fftSource = 'auto';
+    let showPeakMarkers = true;
+    let peakHoldBuffer = new Float32Array(256).fill(-80);
+
+    // Web Audio API State
+    let audioCtx = null;
+    let isAudioEnabled = false;
+    let audioVolume = 0.5;
+    let oscHum = null;
+    let oscHarmonic = null;
+    let oscCarrier = null;
+    let gainHum = null;
+    let gainCarrier = null;
+    let masterGain = null;
+    let filterCarrier = null;
+    let analyserNode = null;
+    let fftDataArray = null;
+
+    // Component DOM targets
+    const dutySlider = document.getElementById('duty-slider');
+    const knobValueDisplay = document.getElementById('knob-value-display');
+    const rotaryKnob = document.getElementById('rotary-knob');
+    const dialProgressArc = document.getElementById('dial-progress-arc');
+    const powerToggle = document.getElementById('power-toggle');
+    const toggleAnim = document.getElementById('toggle-anim');
+    const resetBtn = document.getElementById('reset-defaults-btn');
+
+    // Auto Sweep DOM targets
+    const sweepPlayBtn = document.getElementById('sweep-play-btn');
+    const sweepPlayIcon = document.getElementById('sweep-play-icon');
+    const sweepPlayText = document.getElementById('sweep-play-text');
+    const sweepStatusDot = document.getElementById('sweep-status-dot');
+    const sweepStatusBadge = document.getElementById('sweep-status-badge');
+    const sweepCycleVal = document.getElementById('sweep-cycle-val');
+    const sweepProgressBar = document.getElementById('sweep-progress-bar');
+    const patternTriangleBtn = document.getElementById('pattern-triangle-btn');
+    const patternSawtoothBtn = document.getElementById('pattern-sawtooth-btn');
+    const speed05xBtn = document.getElementById('speed-05x');
+    const speed1xBtn = document.getElementById('speed-1x');
+    const speed2xBtn = document.getElementById('speed-2x');
+
+    // Audio DOM elements
+    const audioToggleBtn = document.getElementById('audio-toggle-btn');
+    const audioIcon = document.getElementById('audio-icon');
+    const audioBadge = document.getElementById('audio-badge');
+    const audioVolumeInput = document.getElementById('audio-volume');
+    const audioVolumeText = document.getElementById('audio-volume-text');
+    const soundIndicatorBadge = document.getElementById('sound-indicator-badge');
+    const soundIndicatorText = document.getElementById('sound-indicator-text');
+
+    // Readout targets
+    const readoutDuty = document.getElementById('readout-duty');
+    const meterDuty = document.getElementById('meter-duty');
+    const readoutVolts = document.getElementById('readout-volts');
+    const readoutRpm = document.getElementById('readout-rpm');
+    const readoutDba = document.getElementById('readout-dba');
+    const fanStatusBadge = document.getElementById('fan-status-badge');
+    const fanRotor = document.getElementById('fan-rotor');
+    const fanCfm = document.getElementById('fan-cfm');
+    const fanNoise = document.getElementById('fan-noise');
+    const potWiperText = document.getElementById('pot-wiper-text');
+    const simStatusPill = document.getElementById('sim-status-pill');
+    const fetStateLabel = document.getElementById('fet-state-label');
+
+    // Oscilloscope & Graph elements
+    const wavePwm = document.getElementById('wave-pwm');
+    const waveCap = document.getElementById('wave-cap');
+    const tonMarkerLine = document.getElementById('ton-marker-line');
+    const tonText = document.getElementById('ton-text');
+    const toffText = document.getElementById('toff-text');
+    const curveOperatingPoint = document.getElementById('curve-operating-point');
+    const curveCrosshairV = document.getElementById('curve-crosshair-v');
+
+    // Tabs DOM elements
+    const tabBtnScope = document.getElementById('tab-btn-scope');
+    const tabBtnCurve = document.getElementById('tab-btn-curve');
+    const tabBtnFft = document.getElementById('tab-btn-fft');
+    const tabScopeContent = document.getElementById('tab-scope-content');
+    const tabCurveContent = document.getElementById('tab-curve-content');
+    const tabFftContent = document.getElementById('tab-fft-content');
+    const traceLegendDefault = document.getElementById('trace-legend-default');
+    const traceLegendFft = document.getElementById('trace-legend-fft');
+    const bottomInsightText = document.getElementById('bottom-insight-text');
+    const bottomFreqBadge = document.getElementById('bottom-freq-badge');
+
+    // FFT Canvas & telemetry badges
+    const fftCanvas = document.getElementById('fft-canvas');
+    const fftTooltip = document.getElementById('fft-tooltip');
+    const fftTooltipText = document.getElementById('fft-tooltip-text');
+    const fftCarrierBadge = document.getElementById('fft-carrier-badge');
+    const fftBpfBadge = document.getElementById('fft-bpf-badge');
+    const fftThdBadge = document.getElementById('fft-thd-badge');
+    const fftFloorBadge = document.getElementById('fft-floor-badge');
+    const fftEngineMode = document.getElementById('fft-engine-mode');
+    const fftWindowSelect = document.getElementById('fft-window-select');
+    const fftSourceSelect = document.getElementById('fft-source-select');
+    const fftPeakDetectCheckbox = document.getElementById('fft-peak-detect');
+
+    // Web Audio Synthesizer Engine & AnalyserNode Hook
+    function initAudioContext() {
+      if (audioCtx) return;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      audioCtx = new AudioCtx();
+
+      // AnalyserNode for live FFT
+      analyserNode = audioCtx.createAnalyser();
+      analyserNode.fftSize = 1024;
+      analyserNode.smoothingTimeConstant = 0.8;
+      fftDataArray = new Uint8Array(analyserNode.frequencyBinCount);
+
+      // Master gain node
+      masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+      masterGain.connect(analyserNode);
+      analyserNode.connect(audioCtx.destination);
+
+      // 1. Motor Blade Passing Frequency Hum (Fundamental: 3 blades * RPM / 60)
+      oscHum = audioCtx.createOscillator();
+      oscHum.type = 'sawtooth';
+      oscHum.frequency.setValueAtTime(97.5, audioCtx.currentTime);
+
+      // Low pass filter to soften the sawtooth into motor mechanical hum
+      const humFilter = audioCtx.createBiquadFilter();
+      humFilter.type = 'lowpass';
+      humFilter.frequency.setValueAtTime(350, audioCtx.currentTime);
+
+      gainHum = audioCtx.createGain();
+      gainHum.gain.setValueAtTime(0, audioCtx.currentTime);
+
+      oscHum.connect(humFilter);
+      humFilter.connect(gainHum);
+      gainHum.connect(masterGain);
+      oscHum.start();
+
+      // 2. Harmonic overtone (2nd order blade turbulence)
+      oscHarmonic = audioCtx.createOscillator();
+      oscHarmonic.type = 'triangle';
+      oscHarmonic.frequency.setValueAtTime(195, audioCtx.currentTime);
+      const gainHarmonic = audioCtx.createGain();
+      gainHarmonic.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      oscHarmonic.connect(gainHarmonic);
+      gainHarmonic.connect(gainHum);
+      oscHarmonic.start();
+
+      // 3. 1.44 kHz PWM Carrier Whine (Coil switching artifact)
+      oscCarrier = audioCtx.createOscillator();
+      oscCarrier.type = 'square';
+      oscCarrier.frequency.setValueAtTime(1440, audioCtx.currentTime);
+
+      filterCarrier = audioCtx.createBiquadFilter();
+      filterCarrier.type = 'bandpass';
+      filterCarrier.frequency.setValueAtTime(1440, audioCtx.currentTime);
+      filterCarrier.Q.setValueAtTime(8, audioCtx.currentTime);
+
+      gainCarrier = audioCtx.createGain();
+      gainCarrier.gain.setValueAtTime(0, audioCtx.currentTime);
+
+      oscCarrier.connect(filterCarrier);
+      filterCarrier.connect(gainCarrier);
+      gainCarrier.connect(masterGain);
+      oscCarrier.start();
+    }
+
+    function updateAudioParameters(duty, power) {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+
+      if (!isAudioEnabled || !power || duty === 0) {
+        masterGain.gain.setTargetAtTime(0, now, 0.05);
+        return;
+      }
+
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const telemetry = computeTelemetry(duty, power);
+      const rpm = telemetry.rpm;
+
+      if (rpm === 0) {
+        masterGain.gain.setTargetAtTime(audioVolume * 0.15, now, 0.05);
+        gainHum.gain.setTargetAtTime(0, now, 0.04);
+        gainCarrier.gain.setTargetAtTime(0.04, now, 0.04);
+        return;
+      }
+
+      const bpf = Math.max(20, (3 * rpm) / 60);
+      oscHum.frequency.setTargetAtTime(bpf, now, 0.04);
+      oscHarmonic.frequency.setTargetAtTime(bpf * 2, now, 0.04);
+
+      const humAmp = 0.12 + (rpm / 3000) * 0.28;
+      gainHum.gain.setTargetAtTime(humAmp, now, 0.04);
+
+      const pwmHarmonicFactor = Math.sin((duty / 100) * Math.PI);
+      const carrierAmp = 0.015 + pwmHarmonicFactor * 0.04;
+      gainCarrier.gain.setTargetAtTime(carrierAmp, now, 0.04);
+
+      masterGain.gain.setTargetAtTime(audioVolume, now, 0.03);
+    }
+
+    function toggleAudio() {
+      initAudioContext();
+      isAudioEnabled = !isAudioEnabled;
+      if (audioCtx && audioCtx.state === 'suspended' && isAudioEnabled) {
+        audioCtx.resume();
+      }
+
+      if (isAudioEnabled) {
+        audioToggleBtn.classList.add('bg-primary-container', 'text-on-primary-container');
+        audioToggleBtn.classList.remove('bg-surface-pure', 'text-on-surface-variant');
+        audioIcon.textContent = 'volume_up';
+        audioBadge.textContent = 'Active';
+        audioBadge.className = 'px-1.5 py-0.2 rounded text-[10px] font-mono uppercase bg-signal-pulse/15 text-signal-pulse font-bold';
+        soundIndicatorBadge.classList.remove('hidden');
+        soundIndicatorBadge.classList.add('flex');
+      } else {
+        audioToggleBtn.classList.remove('bg-primary-container', 'text-on-primary-container');
+        audioToggleBtn.classList.add('bg-surface-pure', 'text-on-surface-variant');
+        audioIcon.textContent = 'volume_off';
+        audioBadge.textContent = 'Muted';
+        audioBadge.className = 'px-1.5 py-0.2 rounded text-[10px] font-mono uppercase bg-surface-muted text-on-surface-variant';
+        soundIndicatorBadge.classList.add('hidden');
+        soundIndicatorBadge.classList.remove('flex');
+      }
+      updateAudioParameters(dutyCycle, isPowered);
+    }
+
+    // Calculate electrical & kinetic variables
+    function computeTelemetry(duty, power) {
+      if (!power || duty === 0) {
+        return {
+          duty: duty,
+          volts: 0.0,
+          rpm: 0,
+          dba: 18.0,
+          cfm: 0.0,
+          ton_us: 0,
+          toff_us: 694
+        };
+      }
+
+      const volts = (duty / 100) * 12.0;
+      let rpm = 0;
+      if (duty >= 20) {
+        const normalized = (duty - 20) / 80;
+        rpm = Math.round(400 + normalized * 2600);
+      }
+
+      const dba = rpm > 0 ? (20 + (rpm / 3000) * 22).toFixed(1) : '18.0';
+      const cfm = ((rpm / 3000) * 58.5).toFixed(1);
+      const totalPeriodUs = 694;
+      const ton_us = Math.round((duty / 100) * totalPeriodUs);
+      const toff_us = totalPeriodUs - ton_us;
+
+      return { duty, volts, rpm, dba, cfm, ton_us, toff_us };
+    }
+
+    // Render Oscilloscope waveform SVG paths
+    function updateWaveforms(duty, power) {
+      if (!power) {
+        wavePwm.setAttribute('d', 'M 0 200 L 900 200');
+        waveCap.setAttribute('d', 'M 0 200 L 900 200');
+        tonMarkerLine.setAttribute('x2', '100');
+        tonText.textContent = 'VCC Disconnected';
+        toffText.textContent = '';
+        return;
+      }
+
+      const periodPx = 180;
+      const highY = 45;
+      const lowY = 200;
+      const capHighY = 90;
+      const capLowY = 150;
+
+      const dutyFraction = Math.max(0.02, Math.min(0.98, duty / 100));
+      const tonPx = periodPx * dutyFraction;
+      const toffPx = periodPx - tonPx;
+
+      let pwmPath = `M 0 ${dutyFraction > 0 ? highY : lowY}`;
+      let capPath = `M 0 ${capLowY}`;
+
+      for (let x = 0; x < 900; x += periodPx) {
+        pwmPath += ` L ${x} ${highY} L ${x + tonPx} ${highY} L ${x + tonPx} ${lowY} L ${x + periodPx} ${lowY}`;
+        const midChargeX = x + tonPx;
+        capPath += ` Q ${x + tonPx * 0.4} ${capHighY - 10}, ${midChargeX} ${capHighY}`;
+        capPath += ` Q ${midChargeX + toffPx * 0.5} ${capLowY + 10}, ${x + periodPx} ${capLowY}`;
+      }
+
+      wavePwm.setAttribute('d', pwmPath);
+      waveCap.setAttribute('d', capPath);
+
+      const markStartX = 100;
+      const markEndX = markStartX + tonPx;
+      tonMarkerLine.setAttribute('x1', markStartX);
+      tonMarkerLine.setAttribute('x2', markEndX);
+      tonText.setAttribute('x', (markStartX + markEndX) / 2);
+
+      const totalPeriodUs = 694;
+      const tonVal = Math.round(dutyFraction * totalPeriodUs);
+      const toffVal = totalPeriodUs - tonVal;
+      tonText.textContent = `Ton: ${tonVal} µs (${Math.round(duty)}%)`;
+      toffText.textContent = `Toff: ${toffVal} µs (${Math.round(100 - duty)}%)`;
+
+      const curveX = 80 + (duty / 100) * 780;
+      let curveY = 200;
+      if (duty >= 20) {
+        const norm = (duty - 20) / 80;
+        const rpm = 400 + norm * 2600;
+        curveY = 200 - (rpm / 3000) * 175;
+      }
+      curveOperatingPoint.setAttribute('cx', curveX);
+      curveOperatingPoint.setAttribute('cy', curveY);
+      curveCrosshairV.setAttribute('x1', curveX);
+      curveCrosshairV.setAttribute('x2', curveX);
+    }
+
+    // FFT Spectrum Renderer Engine
+    function renderFftSpectrum() {
+      if (!fftCanvas) return;
+      const ctx = fftCanvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = fftCanvas.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+
+      if (fftCanvas.width !== rect.width * dpr || fftCanvas.height !== rect.height * dpr) {
+        fftCanvas.width = rect.width * dpr;
+        fftCanvas.height = rect.height * dpr;
+      }
+      ctx.save();
+      ctx.scale(dpr, dpr);
+
+      const width = rect.width;
+      const height = rect.height;
+
+      // Clear Canvas Background
+      ctx.fillStyle = '#0F172A';
+      ctx.fillRect(0, 0, width, height);
+
+      // Draw Grid Lines (dB scale -80dB to 0dB, frequency grid 20Hz, 100Hz, 1kHz, 10kHz, 20kHz)
+      ctx.strokeStyle = '#1E293B';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 3]);
+
+      // Y-axis grid (-80 to 0 dB, steps of 20 dB)
+      const dbSteps = [0, -20, -40, -60, -80];
+      ctx.fillStyle = '#64748B';
+      ctx.font = '10px JetBrains Mono, monospace';
+      ctx.textAlign = 'left';
+
+      dbSteps.forEach(db => {
+        const y = ((0 - db) / 80) * (height - 24) + 12;
+        ctx.beginPath();
+        ctx.moveTo(35, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+        ctx.fillText(`${db}dB`, 4, y + 3);
+      });
+
+      // Frequency map: Logarithmic from 20 Hz to 20,000 Hz
+      const fMin = 20;
+      const fMax = 20000;
+      function freqToX(f) {
+        if (f < fMin) return 35;
+        const logMin = Math.log10(fMin);
+        const logMax = Math.log10(fMax);
+        const ratio = (Math.log10(f) - logMin) / (logMax - logMin);
+        return 35 + ratio * (width - 45);
+      }
+
+      function xToFreq(x) {
+        const logMin = Math.log10(fMin);
+        const logMax = Math.log10(fMax);
+        const ratio = Math.max(0, Math.min(1, (x - 35) / (width - 45)));
+        return Math.pow(10, logMin + ratio * (logMax - logMin));
+      }
+
+      // Frequency grid vertical lines
+      const fGrid = [50, 100, 200, 500, 1000, 2000, 5000, 10000];
+      fGrid.forEach(f => {
+        const x = freqToX(f);
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height - 12);
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+
+      const telemetry = computeTelemetry(dutyCycle, isPowered);
+      const rpm = telemetry.rpm;
+      const bpf = rpm > 0 ? (3 * rpm) / 60 : 0;
+      const fCarrier = 1440; // 1.44 kHz
+
+      // Compute or sample spectrum points (256 frequency bins)
+      const numBins = 256;
+      const points = [];
+      const hasLiveAudio = isAudioEnabled && isPowered && analyserNode && audioCtx && audioCtx.state === 'running';
+
+      if (hasLiveAudio && fftSource !== 'electrical') {
+        fftEngineMode.textContent = 'Live Web Audio FFT (AnalyserNode)';
+        analyserNode.getByteFrequencyData(fftDataArray);
+      } else {
+        fftEngineMode.textContent = isPowered ? 'Mathematical Fourier Series FFT' : 'Rail Depowered (Noise Floor)';
+      }
+
+      // Windowing multiplier adjustment
+      let windowFactor = 1.0;
+      if (fftWindowType === 'blackman') windowFactor = 0.95;
+      if (fftWindowType === 'flattop') windowFactor = 1.05;
+
+      const D = dutyCycle / 100;
+      const noiseFloorDb = isPowered ? -74.0 : -85.0;
+
+      for (let i = 0; i < numBins; i++) {
+        const ratio = i / (numBins - 1);
+        const logMin = Math.log10(fMin);
+        const logMax = Math.log10(fMax);
+        const freq = Math.pow(10, logMin + ratio * (logMax - logMin));
+        const x = 35 + ratio * (width - 45);
+
+        let magDb = noiseFloorDb + (Math.sin(i * 13) * 1.5); // Baseline thermal noise
+
+        if (isPowered && dutyCycle > 0) {
+          // 1. Motor Blade Passing Frequency (BPF) Mechanical Peak + 2nd & 3rd Harmonics
+          if (bpf > 0 && fftSource !== 'electrical') {
+            const bpfAmp = -14.2 + (rpm / 3000) * 8.0;
+            // Fundamental BPF
+            const bpfDist = Math.abs(freq - bpf) / (bpf * 0.12);
+            if (bpfDist < 3) {
+              magDb = Math.max(magDb, bpfAmp - bpfDist * 12);
+            }
+            // 2nd Harmonic
+            const bpf2Dist = Math.abs(freq - (bpf * 2)) / (bpf * 2 * 0.14);
+            if (bpf2Dist < 3) {
+              magDb = Math.max(magDb, bpfAmp - 7 - bpf2Dist * 12);
+            }
+            // 3rd Harmonic
+            const bpf3Dist = Math.abs(freq - (bpf * 3)) / (bpf * 3 * 0.16);
+            if (bpf3Dist < 3) {
+              magDb = Math.max(magDb, bpfAmp - 14 - bpf3Dist * 14);
+            }
+          }
+
+          // 2. PWM Carrier Harmonics (f0 = 1.44 kHz, 2f0 = 2.88 kHz, 3f0 = 4.32 kHz, 4f0, etc.)
+          if (fftSource !== 'acoustic') {
+            for (let n = 1; n <= 8; n++) {
+              const fHarmonic = fCarrier * n;
+              if (fHarmonic > 20000) break;
+
+              const an = (2 / (n * Math.PI)) * Math.abs(Math.sin(n * Math.PI * D));
+              const harmonicDb = an > 0.001 ? Math.max(-75, 20 * Math.log10(an) - 2.5) : -75;
+
+              const harmDist = Math.abs(freq - fHarmonic) / (fHarmonic * 0.05);
+              if (harmDist < 3.2) {
+                const peakVal = (harmonicDb - harmDist * 14) * windowFactor;
+                magDb = Math.max(magDb, peakVal);
+              }
+            }
+          }
+
+          // If live audio analyser is available, blend live data
+          if (hasLiveAudio && fftDataArray && fftSource !== 'electrical') {
+            const nyquist = audioCtx.sampleRate / 2;
+            const binIdx = Math.floor((freq / nyquist) * analyserNode.frequencyBinCount);
+            if (binIdx >= 0 && binIdx < analyserNode.frequencyBinCount) {
+              const liveByte = fftDataArray[binIdx];
+              const liveDb = (liveByte / 255) * 80 - 80;
+              magDb = Math.max(magDb, liveDb * 0.95);
+            }
+          }
+        }
+
+        // Clamp to [-80, 0] dB
+        magDb = Math.max(-80, Math.min(0, magDb));
+
+        // Update Peak-Hold decay buffer
+        if (magDb > peakHoldBuffer[i]) {
+          peakHoldBuffer[i] = magDb;
+        } else {
+          peakHoldBuffer[i] = Math.max(-80, peakHoldBuffer[i] - 0.25);
+        }
+
+        const y = ((0 - magDb) / 80) * (height - 24) + 12;
+        const yPeak = ((0 - peakHoldBuffer[i]) / 80) * (height - 24) + 12;
+        points.push({ x, y, yPeak, freq, db: magDb });
+      }
+
+      // Draw Glowing Spectral Gradient Area
+      if (points.length > 0) {
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, height - 12);
+        for (let i = 0; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.lineTo(points[points.length - 1].x, height - 12);
+        ctx.closePath();
+
+        const grad = ctx.createLinearGradient(0, 0, 0, height);
+        grad.addColorStop(0, 'rgba(2, 132, 199, 0.45)');
+        grad.addColorStop(0.5, 'rgba(16, 185, 129, 0.2)');
+        grad.addColorStop(1, 'rgba(15, 23, 42, 0.05)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Draw Peak Hold Line
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(147, 204, 255, 0.5)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 2]);
+        for (let i = 0; i < points.length; i++) {
+          if (i === 0) ctx.moveTo(points[i].x, points[i].yPeak);
+          else ctx.lineTo(points[i].x, points[i].yPeak);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Draw Active Spectrum Curve
+        ctx.beginPath();
+        ctx.strokeStyle = '#0284C7';
+        ctx.lineWidth = 2.2;
+        ctx.shadowColor = '#0284C7';
+        ctx.shadowBlur = 6;
+        for (let i = 0; i < points.length; i++) {
+          if (i === 0) ctx.moveTo(points[i].x, points[i].y);
+          else ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // Peak Markers & Annotations
+      if (showPeakMarkers && isPowered && dutyCycle > 0) {
+        const xF0 = freqToX(1440);
+        const a1 = (2 / Math.PI) * Math.abs(Math.sin(Math.PI * D));
+        const dbF0 = Math.max(-75, 20 * Math.log10(a1) - 2.5);
+        const yF0 = ((0 - dbF0) / 80) * (height - 24) + 12;
+
+        ctx.fillStyle = '#0284C7';
+        ctx.beginPath();
+        ctx.arc(xF0, yF0, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#93CCFF';
+        ctx.font = 'bold 9px JetBrains Mono, monospace';
+        ctx.fillText('f0 1.44k', xF0 - 18, Math.max(20, yF0 - 8));
+
+        const xF1 = freqToX(2880);
+        const a2 = (1 / Math.PI) * Math.abs(Math.sin(2 * Math.PI * D));
+        const dbF1 = a2 > 0.001 ? Math.max(-75, 20 * Math.log10(a2) - 2.5) : -75;
+        const yF1 = ((0 - dbF1) / 80) * (height - 24) + 12;
+        if (dbF1 > -65) {
+          ctx.fillStyle = '#10B981';
+          ctx.beginPath();
+          ctx.arc(xF1, yF1, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillText('2f0', xF1 - 8, Math.max(20, yF1 - 8));
+        }
+
+        if (bpf > 0) {
+          const xBpf = freqToX(bpf);
+          const dbBpf = -14.2 + (rpm / 3000) * 8.0;
+          const yBpf = ((0 - dbBpf) / 80) * (height - 24) + 12;
+
+          ctx.fillStyle = '#10B981';
+          ctx.beginPath();
+          ctx.arc(xBpf, yBpf, 4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          ctx.fillStyle = '#6EE7B7';
+          ctx.fillText(`BPF ${Math.round(bpf)}Hz`, Math.max(38, xBpf - 24), Math.max(22, yBpf - 8));
+        }
+      }
+
+      // Update Telemetry Badges
+      const an1 = (2 / Math.PI) * Math.abs(Math.sin(Math.PI * D));
+      const calcF0Db = isPowered && dutyCycle > 0 ? (20 * Math.log10(an1) - 2.5).toFixed(1) : '-∞';
+      fftCarrierBadge.textContent = isPowered ? `1.44 kHz (${calcF0Db} dB)` : '0.0 kHz (OFF)';
+
+      const calcBpfDb = rpm > 0 ? (-14.2 + (rpm / 3000) * 8.0).toFixed(1) : '-';
+      fftBpfBadge.textContent = rpm > 0 ? `${Math.round(bpf)} Hz (${calcBpfDb} dB)` : 'Stalled (0 Hz)';
+
+      let thdVal = 0;
+      if (dutyCycle > 0 && dutyCycle < 100) {
+        thdVal = (18 + Math.abs(50 - dutyCycle) * 0.45).toFixed(1);
+      } else if (dutyCycle === 100) {
+        thdVal = '0.0';
+      } else {
+        thdVal = '0.0';
+      }
+      fftThdBadge.textContent = isPowered ? `${thdVal} %` : '0.0 %';
+      fftFloorBadge.textContent = isPowered ? '-74.0 dB' : '-85.0 dB';
+
+      ctx.restore();
+    }
+
+    // FFT Canvas interactive mouse inspection
+    fftCanvas.addEventListener('mousemove', (e) => {
+      const rect = fftCanvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      if (x < 35 || x > rect.width - 10) {
+        fftTooltip.classList.add('hidden');
+        return;
+      }
+
+      const logMin = Math.log10(20);
+      const logMax = Math.log10(20000);
+      const ratio = Math.max(0, Math.min(1, (x - 35) / (rect.width - 45)));
+      const freq = Math.pow(10, logMin + ratio * (logMax - logMin));
+
+      const freqStr = freq >= 1000 ? `${(freq / 1000).toFixed(2)} kHz` : `${Math.round(freq)} Hz`;
+      fftTooltipText.textContent = `Freq: ${freqStr}`;
+      fftTooltip.style.left = `${x}px`;
+      fftTooltip.style.top = `${e.clientY - rect.top - 8}px`;
+      fftTooltip.classList.remove('hidden');
+    });
+
+    fftCanvas.addEventListener('mouseleave', () => {
+      fftTooltip.classList.add('hidden');
+    });
+
+    // Update full UI states
+    function updateUI() {
+      const data = computeTelemetry(dutyCycle, isPowered);
+
+      readoutDuty.textContent = `${data.duty.toFixed(1)} %`;
+      meterDuty.style.width = `${data.duty}%`;
+      readoutVolts.textContent = `${data.volts.toFixed(2)} V`;
+      readoutRpm.textContent = `${data.rpm.toLocaleString()} RPM`;
+      readoutDba.textContent = `${data.dba} dBA`;
+
+      knobValueDisplay.textContent = `${Math.round(dutyCycle)}%`;
+      if (potWiperText) potWiperText.textContent = `${Math.round(dutyCycle)}% Wiper`;
+
+      const totalCircumference = 414.69;
+      const maxArcLength = totalCircumference * 0.75;
+      const progressLength = (dutyCycle / 100) * maxArcLength;
+      dialProgressArc.style.strokeDashoffset = totalCircumference - progressLength;
+
+      const knobDeg = -135 + (dutyCycle / 100) * 270;
+      rotaryKnob.style.transform = `rotate(${knobDeg}deg)`;
+      dutySlider.value = Math.round(dutyCycle);
+
+      // Auto Sweep Widget sync
+      sweepCycleVal.textContent = `Phase: ${Math.round(sweepPhase * 100)}% (D = ${data.duty.toFixed(1)}%)`;
+      sweepProgressBar.style.width = `${Math.max(0, Math.min(100, dutyCycle))}%`;
+
+      if (!isPowered) {
+        fanStatusBadge.textContent = '0 RPM (Power OFF)';
+        fanStatusBadge.className = 'font-label-sm text-label-sm text-on-surface-variant';
+        simStatusPill.textContent = 'VCC OFF';
+        fetStateLabel.textContent = 'Gate Pulled Down (GND)';
+      } else if (data.rpm === 0) {
+        fanStatusBadge.textContent = 'STALLED (<20% Threshold)';
+        fanStatusBadge.className = 'font-label-sm text-label-sm text-error font-bold';
+        simStatusPill.textContent = '12.0V Active (Stall)';
+        fetStateLabel.textContent = 'Switching (Below Start-Torque)';
+      } else {
+        fanStatusBadge.textContent = `${data.rpm.toLocaleString()} RPM Running`;
+        fanStatusBadge.className = 'font-label-sm text-label-sm text-signal-pulse font-bold';
+        simStatusPill.textContent = '12.0V Active (PWM)';
+        fetStateLabel.textContent = 'MOSFET Switching OK';
+      }
+
+      fanCfm.textContent = `Airflow: ${data.cfm} CFM`;
+      fanNoise.textContent = `Sound: ${data.dba} dBA`;
+
+      if (isAudioEnabled && isPowered && data.rpm > 0) {
+        const bpf = Math.round((3 * data.rpm) / 60);
+        soundIndicatorText.textContent = `Active: ${bpf} Hz Hum + 1.44 kHz`;
+      } else if (isAudioEnabled && isPowered && data.rpm === 0) {
+        soundIndicatorText.textContent = 'Active: 1.44 kHz Idle Buzz';
+      } else if (isAudioEnabled && !isPowered) {
+        soundIndicatorText.textContent = 'Muted: 0V Rail';
+      }
+
+      updateWaveforms(dutyCycle, isPowered);
+      updateAudioParameters(dutyCycle, isPowered);
+
+      if (activeTab === 'fft') {
+        renderFftSpectrum();
+      }
+    }
+
+    // Auto Sweep Controller Logic
+    function startAutoSweep() {
+      if (isAutoSweeping) return;
+      isAutoSweeping = true;
+      sweepStartTime = performance.now();
+      initAudioContext();
+
+      sweepPlayBtn.className = 'flex-1 px-space-md py-2 rounded-lg bg-error text-on-primary font-label-md text-label-md font-semibold hover:bg-error/90 transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer select-none';
+      sweepPlayIcon.textContent = 'pause';
+      sweepPlayText.textContent = '⏸ Standby / Pause';
+      sweepStatusDot.className = 'w-2 h-2 rounded-full bg-analog-trace animate-pulse';
+      sweepStatusBadge.textContent = 'RUNNING';
+      sweepStatusBadge.className = 'font-mono text-[11px] uppercase font-bold text-analog-trace tracking-wider';
+    }
+
+    function stopAutoSweep() {
+      if (!isAutoSweeping) return;
+      isAutoSweeping = false;
+      sweepStartTime = null;
+
+      sweepPlayBtn.className = 'flex-1 px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold hover:bg-primary-container transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer select-none';
+      sweepPlayIcon.textContent = 'play_arrow';
+      sweepPlayText.textContent = '▶ Auto Sweep Demo';
+      sweepStatusDot.className = 'w-2 h-2 rounded-full bg-slate-400';
+      sweepStatusBadge.textContent = 'IDLE';
+      sweepStatusBadge.className = 'font-mono text-[11px] uppercase font-bold text-on-surface-variant tracking-wider';
+    }
+
+    function toggleAutoSweep() {
+      if (isAutoSweeping) {
+        stopAutoSweep();
+      } else {
+        startAutoSweep();
+      }
+    }
+
+    // Auto Sweep Step calculations
+    function updateAutoSweepStep(now) {
+      if (!isAutoSweeping) return;
+
+      const duration = sweepBaseDurationMs / sweepSpeedMultiplier;
+      const elapsed = (now - sweepStartTime) % duration;
+      const progress = elapsed / duration; // 0 to 1
+      sweepPhase = progress;
+
+      let nextDuty = 0;
+      if (sweepPattern === 'triangle') {
+        // Continuous ping-pong: 0 -> 100 -> 0
+        if (progress < 0.5) {
+          nextDuty = (progress * 2) * 100;
+        } else {
+          nextDuty = (1 - (progress - 0.5) * 2) * 100;
+        }
+      } else {
+        // Sawtooth ramp: 0 -> 100 instantly reset to 0
+        nextDuty = progress * 100;
+      }
+
+      dutyCycle = Math.round(nextDuty * 10) / 10;
+      updateUI();
+    }
+
+    // Animation Loop for live rotor spin, FFT, and Auto Sweep
+    function renderAnimation(timestamp) {
+      if (isAutoSweeping) {
+        updateAutoSweepStep(timestamp);
+      }
+
+      if (isPowered && isAnimated && dutyCycle >= 20) {
+        const rpm = computeTelemetry(dutyCycle, true).rpm;
+        const step = (rpm / 60) * 0.36;
+        fanAngle = (fanAngle + step) % 360;
+        fanRotor.style.transform = `rotate(${fanAngle}deg)`;
+      }
+
+      // If FFT tab is active, continuously refresh spectrum
+      if (activeTab === 'fft') {
+        renderFftSpectrum();
+      }
+
+      animFrameId = requestAnimationFrame(renderAnimation);
+    }
+
+    // Auto Sweep UI Event Listeners
+    sweepPlayBtn.addEventListener('click', toggleAutoSweep);
+
+    patternTriangleBtn.addEventListener('click', () => {
+      sweepPattern = 'triangle';
+      patternTriangleBtn.className = 'sweep-pattern-btn px-2.5 py-1.5 rounded-lg border border-signal-pulse bg-surface-container-low text-primary font-label-sm text-[11px] font-semibold flex items-center justify-center gap-1 transition-all cursor-pointer';
+      patternSawtoothBtn.className = 'sweep-pattern-btn px-2.5 py-1.5 rounded-lg border border-border-subtle bg-surface-pure text-on-surface-variant hover:text-on-surface font-label-sm text-[11px] font-medium flex items-center justify-center gap-1 transition-all cursor-pointer';
+    });
+
+    patternSawtoothBtn.addEventListener('click', () => {
+      sweepPattern = 'sawtooth';
+      patternSawtoothBtn.className = 'sweep-pattern-btn px-2.5 py-1.5 rounded-lg border border-signal-pulse bg-surface-container-low text-primary font-label-sm text-[11px] font-semibold flex items-center justify-center gap-1 transition-all cursor-pointer';
+      patternTriangleBtn.className = 'sweep-pattern-btn px-2.5 py-1.5 rounded-lg border border-border-subtle bg-surface-pure text-on-surface-variant hover:text-on-surface font-label-sm text-[11px] font-medium flex items-center justify-center gap-1 transition-all cursor-pointer';
+    });
+
+    function setSpeed(speedVal) {
+      sweepSpeedMultiplier = speedVal;
+      [speed05xBtn, speed1xBtn, speed2xBtn].forEach(b => {
+        b.className = 'sweep-speed-btn px-2 py-1 rounded text-[11px] font-mono font-medium text-on-surface-variant hover:text-on-surface transition-all cursor-pointer';
+      });
+      if (speedVal === 0.5) speed05xBtn.className = 'sweep-speed-btn px-2 py-1 rounded text-[11px] font-mono font-bold bg-surface-pure text-primary shadow-xs transition-all cursor-pointer';
+      if (speedVal === 1.0) speed1xBtn.className = 'sweep-speed-btn px-2 py-1 rounded text-[11px] font-mono font-bold bg-surface-pure text-primary shadow-xs transition-all cursor-pointer';
+      if (speedVal === 2.0) speed2xBtn.className = 'sweep-speed-btn px-2 py-1 rounded text-[11px] font-mono font-bold bg-surface-pure text-primary shadow-xs transition-all cursor-pointer';
+      if (isAutoSweeping) {
+        sweepStartTime = performance.now();
+      }
+    }
+
+    speed05xBtn.addEventListener('click', () => setSpeed(0.5));
+    speed1xBtn.addEventListener('click', () => setSpeed(1.0));
+    speed2xBtn.addEventListener('click', () => setSpeed(2.0));
+
+    // Manual potentiometer scrubbing overrides sweep cleanly
+    dutySlider.addEventListener('input', (e) => {
+      stopAutoSweep();
+      dutyCycle = parseInt(e.target.value, 10);
+      initAudioContext();
+      updateUI();
+    });
+
+    powerToggle.addEventListener('change', (e) => {
+      isPowered = e.target.checked;
+      initAudioContext();
+      updateUI();
+    });
+
+    toggleAnim.addEventListener('change', (e) => {
+      isAnimated = e.target.checked;
+      if (!isAnimated) {
+        fanRotor.style.transform = 'rotate(0deg)';
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      stopAutoSweep();
+      dutyCycle = 65;
+      dutySlider.value = 65;
+      powerToggle.checked = true;
+      isPowered = true;
+      initAudioContext();
+      updateUI();
+    });
+
+    // Audio controls
+    audioToggleBtn.addEventListener('click', () => {
+      toggleAudio();
+    });
+
+    audioVolumeInput.addEventListener('input', (e) => {
+      audioVolume = parseInt(e.target.value, 10) / 100;
+      audioVolumeText.textContent = `${e.target.value}%`;
+      initAudioContext();
+      updateAudioParameters(dutyCycle, isPowered);
+    });
+
+    // Preset Buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        stopAutoSweep();
+        const val = parseInt(btn.getAttribute('data-val'), 10);
+        dutyCycle = val;
+        dutySlider.value = val;
+        initAudioContext();
+        updateUI();
+
+        document.querySelectorAll('.preset-btn').forEach(b => {
+          b.className = 'preset-btn px-3 py-1.5 rounded-lg bg-surface-muted hover:bg-surface-container font-label-sm text-label-sm text-on-surface transition-all flex-1';
+        });
+        btn.className = 'preset-btn px-3 py-1.5 rounded-lg bg-surface-container text-primary font-bold font-label-sm text-label-sm transition-all flex-1';
+      });
+    });
+
+    // Drag-to-rotate interaction on physical rotary knob
+    let isDraggingKnob = false;
+    let startY = 0;
+    let startVal = 65;
+
+    rotaryKnob.addEventListener('mousedown', (e) => {
+      stopAutoSweep();
+      initAudioContext();
+      isDraggingKnob = true;
+      startY = e.clientY;
+      startVal = dutyCycle;
+      document.body.style.userSelect = 'none';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDraggingKnob) return;
+      const deltaY = startY - e.clientY;
+      let newVal = Math.min(100, Math.max(0, Math.round(startVal + deltaY * 0.7)));
+      dutyCycle = newVal;
+      dutySlider.value = newVal;
+      updateUI();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDraggingKnob) {
+        isDraggingKnob = false;
+        document.body.style.userSelect = '';
+      }
+    });
+
+    // Tab switching between Oscilloscope, Transfer Curve, and FFT Spectrum
+    function setTab(tab) {
+      activeTab = tab;
+
+      // Reset tab button states
+      [tabBtnScope, tabBtnCurve, tabBtnFft].forEach(b => {
+        b.className = 'px-space-md py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-1.5';
+      });
+
+      // Hide all panels
+      tabScopeContent.classList.add('hidden');
+      tabScopeContent.classList.remove('flex');
+      tabCurveContent.classList.add('hidden');
+      tabCurveContent.classList.remove('flex');
+      tabFftContent.classList.add('hidden');
+      tabFftContent.classList.remove('flex');
+
+      if (tab === 'scope') {
+        tabBtnScope.className = 'px-space-md py-space-xs rounded-lg bg-surface-container text-primary font-label-md text-label-md font-bold transition-all';
+        tabScopeContent.classList.remove('hidden');
+        tabScopeContent.classList.add('flex');
+        traceLegendDefault.classList.remove('hidden');
+        traceLegendDefault.classList.add('flex');
+        traceLegendFft.classList.add('hidden');
+        traceLegendFft.classList.remove('flex');
+        bottomInsightText.innerHTML = '<strong class="text-on-surface">Engineering Insight:</strong> Below 20% duty cycle, brushless motor stator coils do not receive adequate starting torque to overcome static bearing friction, resulting in rotor stall.';
+        bottomFreqBadge.textContent = '1.44 kHz eliminates audible coil whine';
+      } else if (tab === 'curve') {
+        tabBtnCurve.className = 'px-space-md py-space-xs rounded-lg bg-surface-container text-primary font-label-md text-label-md font-bold transition-all';
+        tabCurveContent.classList.remove('hidden');
+        tabCurveContent.classList.add('flex');
+        traceLegendDefault.classList.remove('hidden');
+        traceLegendDefault.classList.add('flex');
+        traceLegendFft.classList.add('hidden');
+        traceLegendFft.classList.remove('flex');
+        bottomInsightText.innerHTML = '<strong class="text-on-surface">Transfer Characteristics:</strong> PWM effectively modulates average stator current, providing a linear RPM response once past the initial 20% breakaway torque threshold.';
+        bottomFreqBadge.textContent = 'Nonlinear Stiction Overcome @ 20%';
+      } else if (tab === 'fft') {
+        tabBtnFft.className = 'px-space-md py-space-xs rounded-lg bg-surface-container text-primary font-label-md text-label-md font-bold transition-all flex items-center gap-1.5';
+        tabFftContent.classList.remove('hidden');
+        tabFftContent.classList.add('flex');
+        traceLegendDefault.classList.add('hidden');
+        traceLegendDefault.classList.remove('flex');
+        traceLegendFft.classList.remove('hidden');
+        traceLegendFft.classList.add('flex');
+        bottomInsightText.innerHTML = '<strong class="text-on-surface">Spectral Insight:</strong> Pure PWM creates odd & even harmonics at integer multiples of 1.44 kHz. Motor aerodynamic blade pass frequency (BPF) manifests as sub-200Hz mechanical tones.';
+        bottomFreqBadge.textContent = 'Harmonic Series: a_n = (2/nπ)·sin(nπD)';
+        renderFftSpectrum();
+      }
+    }
+
+    tabBtnScope.addEventListener('click', () => setTab('scope'));
+    tabBtnCurve.addEventListener('click', () => setTab('curve'));
+    tabBtnFft.addEventListener('click', () => setTab('fft'));
+
+    // FFT Options
+    fftWindowSelect.addEventListener('change', (e) => {
+      fftWindowType = e.target.value;
+      const rbwMap = { hanning: '19.5 Hz', blackman: '23.4 Hz', flattop: '31.2 Hz' };
+      document.getElementById('fft-rbw-badge').textContent = `RBW: ${rbwMap[fftWindowType] || '20 Hz'}`;
+      if (activeTab === 'fft') renderFftSpectrum();
+    });
+
+    fftSourceSelect.addEventListener('change', (e) => {
+      fftSource = e.target.value;
+      if (activeTab === 'fft') renderFftSpectrum();
+    });
+
+    fftPeakDetectCheckbox.addEventListener('change', (e) => {
+      showPeakMarkers = e.target.checked;
+      if (activeTab === 'fft') renderFftSpectrum();
+    });
+
+    window.addEventListener('resize', () => {
+      if (activeTab === 'fft') renderFftSpectrum();
+    });
+
+    // Initial mount render
+    updateUI();
+    requestAnimationFrame(renderAnimation);
+  })();
+</script></main><footer class="w-full bg-surface-pure border-t border-border-subtle py-space-lg"><div class="w-full max-w-[1600px] mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col gap-space-xs text-center md:text-left"><p class="font-body-md text-body-md text-on-surface">Semi Lab — Interactive Electronics &amp; Semiconductor Education.</p><p class="font-body-sm text-body-sm text-on-surface-variant">Built for 555 Timer, MOSFET &amp; PWM simulation. Clinical precision workbench UI.</p></div><div class="flex items-center gap-space-lg font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="hover:text-primary transition-colors" data-path="about" href="#">About</a><a class="hover:text-primary transition-colors" href="#">Documentation</a><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></div><div class="font-label-sm text-label-sm text-outline">© 2025 Semi Lab. All rights reserved.</div></div></footer>
+
+
+</body></html>

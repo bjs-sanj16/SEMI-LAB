@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About & Bill of Materials – Semi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <!-- Shared Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);">
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <path d="M6 12h4m4 0h4"></path>
+          <path d="M10 9v6"></path>
+        </svg>
+        <span>Semi Lab</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">3D Lab</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="fan.html">Fan Regulator</a></li>
+        <li><a href="led.html">LED Dimmer</a></li>
+        <li><a href="mosfet.html">MOSFET</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+      </ul>
+
+      <div class="theme-switcher">
+        <button class="theme-btn" data-theme="light" title="Light Theme" aria-label="Light Theme">☀️</button>
+        <button class="theme-btn" data-theme="dark" title="Dark Theme" aria-label="Dark Theme">🌙</button>
+        <button class="theme-btn" data-theme="blue" title="Blue Theme" aria-label="Blue Theme">🔷</button>
+        <button class="theme-btn" data-theme="green" title="Green Theme" aria-label="Green Theme">🌿</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="home.html">Semi Lab</a> / <span>Project</span> / <span>About &amp; BOM</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span class="tag">LAB SPECIFICATION &amp; PHILOSOPHY</span>
+            </div>
+            <h1>About Semi Lab</h1>
+            <p>An interactive educational electronics laboratory engineered to demystify semiconductor physics and practical PWM power control circuits through real-time mathematical simulation.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="padding-top:32px; padding-bottom:60px;">
+
+      <!-- Core Metrics Highlights Strip -->
+      <div class="readout-grid" style="margin-bottom:32px;">
+        <div class="readout-card">
+          <div class="readout-label">OSCILLATOR CORE</div>
+          <div class="readout-value" style="font-size:1.3rem;">555 Astable</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Dual steering diode topology</div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label">SWITCHING STAGE</div>
+          <div class="readout-value" style="font-size:1.3rem;">Power MOSFET</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Low-side gate actuation</div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label">SWEEP DUTY RANGE</div>
+          <div class="readout-value" style="font-size:1.3rem;">1% — 99%</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Continuous dial modulation</div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label">PWM FREQUENCY</div>
+          <div class="readout-value" style="font-size:1.3rem;">1.44 kHz Base</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Zero audible motor whine</div>
+        </div>
+      </div>
+
+      <!-- Philosophy & Educational Mission -->
+      <section style="margin-bottom:48px;">
+        <div class="grid grid-2" style="align-items:center;">
+          <div class="card">
+            <span class="tag" style="margin-bottom:12px;">MISSION &amp; PEDAGOGY</span>
+            <h2 style="font-size:1.6rem; margin-bottom:12px;">Bridging Pure Solid-State Physics with Benchtop Hardware</h2>
+            <p>
+              Standard electronics coursework frequently bifurcates into mathematical abstractions of semiconductor equations or disconnected cookbook schematics. Semi Lab collapses this divide. By placing interactive circuit simulation alongside exact junction physics, users observe how minority carrier diffusion in steering diodes slows duty timing down to the microsecond.
+            </p>
+            <p>
+              Every waveform rendered in our oscilloscope view directly correlates with real-world component parasitic resistances, from gate source capacitance (<i>Q</i><sub>g</sub>) in N-channel power switches to inductive back-EMF generated by high-RPM brushless windings.
+            </p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:20px;">
+              <div style="background:var(--bg-secondary); padding:12px 14px; border-radius:var(--radius-sm); border-left:3px solid var(--accent);">
+                <div style="font-weight:700; font-size:0.85rem; color:var(--accent); margin-bottom:4px;">⚡ Carrier Dynamics</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary); line-height:1.4;">Inversion layer formulation inside gate dielectric.</div>
+              </div>
+              <div style="background:var(--bg-secondary); padding:12px 14px; border-radius:var(--radius-sm); border-left:3px solid var(--success);">
+                <div style="font-weight:700; font-size:0.85rem; color:var(--success); margin-bottom:4px;">📈 Capacitor Ramps</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary); line-height:1.4;">RC charging loops separated by 1N4148 steering diodes.</div>
+              </div>
+              <div style="background:var(--bg-secondary); padding:12px 14px; border-radius:var(--radius-sm); border-left:3px solid var(--danger);">
+                <div style="font-weight:700; font-size:0.85rem; color:var(--danger); margin-bottom:4px;">🛡️ Inductive Clamping</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary); line-height:1.4;">Schottky dissipation protecting switching junctions.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conceptual Closed Loop SVG Card -->
+          <div class="card" style="text-align:center; padding:32px;">
+            <span class="tag" style="margin-bottom:12px;">TOPOLOGY OVERVIEW</span>
+            <h3 style="margin-bottom:16px;">Integrated Closed Loop</h3>
+            <svg viewBox="0 0 340 160" style="max-width:320px; width:100%; height:auto; margin:0 auto; display:block;">
+              <!-- 555 Box -->
+              <rect x="20" y="45" width="70" height="70" rx="6" fill="var(--bg-secondary)" stroke="var(--accent)" stroke-width="2"/>
+              <text x="55" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="var(--accent)">NE555</text>
+              <text x="55" y="95" text-anchor="middle" font-size="9" fill="var(--text-muted)">TIMER</text>
+
+              <!-- Connection to Gate -->
+              <path d="M90 80 H140" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 3"/>
+              
+              <!-- MOSFET Box -->
+              <rect x="140" y="45" width="70" height="70" rx="6" fill="var(--bg-secondary)" stroke="#10b981" stroke-width="2"/>
+              <text x="175" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#10b981">IRFZ44N</text>
+              <text x="175" y="95" text-anchor="middle" font-size="9" fill="var(--text-muted)">MOSFET</text>
+
+              <!-- Connection to Load -->
+              <path d="M210 80 H260" stroke="#10b981" stroke-width="2"/>
+
+              <!-- Load Box -->
+              <circle cx="285" cy="80" r="25" fill="var(--bg-secondary)" stroke="var(--warning)" stroke-width="2"/>
+              <text x="285" y="84" text-anchor="middle" font-size="11" font-weight="bold" fill="var(--warning)">LOAD</text>
+
+              <!-- Feedback loop -->
+              <path d="M 285 55 V 20 H 55 V 45" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <text x="170" y="15" text-anchor="middle" font-size="9" fill="var(--text-muted)">VCC Rail Bias Loop</text>
+            </svg>
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:16px; margin-bottom:0;">
+              The NE555 operates in astable configuration with charge and discharge paths segregated via counter-facing fast diodes, ensuring constant frequency while adjusting PWM duty cycle smoothly.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Component Bill of Materials (BOM) Table -->
+      <section style="margin-bottom:48px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div>
+            <h2 class="section-title">Hardware Bill of Materials (BOM)</h2>
+            <p class="section-subtitle" style="margin-bottom:0;">Complete active and passive components configured for the Semi Lab 12V pulse-width modulation test bench.</p>
+          </div>
+          <button class="btn btn-secondary btn-small" id="btnExportBom">Export CSV</button>
+        </div>
+
+        <div class="component-list">
+          <table id="bomTable">
+            <thead>
+              <tr>
+                <th>Designator</th>
+                <th>Component</th>
+                <th>Manufacturer / Key Specifications</th>
+                <th>Role in Circuit</th>
+                <th>Package</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tag" style="background:var(--accent-glow); color:var(--accent); font-weight:700;">U1</span></td>
+                <td><strong>NE555P Precision Timer</strong></td>
+                <td>Texas Instruments / Diodes Inc. • 4.5V–16V VCC, 200mA Drive, 0.5µs Rise</td>
+                <td>Astable oscillator generating variable PWM pulse train</td>
+                <td><code>DIP-8 / SOIC-8</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:rgba(16,185,129,0.15); color:var(--success); font-weight:700;">Q1</span></td>
+                <td><strong>IRFZ44N / IRLZ44N</strong></td>
+                <td>Infineon / Vishay • N-Channel Power MOSFET, 55V, 49A, Rds(on)=17.5mΩ</td>
+                <td>Low-side high-current power switch actuated by gate threshold</td>
+                <td><code>TO-220AB</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:rgba(245,158,11,0.15); color:var(--warning); font-weight:700;">D1, D2</span></td>
+                <td><strong>1N4148 Fast Switching</strong></td>
+                <td>Fairchild / ON Semi • 100V, 200mA, trr ≤ 4ns Fast Recovery</td>
+                <td>Steering diodes separating charge &amp; discharge timing paths</td>
+                <td><code>DO-35 Glass Axial</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:rgba(239,68,68,0.15); color:var(--danger); font-weight:700;">D3</span></td>
+                <td><strong>1N4007 / 1N5819 Schottky</strong></td>
+                <td>General Semi • 1000V, 1A (or 40V, 1A Schottky for low forward drop)</td>
+                <td>Flyback protection: clamps inductive motor kickback voltage spikes</td>
+                <td><code>DO-41 Axial</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:var(--bg-secondary); color:var(--text-secondary); font-weight:700;">RV1</span></td>
+                <td><strong>100kΩ Linear Potentiometer</strong></td>
+                <td>Bourns / Alps Alpine • 100 kΩ ±10%, Linear B-Taper, 0.2W</td>
+                <td>Adjustable voltage divider splitting resistance into Ra and Rb for duty control</td>
+                <td><code>Panel Mount 16mm</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:var(--bg-secondary); color:var(--text-secondary); font-weight:700;">C1</span></td>
+                <td><strong>0.01µF Ceramic Timing Cap</strong></td>
+                <td>KEMET / Murata • 10 nF (0.01 µF), 50V, ±5% X7R Dielectric</td>
+                <td>Main oscillator timing capacitor defining oscillation period to ~0.693 ms</td>
+                <td><code>Radial 2.5mm / 0805</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:var(--bg-secondary); color:var(--text-secondary); font-weight:700;">C2</span></td>
+                <td><strong>0.01µF Bypass Capacitor</strong></td>
+                <td>Vishay • 10 nF, 50V Ceramic Disc</td>
+                <td>Pin 5 Control Voltage noise filter to GND</td>
+                <td><code>Radial Disc</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:var(--bg-secondary); color:var(--text-secondary); font-weight:700;">Rg</span></td>
+                <td><strong>100Ω Gate Resistor</strong></td>
+                <td>Yageo • 100 Ω, 0.25W Metal Film ±1%</td>
+                <td>Damps parasitic gate oscillation ringing during fast edge transitions</td>
+                <td><code>Axial / 0805</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:var(--bg-secondary); color:var(--text-secondary); font-weight:700;">Rgs</span></td>
+                <td><strong>10kΩ Gate Pull-Down</strong></td>
+                <td>Vishay Dale • 10 kΩ, 0.25W Metal Film</td>
+                <td>Guarantees MOSFET remains OFF when 555 output floats or powers down</td>
+                <td><code>Axial / 0805</code></td>
+              </tr>
+              <tr>
+                <td><span class="tag" style="background:var(--accent-glow); color:var(--accent); font-weight:700;">LOAD</span></td>
+                <td><strong>12V DC Fan &amp; High-Power LED</strong></td>
+                <td>CoolerMaster / Cree • 12V DC 0.25A Fan, or 9V 350mA High-Power LED COB</td>
+                <td>Target power actuators modulated via continuous PWM switching</td>
+                <td><code>Mechanical / Heatsink</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Team & Contributors Cards -->
+      <section style="margin-bottom:48px;">
+        <div class="text-center" style="margin-bottom:28px;">
+          <span class="tag" style="margin-bottom:8px;">LAB DIRECTORS &amp; RESEARCHERS</span>
+          <h2 class="section-title text-center">Team &amp; Contributors</h2>
+          <p class="section-subtitle text-center">The minds orchestrating hardware engineering, physical simulation engines, and human interface design.</p>
+        </div>
+
+        <div class="grid grid-2" style="max-width:960px; margin:0 auto; gap:24px;">
+          <!-- Contributor 1: Bhavana Bollineni -->
+          <div class="card team-card" style="text-align:left; padding:28px; display:flex; flex-direction:column; justify-content:between;">
+            <div>
+              <div style="background:var(--bg-secondary); border-radius:var(--radius-md); border:1px solid var(--border); padding:24px; display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:20px;">
+                <div style="width:72px; height:72px; border-radius:50%; background:var(--accent-light); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:700; box-shadow:var(--shadow-sm);">
+                  BB
+                </div>
+                <div class="mono" style="margin-top:10px; font-size:0.8rem; font-weight:700; color:var(--accent); letter-spacing:0.05em;">
+                  BHAVANA BOLLINENI
+                </div>
+              </div>
+              <h3 style="font-size:1.35rem; margin-bottom:4px; color:var(--text-primary);">Bhavana Bollineni</h3>
+              <span class="tag" style="margin-bottom:12px;">ECE, 2nd Year B.Tech &bull; SRMIST</span>
+              <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-top:8px;">
+                Pursuing B.Tech in Electronics &amp; Communication Engineering (ECE, 2nd Year) at SRMIST. Contributing to hardware analysis, PWM circuit modeling, and laboratory instrumentation.
+              </p>
+            </div>
+            <div style="margin-top:20px; padding:10px 14px; background:var(--bg-secondary); border-radius:var(--radius-sm); font-size:0.8rem; color:var(--text-primary); display:flex; align-items:center; gap:8px;">
+              <span style="color:var(--text-muted); font-family:'JetBrains Mono',monospace;">Domain:</span>
+              <strong>Hardware Analysis &amp; PWM Circuit Modeling</strong>
+            </div>
+          </div>
+
+          <!-- Contributor 2: Sanjai B J -->
+          <div class="card team-card" style="text-align:left; padding:28px; display:flex; flex-direction:column; justify-content:between;">
+            <div>
+              <div style="background:var(--bg-secondary); border-radius:var(--radius-md); border:1px solid var(--border); padding:24px; display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:20px;">
+                <div style="width:72px; height:72px; border-radius:50%; background:rgba(16,185,129,0.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:700; box-shadow:var(--shadow-sm);">
+                  SBJ
+                </div>
+                <div class="mono" style="margin-top:10px; font-size:0.8rem; font-weight:700; color:var(--success); letter-spacing:0.05em;">
+                  SANJAI B J
+                </div>
+              </div>
+              <h3 style="font-size:1.35rem; margin-bottom:4px; color:var(--text-primary);">Sanjai B J</h3>
+              <span class="tag" style="margin-bottom:12px; background:rgba(16,185,129,0.15); color:var(--success);">ECE, 2nd Year B.Tech &bull; SRMIST</span>
+              <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-top:8px;">
+                Pursuing B.Tech in Electronics &amp; Communication Engineering (ECE, 2nd Year) at SRMIST. Specializing in semiconductor device physics, 555 timer timing loops, and simulation workflows.
+              </p>
+            </div>
+            <div style="margin-top:20px; padding:10px 14px; background:var(--bg-secondary); border-radius:var(--radius-sm); font-size:0.8rem; color:var(--text-primary); display:flex; align-items:center; gap:8px;">
+              <span style="color:var(--text-muted); font-family:'JetBrains Mono',monospace;">Domain:</span>
+              <strong>Semiconductor Physics &amp; 555 Timing Loops</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Open Source Schematics & SPICE Models -->
+      <section style="margin-bottom:32px;">
+        <div class="card" style="background:linear-gradient(135deg, var(--bg-card), var(--bg-secondary)); border:1px solid var(--border); padding:32px; text-align:center;">
+          <h2 style="margin-bottom:12px;">Open Source Schematics &amp; SPICE Netlists</h2>
+          <p style="max-width:680px; margin:0 auto 16px; font-size:0.95rem; line-height:1.6;">
+            All CAD Gerber files, LTspice deck files (.asc), KiCad project repositories, and instructional laboratory assignment guides are freely distributable under the CERN-OHL-P hardware license.
+          </p>
+          <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:24px; font-size:0.8rem; color:var(--text-secondary);">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="color:var(--success); font-weight:700;">✓</span>
+              <span>KiCad v8.0 Tested</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="color:var(--success); font-weight:700;">✓</span>
+              <span>NGSPICE Compatible</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="color:var(--success); font-weight:700;">✓</span>
+              <span>Interactive WebGL Canvas</span>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="btnDownloadSpice">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              View SPICE Netlist (.cir)
+            </button>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              GitHub Repository (CERN-OHL)
+            </a>
+          </div>
+
+          <!-- SPICE Netlist Viewer Modal / Panel -->
+          <div id="spiceNetlistBox" style="display:none; text-align:left; margin-top:24px; padding:16px; background:var(--code-bg); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <strong style="font-size:0.85rem; color:var(--text-primary);">Semi_Lab_555_PWM_Motor_Driver.cir</strong>
+              <button class="btn btn-secondary btn-small" id="btnCloseSpice">Close</button>
+            </div>
+            <pre class="mono" style="font-size:0.75rem; line-height:1.5; overflow-x:auto; margin:0; color:var(--text-primary);">
+* Semi Lab: 555 Astable PWM with Opposed Steering Diodes & IRFZ44N
+.title Semi Lab 555 PWM Benchtop Circuit
+V1 VCC 0 DC 12V
+R1 VCC 8 0.1
+X_U1 0 2 3 VCC 5 6 7 8 NE555
+R_A 8 7 65k
+D1 7 2 1N4148
+R_B 7 2 35k
+D2 2 7 1N4148
+C1 2 0 10nF
+C2 5 0 10nF
+R_GATE 3 GATE 100
+R_GS GATE 0 10k
+M1 DRAIN GATE 0 0 IRFZ44N
+L_MOTOR VCC DRAIN 2.5mH
+R_MOTOR VCC DRAIN 48
+D_FLY DRAIN VCC 1N4007
+.model 1N4148 D(Is=2.52n Rs=0.568 N=1.752 Cjo=4pF Tt=6ns)
+.model 1N4007 D(Is=7.02n Rs=0.034 N=1.8 Cjo=15pF)
+.model IRFZ44N NMOS(Vto=3.0 Kp=29.6 W=1 L=1u Rs=0.0175 Rd=0.0175 Cgd=360p Cgs=1700p)
+.tran 0.1u 5m
+.end
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Did You Know Tip -->
+      <div class="did-you-know animate-on-scroll">
+        <strong>Did you know?</strong> In extreme high-power applications (such as electric vehicles and grid inverters), silicon MOSFETs are increasingly replaced by <strong>Silicon Carbide (SiC)</strong> and <strong>Gallium Nitride (GaN)</strong> wide-bandgap semiconductors. These modern devices have breakdown electric fields 10× higher than traditional silicon, enabling switching frequencies in the megahertz range with even lower on-resistance!
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <strong>Semi Lab</strong> — Interactive Electronics & Semiconductor Education
+        <p>Built for 555 Timer, MOSFET & PWM simulation. Precision workbench UI.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">3D Lab</a>
+        <a href="home.html">Home</a>
+        <a href="fan.html">Fan Regulator</a>
+        <a href="led.html">LED Dimmer</a>
+        <a href="mosfet.html">MOSFET</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-copy">
+        <p>© 2026 Semi Lab. Plain HTML/CSS/JS. No backend required.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // SPICE viewer toggle
+    (function() {
+      const btnOpen = document.getElementById('btnDownloadSpice');
+      const btnClose = document.getElementById('btnCloseSpice');
+      const box = document.getElementById('spiceNetlistBox');
+
+      if (btnOpen && box) {
+        btnOpen.addEventListener('click', () => {
+          box.style.display = box.style.display === 'none' ? 'block' : 'none';
+        });
+      }
+      if (btnClose && box) {
+        btnClose.addEventListener('click', () => {
+          box.style.display = 'none';
+        });
+      }
+
+      // Export BOM to CSV
+      const btnExport = document.getElementById('btnExportBom');
+      if (btnExport) {
+        btnExport.addEventListener('click', () => {
+          const rows = [];
+          document.querySelectorAll('#bomTable tr').forEach(tr => {
+            const row = [];
+            tr.querySelectorAll('th, td').forEach(cell => {
+              row.push('"' + cell.textContent.replace(/"/g, '""').trim() + '"');
+            });
+            rows.push(row.join(','));
+          });
+          const csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(rows.join('\n'));
+          const link = document.createElement('a');
+          link.setAttribute('href', csvContent);
+          link.setAttribute('download', 'Semi_Lab_BOM.csv');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

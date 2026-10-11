@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power MOSFET Physics & Operation – Semi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <!-- Shared Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);">
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <path d="M6 12h4m4 0h4"></path>
+          <path d="M10 9v6"></path>
+        </svg>
+        <span>Semi Lab</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">3D Lab</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="fan.html">Fan Regulator</a></li>
+        <li><a href="led.html">LED Dimmer</a></li>
+        <li><a href="mosfet.html" class="active">MOSFET</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="theme-switcher">
+        <button class="theme-btn" data-theme="light" title="Light Theme" aria-label="Light Theme">☀️</button>
+        <button class="theme-btn" data-theme="dark" title="Dark Theme" aria-label="Dark Theme">🌙</button>
+        <button class="theme-btn" data-theme="blue" title="Blue Theme" aria-label="Blue Theme">🔷</button>
+        <button class="theme-btn" data-theme="green" title="Green Theme" aria-label="Green Theme">🌿</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="home.html">Semi Lab</a> / <span>Semiconductor Physics</span> / <span>MOSFET</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span class="tag">SOLID-STATE DYNAMICS</span>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">Device Model: Enhancement-Mode N-MOSFET (IRFZ44N)</span>
+            </div>
+            <h1>Power MOSFET Physics &amp; Operation</h1>
+            <p>Explore channel inversion, carrier drift, and switching regimes in an N-Channel enhancement-mode power MOSFET. Modulate gate and drain potentials to visualize channel pinch-off and family of curves in real time.</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-small" id="btnResetMosfet">Reset Parameters</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="padding-top:24px; padding-bottom:60px;">
+
+      <!-- Telemetry Readouts & Regime Badge -->
+      <div class="readout-grid">
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Operating conduction regime based on Vgs, Vth and Vds">Operating Regime</div>
+          <div style="margin-top:6px;">
+            <span class="region-indicator triode" id="regionBadge">TRIODE / LINEAR</span>
+          </div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Drain conduction current calculated from physical MOSFET model equations">Drain Current (Id)</div>
+          <div class="readout-value" id="readoutId">1.48<span class="readout-unit">A</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Channel resistance in linear regime: Rds(on) = 1 / [k*(W/L)*(Vgs - Vth)]">On-Resistance Rds(on)</div>
+          <div class="readout-value" id="readoutRds">18.5<span class="readout-unit">mΩ</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Conduction power dissipated as heat: P = Id * Vds">Power Dissipation</div>
+          <div class="readout-value" id="readoutPower">0.04<span class="readout-unit">W</span></div>
+        </div>
+        <div class="readout-card">
+          <div class="readout-label" data-tooltip="Pinch-off voltage boundary: Vds(sat) = Vgs - Vth">Vds(sat) Pinch-off</div>
+          <div class="readout-value" id="readoutVsat">4.00<span class="readout-unit">V</span></div>
+        </div>
+      </div>
+
+      <!-- Main Layout: Left = Cross-Section & Equations, Right = Controls & Family of Curves -->
+      <div class="grid grid-2" style="align-items:start;">
+
+        <!-- LEFT COLUMN: Cross-Section Diagram & Equation Cards -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+
+          <!-- 1. Interactive Silicon Cross-Section SVG -->
+          <div class="circuit-container cross-section-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div>
+                <h3 style="margin-bottom:2px;">Sub-Micron Channel Cross-Section</h3>
+                <span style="font-size:0.75rem; color:var(--text-secondary);">Hover regions to inspect semiconductor physics</span>
+              </div>
+              <span class="tag" id="channelStatusTag">Channel Inverted</span>
+            </div>
+
+            <!-- SVG Cross Section -->
+            <svg class="cross-section-svg" viewBox="0 0 620 340" id="crossSectionSvg" aria-label="MOSFET Silicon Cross Section">
+              <defs>
+                <!-- Pattern for P-type substrate atoms -->
+                <pattern id="pSubstratePattern" width="30" height="30" patternUnits="userSpaceOnUse">
+                  <circle cx="15" cy="15" r="1.5" fill="var(--text-muted)" opacity="0.4"/>
+                </pattern>
+                <linearGradient id="channelGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.3" id="channelDrainGradStop"/>
+                </linearGradient>
+              </defs>
+
+              <!-- P-type Silicon Substrate / Body -->
+              <rect x="30" y="100" width="560" height="200" rx="8" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="2" class="region" data-region="body"/>
+              <rect x="30" y="100" width="560" height="200" rx="8" fill="url(#pSubstratePattern)" pointer-events="none"/>
+              <text x="310" y="270" text-anchor="middle" font-size="14" font-weight="bold" fill="var(--text-secondary)">P-type Silicon Substrate (Body • NA ≈ 10¹⁶ cm⁻³)</text>
+
+              <!-- Source N+ Well -->
+              <rect x="60" y="100" width="110" height="85" rx="6" fill="#3b82f6" fill-opacity="0.25" stroke="#2563eb" stroke-width="2" class="region" data-region="source"/>
+              <text x="115" y="145" text-anchor="middle" font-weight="bold" font-size="13" fill="var(--accent)">Source (N+)</text>
+              <text x="115" y="165" text-anchor="middle" font-size="10" fill="var(--text-secondary)">ND ≈ 10²⁰ cm⁻³</text>
+
+              <!-- Drain N+ Well -->
+              <rect x="450" y="100" width="110" height="85" rx="6" fill="#3b82f6" fill-opacity="0.25" stroke="#2563eb" stroke-width="2" class="region" data-region="drain"/>
+              <text x="505" y="145" text-anchor="middle" font-weight="bold" font-size="13" fill="var(--accent)">Drain (N+)</text>
+              <text x="505" y="165" text-anchor="middle" font-size="10" fill="var(--text-secondary)">ND ≈ 10²⁰ cm⁻³</text>
+
+              <!-- Inversion Channel Layer (between Source and Drain under oxide) -->
+              <path d="M 170 100 L 450 100 L 450 114 L 170 114 Z" id="svgChannelShape" fill="url(#channelGrad)" stroke="#1d4ed8" stroke-width="1" class="region" data-region="channel"/>
+              <!-- Moving electrons in channel -->
+              <g id="channelElectrons">
+                <circle cx="210" cy="107" r="2.5" fill="#ffffff" id="eDot1"/>
+                <circle cx="270" cy="107" r="2.5" fill="#ffffff" id="eDot2"/>
+                <circle cx="330" cy="107" r="2.5" fill="#ffffff" id="eDot3"/>
+                <circle cx="390" cy="107" r="2.5" fill="#ffffff" id="eDot4"/>
+              </g>
+
+              <!-- Gate Oxide (SiO2 Dielectric Insulator) -->
+              <rect x="170" y="86" width="280" height="14" rx="2" fill="#e2e8f0" stroke="var(--wire)" stroke-width="1.5" class="region" data-region="oxide"/>
+              <text x="310" y="96" text-anchor="middle" font-size="10" font-weight="bold" fill="var(--text-secondary)">Gate Oxide (SiO₂ Insulator • tox ≈ 20 nm)</text>
+
+              <!-- Polysilicon Gate Electrode -->
+              <rect x="170" y="44" width="280" height="42" rx="4" fill="var(--comp-fill)" stroke="var(--wire)" stroke-width="2" class="region" data-region="gate"/>
+              <text x="310" y="66" text-anchor="middle" font-weight="bold" font-size="12" fill="var(--text-primary)">Gate Electrode (Poly-Si)</text>
+              <text x="310" y="80" text-anchor="middle" font-size="10" fill="var(--accent)" id="svgGateVgsLabel">Applied Vgs = 6.0 V</text>
+
+              <!-- Source Terminal Electrode & Wire -->
+              <line x1="115" y1="100" x2="115" y2="20" stroke="var(--wire)" stroke-width="3"/>
+              <circle cx="115" cy="20" r="4" fill="var(--wire)"/>
+              <text x="115" y="12" text-anchor="middle" font-weight="bold" font-size="11">SOURCE (S)</text>
+
+              <!-- Gate Terminal Wire -->
+              <line x1="310" y1="44" x2="310" y2="15" stroke="var(--accent)" stroke-width="3"/>
+              <circle cx="310" cy="15" r="4" fill="var(--accent)"/>
+              <text x="310" y="8" text-anchor="middle" font-weight="bold" font-size="11" fill="var(--accent)">GATE (G)</text>
+
+              <!-- Drain Terminal Electrode & Wire -->
+              <line x1="505" y1="100" x2="505" y2="20" stroke="var(--danger)" stroke-width="3"/>
+              <circle cx="505" cy="20" r="4" fill="var(--danger)"/>
+              <text x="505" y="12" text-anchor="middle" font-weight="bold" font-size="11" fill="var(--danger)">DRAIN (D)</text>
+
+              <!-- Depletion Region Boundary Line -->
+              <path d="M 50 195 Q 115 200 170 190 Q 310 175 450 190 Q 505 200 570 195" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+              <text x="310" y="210" text-anchor="middle" font-size="10" fill="var(--text-muted)">Depletion Region Boundary</text>
+            </svg>
+
+            <!-- Region Hover Tooltip Box -->
+            <div id="hoverTooltipBox" style="margin-top:12px; padding:12px; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); font-size:0.85rem;">
+              <strong id="tooltipTitle" style="color:var(--accent);">Channel Inversion Layer:</strong>
+              <span id="tooltipDesc" style="color:var(--text-secondary); margin-left:6px;">When Vgs exceeds Vth, positive gate charge repels bulk holes and attracts mobile conduction electrons from the N+ source/drain, forming a conductive N-channel sheet under the gate oxide.</span>
+            </div>
+          </div>
+
+          <!-- 2. Three Classical MOSFET Equation Cards -->
+          <div class="grid grid-1" style="gap:16px;">
+
+            <!-- Equation Card 1: Saturation -->
+            <div class="equation-card" id="cardEqSat">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h4>1. Saturation Regime (V<sub>ds</sub> &ge; V<sub>gs</sub> - V<sub>th</sub>)</h4>
+                <span class="tag" id="badgeSatStatus">Inactive</span>
+              </div>
+              <div class="equation">
+                <i>I</i><sub>d</sub> = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span> &middot; <i>k</i> &middot; <span class="math-frac"><span class="num"><i>W</i></span><span class="den"><i>L</i></span></span> &middot; (<i>V</i><sub>gs</sub> - <i>V</i><sub>th</sub>)<sup>2</sup>
+              </div>
+              <p style="font-size:0.8rem; margin-bottom:8px;">
+                Occurs when <i>V</i><sub>ds</sub> &ge; <i>V</i><sub>gs</sub> - <i>V</i><sub>th</sub>. The channel pinches off at the drain side. Drain current saturates into a constant, voltage-controlled current source independent of <i>V</i><sub>ds</sub>.
+              </p>
+              <div class="equation-result" id="eqResultSat">Id = 1.60 A</div>
+            </div>
+
+            <!-- Equation Card 2: Triode / Linear -->
+            <div class="equation-card" id="cardEqTriode">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h4>2. Triode / Linear Regime (V<sub>ds</sub> &lt; V<sub>gs</sub> - V<sub>th</sub>)</h4>
+                <span class="tag" id="badgeTriodeStatus" style="background:rgba(22,163,74,0.12); color:var(--success);">Active</span>
+              </div>
+              <div class="equation">
+                <i>I</i><sub>d</sub> = <i>k</i> &middot; <span class="math-frac"><span class="num"><i>W</i></span><span class="den"><i>L</i></span></span> &middot; [(<i>V</i><sub>gs</sub> - <i>V</i><sub>th</sub>) &middot; <i>V</i><sub>ds</sub> - <span class="math-frac"><span class="num"><i>V</i><sub>ds</sub><sup>2</sup></span><span class="den">2</span></span>]
+              </div>
+              <p style="font-size:0.8rem; margin-bottom:8px;">
+                Active when <i>V</i><sub>ds</sub> &lt; <i>V</i><sub>gs</sub> - <i>V</i><sub>th</sub>. Continuous conductive channel from source to drain. Functions as a precision voltage-controlled resistor ideal for low-loss switching.
+              </p>
+              <div class="equation-result" id="eqResultTriode">Id = 1.48 A</div>
+            </div>
+
+            <!-- Equation Card 3: On-Resistance -->
+            <div class="equation-card" id="cardEqRds">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h4>3. Conduction On-Resistance (Ohmic Limit)</h4>
+                <span class="tag">Switching Metric</span>
+              </div>
+              <div class="equation">
+                <i>R</i><sub>ds(on)</sub> = <span class="math-frac"><span class="num">1</span><span class="den"><i>k</i> &middot; (<i>W</i>/<i>L</i>) &middot; (<i>V</i><sub>gs</sub> - <i>V</i><sub>th</sub>)</span></span>
+              </div>
+              <p style="font-size:0.8rem; margin-bottom:8px;">
+                Governs <i>I</i><sup>2</sup><i>R</i> heat dissipation and conduction loss in switching converter stages. Driving the gate with <i>V</i><sub>gs</sub> = 10V to 12V maximizes channel inversion, dropping <i>R</i><sub>ds(on)</sub> to milliohms.
+              </p>
+              <div class="equation-result" id="eqResultRds">Rds(on) = 18.5 mΩ</div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Parameter Controls, Power Loss & Charts -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+
+          <!-- 1. Physical Parameter Modulation Deck -->
+          <div class="controls-panel">
+            <h3 style="margin-bottom:16px;">MOSFET Parameter Modulation</h3>
+
+            <!-- Preset Buttons -->
+            <div class="control-group">
+              <span class="control-label">Operating Presets:</span>
+              <div class="preset-group">
+                <button class="preset-btn" id="presetCutoff">Cutoff (Off Switch)</button>
+                <button class="preset-btn active" id="presetLinear">Deep Triode (Low Rds)</button>
+                <button class="preset-btn" id="presetSat">Saturation (Amplifier)</button>
+              </div>
+            </div>
+
+            <!-- Slider 1: Gate-Source Voltage Vgs -->
+            <div class="control-group">
+              <div class="control-label">
+                <span data-tooltip="Gate-to-source bias voltage. Must exceed threshold Vth to create inversion channel.">Gate-Source Voltage (Vgs):</span>
+                <span class="control-value" id="valVgs">6.0 V</span>
+              </div>
+              <input type="range" id="sliderVgs" min="0" max="12" step="0.1" value="6.0">
+            </div>
+
+            <!-- Slider 2: Drain-Source Voltage Vds -->
+            <div class="control-group">
+              <div class="control-label">
+                <span data-tooltip="Drain-to-source voltage across the switch. In a closed switch, Vds is tiny.">Drain-Source Bias (Vds):</span>
+                <span class="control-value" id="valVds">0.5 V</span>
+              </div>
+              <input type="range" id="sliderVds" min="0" max="12" step="0.1" value="0.5">
+            </div>
+
+            <!-- Slider 3: Threshold Voltage Vth -->
+            <div class="control-group">
+              <div class="control-label">
+                <span data-tooltip="Minimum gate voltage required to invert substrate and form conductive channel.">Threshold Voltage (Vth):</span>
+                <span class="control-value" id="valVth">2.0 V</span>
+              </div>
+              <input type="range" id="sliderVth" min="1.0" max="4.5" step="0.1" value="2.0">
+            </div>
+
+            <!-- Slider 4: Aspect Ratio W/L -->
+            <div class="control-group">
+              <div class="control-label">
+                <span data-tooltip="Channel Width-to-Length aspect ratio. Power MOSFETs feature huge W/L for high current.">Channel Aspect Ratio (W/L):</span>
+                <span class="control-value" id="valWL">500</span>
+              </div>
+              <input type="range" id="sliderWL" min="50" max="1500" step="25" value="500">
+            </div>
+
+            <!-- Slider 5: Transconductance k (mu_n * Cox) -->
+            <div class="control-group">
+              <div class="control-label">
+                <span data-tooltip="Process transconductance parameter k' = mu_n * Cox in uA/V^2">Process Factor k' (µA/V²):</span>
+                <span class="control-value" id="valK">200 µA/V²</span>
+              </div>
+              <input type="range" id="sliderK" min="50" max="500" step="10" value="200">
+            </div>
+          </div>
+
+          <!-- 2. Switching Efficiency & Thermal Power Loss Card -->
+          <div class="card" style="border-left:4px solid var(--accent);">
+            <h3 style="margin-bottom:8px;">Why MOSFET Switches Run Cold</h3>
+            <p style="font-size:0.85rem; margin-bottom:12px;">
+              A transistor dissipates thermal power proportional to <i>P</i> = <i>I</i><sub>d</sub> &times; <i>V</i><sub>ds</sub>. Look at what happens in our PWM lab:
+            </p>
+            <div class="grid grid-2" style="gap:12px; margin-bottom:12px;">
+              <div style="background:var(--bg-secondary); padding:10px; border-radius:var(--radius-sm);">
+                <div style="font-size:0.75rem; color:var(--text-secondary); font-weight:600;">STATE 1: SWITCH OFF (CUTOFF)</div>
+                <div style="font-size:0.85rem; margin-top:4px;"><i>I</i><sub>d</sub> = 0 A &nbsp;&bull;&nbsp; <i>V</i><sub>ds</sub> = 12 V</div>
+                <div style="font-weight:700; color:var(--success); margin-top:4px;">Power Loss = 0.00 W</div>
+              </div>
+              <div style="background:var(--bg-secondary); padding:10px; border-radius:var(--radius-sm);">
+                <div style="font-size:0.75rem; color:var(--text-secondary); font-weight:600;">STATE 2: SWITCH ON (DEEP TRIODE)</div>
+                <div style="font-size:0.85rem; margin-top:4px;"><i>I</i><sub>d</sub> = 0.25 A &nbsp;&bull;&nbsp; <i>R</i><sub>ds(on)</sub> = 17.5 m&Omega;</div>
+                <div style="font-weight:700; color:var(--success); margin-top:4px;">Power Loss = 1.1 mW</div>
+              </div>
+            </div>
+            <p style="font-size:0.8rem; margin:0; color:var(--text-muted);">
+              Because the transistor transitions rapidly between these two states at 1.44 kHz without dwelling in linear saturation, efficiency easily exceeds <strong>96%</strong> without requiring a bulky heatsink.
+            </p>
+          </div>
+
+          <!-- 3. Chart: Family of Curves (Id vs Vds) -->
+          <div class="chart-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="margin:0;">Id vs Vds Family of Curves</h3>
+              <span class="tag" style="font-size:0.7rem;">Pinch-off Boundary: Vds = Vgs - Vth</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="familyOfCurvesChart"></canvas>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:8px;">
+              <span>• Curves: Vgs = 3V, 4V, 5V, 6V, 8V, 10V</span>
+              <span style="color:#ef4444; font-weight:600;">● Active Operating Point</span>
+            </div>
+          </div>
+
+          <!-- 4. Chart: Transfer Characteristic (Id vs Vgs) -->
+          <div class="chart-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="margin:0;">Transfer Characteristic: Id vs Vgs</h3>
+              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">Parabolic Turn-On</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="transferCurveChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Did You Know Tip -->
+      <div class="did-you-know animate-on-scroll">
+        <strong>Did you know?</strong> Unlike bipolar junction transistors (BJTs) which require continuous base current (<i>I</i><sub>b</sub> = <i>I</i><sub>c</sub> / &beta;) to stay on, a MOSFET's gate is an insulated capacitor (SiO<sub>2</sub>). Once charged, the DC steady-state gate current is literally <strong>zero amperes</strong>! Energy is only consumed during rapid charging and discharging of the gate capacitance (<i>Q</i><sub>g</sub> &asymp; 60 nC), making MOSFETs the uncontested king of modern high-frequency power electronics.
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <strong>Semi Lab</strong> — Interactive Electronics & Semiconductor Education
+        <p>Built for 555 Timer, MOSFET & PWM simulation. Precision workbench UI.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">3D Lab</a>
+        <a href="home.html">Home</a>
+        <a href="fan.html">Fan Regulator</a>
+        <a href="led.html">LED Dimmer</a>
+        <a href="mosfet.html">MOSFET</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-copy">
+        <p>© 2026 Semi Lab. Plain HTML/CSS/JS. No backend required.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/mosfet.js"></script>
+</body>
+</html>

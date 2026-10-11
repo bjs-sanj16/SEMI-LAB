@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works & Astable Equations – Semi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <!-- Shared Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);">
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <path d="M6 12h4m4 0h4"></path>
+          <path d="M10 9v6"></path>
+        </svg>
+        <span>Semi Lab</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">3D Lab</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="fan.html">Fan Regulator</a></li>
+        <li><a href="led.html">LED Dimmer</a></li>
+        <li><a href="mosfet.html">MOSFET</a></li>
+        <li><a href="how-it-works.html" class="active">How It Works</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="theme-switcher">
+        <button class="theme-btn" data-theme="light" title="Light Theme" aria-label="Light Theme">☀️</button>
+        <button class="theme-btn" data-theme="dark" title="Dark Theme" aria-label="Dark Theme">🌙</button>
+        <button class="theme-btn" data-theme="blue" title="Blue Theme" aria-label="Blue Theme">🔷</button>
+        <button class="theme-btn" data-theme="green" title="Green Theme" aria-label="Green Theme">🌿</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="home.html">Semi Lab</a> / <span>Theory</span> / <span>How It Works</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span class="tag">MATHEMATICAL FOUNDATIONS</span>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">Cycle Kinetics &amp; Dual-Diode Steering Theory</span>
+            </div>
+            <h1>How It Works: 555 Astable &amp; PWM Kinetics</h1>
+            <p>A step-by-step technical breakdown of capacitor charge trajectories, comparator voltage thresholds, the SR flip-flop state machine, and the pulse-width modulation formulas governing the Semi Lab workbench.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="padding-top:32px; padding-bottom:60px;">
+
+      <!-- 1. The Core 555 Mathematical Formulas -->
+      <section style="margin-bottom:48px;">
+        <h2 class="section-title">The Astable PWM Equations</h2>
+        <p class="section-subtitle">Deriving the timing intervals, oscillation frequency, and duty cycle when steering diodes isolate the charge and discharge paths.</p>
+
+        <div class="grid grid-3">
+          <div class="equation-card">
+            <h4>Charge Time (T_high)</h4>
+            <div class="equation"><i>t</i><sub>high</sub> = 0.693 &middot; <i>R</i><sub>a</sub> &middot; <i>C</i><sub>1</sub></div>
+            <p style="font-size:0.85rem;">
+              Capacitor <i>C</i><sub>1</sub> charges from <span class="inline-frac"><span class="num">1</span><span class="den">3</span></span> <i>V</i><sub>cc</sub> up to <span class="inline-frac"><span class="num">2</span><span class="den">3</span></span> <i>V</i><sub>cc</sub> through potentiometer top segment <i>R</i><sub>a</sub> and forward-biased diode <i>D</i><sub>1</sub>. During this phase, Pin 3 output is <strong>HIGH</strong>.
+            </p>
+          </div>
+
+          <div class="equation-card">
+            <h4>Discharge Time (T_low)</h4>
+            <div class="equation"><i>t</i><sub>low</sub> = 0.693 &middot; <i>R</i><sub>b</sub> &middot; <i>C</i><sub>1</sub></div>
+            <p style="font-size:0.85rem;">
+              Capacitor <i>C</i><sub>1</sub> discharges from <span class="inline-frac"><span class="num">2</span><span class="den">3</span></span> <i>V</i><sub>cc</sub> down to <span class="inline-frac"><span class="num">1</span><span class="den">3</span></span> <i>V</i><sub>cc</sub> through diode <i>D</i><sub>2</sub> and potentiometer bottom segment <i>R</i><sub>b</sub> into internal discharge transistor Pin 7. Pin 3 is <strong>LOW</strong>.
+            </p>
+          </div>
+
+          <div class="equation-card">
+            <h4>Total Frequency (f)</h4>
+            <div class="equation"><i>f</i> = <span class="math-frac"><span class="num">1.44</span><span class="den">(<i>R</i><sub>a</sub> + <i>R</i><sub>b</sub>) &middot; <i>C</i><sub>1</sub></span></span></div>
+            <p style="font-size:0.85rem;">
+              Because <i>R</i><sub>a</sub> + <i>R</i><sub>b</sub> = <i>R</i><sub>total</sub> = 100 k&Omega; at every knob position, the sum of charging and discharging resistances remains constant, locking the frequency to <strong>1.44 kHz</strong>!
+            </p>
+          </div>
+
+          <div class="equation-card">
+            <h4>Duty Cycle (D)</h4>
+            <div class="equation">Duty = <span class="math-frac"><span class="num"><i>R</i><sub>a</sub></span><span class="den"><i>R</i><sub>a</sub> + <i>R</i><sub>b</sub></span></span> = <span class="math-frac"><span class="num"><i>R</i><sub>a</sub></span><span class="den"><i>R</i><sub>total</sub></span></span></div>
+            <p style="font-size:0.85rem;">
+              The duty cycle is simply the resistance ratio of the potentiometer wiper position, providing a smooth, continuous linear sweep from <strong>1% to 99%</strong>.
+            </p>
+          </div>
+
+          <div class="equation-card">
+            <h4>Average DC Output (V_avg)</h4>
+            <div class="equation"><i>V</i><sub>avg</sub> = Duty &middot; <i>V</i><sub>supply</sub> = <span class="math-frac"><span class="num"><i>R</i><sub>a</sub></span><span class="den"><i>R</i><sub>a</sub> + <i>R</i><sub>b</sub></span></span> &middot; <i>V</i><sub>cc</sub></div>
+            <p style="font-size:0.85rem;">
+              The effective DC voltage seen by the load is the time-weighted average of full supply pulses: <i>V</i><sub>avg</sub> = <span class="inline-frac"><span class="num">1</span><span class="den"><i>T</i></span></span> &int;<sub>0</sub><sup><i>T</i></sup> <i>v</i>(<i>t</i>) d<i>t</i> = <i>D</i> &times; <i>V</i><sub>cc</sub>.
+            </p>
+          </div>
+
+          <div class="equation-card">
+            <h4>Conduction Power Loss (P_loss)</h4>
+            <div class="equation"><i>P</i> = <i>I</i><sub>load</sub><sup>2</sup> &middot; <i>R</i><sub>ds(on)</sub> &middot; Duty</div>
+            <p style="font-size:0.85rem;">
+              Because the IRFZ44N MOSFET on-resistance <i>R</i><sub>ds(on)</sub> is only 17.5 m&Omega;, the power lost as heat is negligible (a few milliwatts), achieving &gt;95% electrical efficiency.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Interactive Astable Parameter Calculator -->
+      <section style="margin-bottom:48px;">
+        <div class="calculator">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+            <div>
+              <h2 style="font-size:1.5rem; margin-bottom:4px;">Interactive 555 Astable Calculator</h2>
+              <p style="margin:0; font-size:0.85rem; color:var(--text-secondary);">Modify component values to instantly compute time intervals, oscillation frequency, and see the synthesized waveform.</p>
+            </div>
+            <button class="btn btn-secondary btn-small" id="btnCalcReset">Reset to Semi Lab Standard</button>
+          </div>
+
+          <div class="grid grid-2" style="gap:24px;">
+            <!-- Inputs -->
+            <div>
+              <div class="calc-row">
+                <label for="calcRa" data-tooltip="Charging resistance (potentiometer upper segment)">Ra (kΩ):</label>
+                <input type="number" id="calcRa" min="0.5" max="500" step="0.5" value="65">
+                <input type="range" id="sliderCalcRa" min="1" max="99" value="65" style="flex:1;">
+              </div>
+
+              <div class="calc-row">
+                <label for="calcRb" data-tooltip="Discharging resistance (potentiometer lower segment)">Rb (kΩ):</label>
+                <input type="number" id="calcRb" min="0.5" max="500" step="0.5" value="35">
+                <span class="mono" id="labelRtotal" style="font-size:0.8rem; color:var(--text-muted);">R_total = 100 kΩ</span>
+              </div>
+
+              <div class="calc-row">
+                <label for="calcC" data-tooltip="Timing capacitor value in nanofarads">C1 (nF):</label>
+                <input type="number" id="calcC" min="0.1" max="1000" step="0.1" value="10">
+                <span style="font-size:0.8rem; color:var(--text-secondary);">(10 nF = 0.01 µF)</span>
+              </div>
+
+              <div class="calc-row">
+                <label for="calcVcc" data-tooltip="Circuit supply voltage">Vcc (V):</label>
+                <input type="number" id="calcVcc" min="3" max="18" step="0.5" value="12">
+                <span style="font-size:0.8rem; color:var(--text-secondary);">(5V to 15V standard)</span>
+              </div>
+
+              <div class="calc-results">
+                <div class="calc-result-row">
+                  <span>Pulse High Time (t_high):</span>
+                  <span class="value" id="resThigh">0.450 ms</span>
+                </div>
+                <div class="calc-result-row">
+                  <span>Pulse Low Time (t_low):</span>
+                  <span class="value" id="resTlow">0.243 ms</span>
+                </div>
+                <div class="calc-result-row">
+                  <span>Total Period (T):</span>
+                  <span class="value" id="resPeriod">0.693 ms</span>
+                </div>
+                <div class="calc-result-row">
+                  <span>Oscillation Frequency (f):</span>
+                  <span class="value" id="resFreq">1.44 kHz</span>
+                </div>
+                <div class="calc-result-row">
+                  <span>Calculated Duty Cycle (D):</span>
+                  <span class="value" id="resDuty">65.0 %</span>
+                </div>
+                <div class="calc-result-row">
+                  <span>Average DC Voltage (V_avg):</span>
+                  <span class="value" id="resVavg">7.80 V</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Waveform Canvas Preview -->
+            <div>
+              <h4 style="margin-bottom:8px;">Calculated Output Waveform Preview</h4>
+              <div style="height:220px; background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-sm); position:relative; overflow:hidden;">
+                <canvas id="calcWaveCanvas" style="width:100%; height:100%; display:block;"></canvas>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:8px;">
+                <span style="color:#2563eb;">■ Output (Pin 3, 0–Vcc)</span>
+                <span style="color:#10b981;">■ Cap Ramp (1/3 to 2/3 Vcc)</span>
+                <span style="color:#f59e0b;">- - Average DC Voltage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Step-by-Step 555 State Machine Breakdown -->
+      <section id="internal-555" style="margin-bottom:48px;">
+        <h2 class="section-title">555 Timer Internal State Machine</h2>
+        <p class="section-subtitle">Walk step-by-step through the internal sequence that generates continuous PWM oscillation.</p>
+
+        <!-- Interactive Stepper Controls -->
+        <div class="card" style="margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="tag" id="stepCounterBadge">Step 1 of 4</span>
+              <h3 style="margin:0;" id="stepTitle">Capacitor Charging Phase</h3>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary btn-small" id="btnPrevStep">◀ Previous</button>
+              <button class="btn btn-primary btn-small" id="btnNextStep">Next Step ▶</button>
+              <button class="btn btn-secondary btn-small" id="btnAutoPlaySteps">Auto-Play ⟳</button>
+            </div>
+          </div>
+
+          <!-- Step Description Box -->
+          <div id="stepExplanation" style="background:var(--bg-secondary); padding:16px; border-radius:var(--radius-sm); border:1px solid var(--border); margin-bottom:20px; font-size:0.95rem; line-height:1.6;">
+            <strong>Step 1: Charging Ramp (Ton)</strong><br>
+            Current leaves the +Vcc rail, flows through upper potentiometer branch <code>Ra</code>, and passes forward-biased diode <code>D1</code> into timing capacitor <code>C1</code>. The capacitor voltage starts ramping upwards from <strong>1/3 Vcc (4.0V)</strong> toward <strong>2/3 Vcc (8.0V)</strong>. During this time, the internal SR latch is SET, the Pin 7 discharge transistor is OFF, and Pin 3 output is <strong>HIGH (+12V)</strong>, driving the MOSFET gate ON.
+          </div>
+
+          <!-- Internal 555 Subsystem SVG Diagram with Active Highlighting -->
+          <svg viewBox="0 0 700 280" style="width:100%; height:auto; background:var(--bg-card); border-radius:var(--radius-sm); border:1px solid var(--border);" id="internalStateSvg">
+            <!-- 3 Resistor Divider (5k, 5k, 5k) -->
+            <rect x="50" y="30" width="40" height="220" rx="4" fill="var(--bg-secondary)" stroke="var(--wire)" stroke-width="1.5"/>
+            <text x="70" y="55" text-anchor="middle" font-size="9" font-weight="bold">VCC</text>
+            <text x="70" y="90" text-anchor="middle" font-size="10" font-weight="bold" fill="var(--text-secondary)">5k</text>
+            <text x="70" y="145" text-anchor="middle" font-size="10" font-weight="bold" fill="var(--text-secondary)">5k</text>
+            <text x="70" y="200" text-anchor="middle" font-size="10" font-weight="bold" fill="var(--text-secondary)">5k</text>
+            <text x="70" y="235" text-anchor="middle" font-size="9" font-weight="bold">GND</text>
+
+            <!-- 2/3 Vcc Tap Line -->
+            <line x1="90" y1="110" x2="160" y2="110" stroke="var(--wire)" stroke-width="2"/>
+            <circle cx="160" cy="110" r="3" fill="var(--accent)"/>
+            <text x="125" y="103" text-anchor="middle" font-size="9" fill="var(--accent)" font-weight="bold">2/3 VCC</text>
+
+            <!-- 1/3 Vcc Tap Line -->
+            <line x1="90" y1="170" x2="160" y2="170" stroke="var(--wire)" stroke-width="2"/>
+            <circle cx="160" cy="170" r="3" fill="var(--success)"/>
+            <text x="125" y="163" text-anchor="middle" font-size="9" fill="var(--success)" font-weight="bold">1/3 VCC</text>
+
+            <!-- Upper Comparator (Triangle) -->
+            <polygon points="160,80 230,110 160,140" fill="var(--bg-secondary)" stroke="var(--wire)" stroke-width="2" id="svgCompUpper"/>
+            <text x="180" y="105" font-size="10" font-weight="bold">-</text>
+            <text x="180" y="125" font-size="10" font-weight="bold">+</text>
+            <text x="195" y="112" font-size="8" fill="var(--text-muted)">COMP A</text>
+            <text x="130" y="75" font-size="9" font-weight="bold">Pin 6 THR</text>
+            <line x1="110" y1="80" x2="160" y2="80" stroke="var(--wire)" stroke-width="2"/>
+
+            <!-- Lower Comparator (Triangle) -->
+            <polygon points="160,150 230,180 160,210" fill="var(--bg-secondary)" stroke="var(--wire)" stroke-width="2" id="svgCompLower"/>
+            <text x="180" y="175" font-size="10" font-weight="bold">-</text>
+            <text x="180" y="195" font-size="10" font-weight="bold">+</text>
+            <text x="195" y="182" font-size="8" fill="var(--text-muted)">COMP B</text>
+            <text x="130" y="222" font-size="9" font-weight="bold">Pin 2 TRG</text>
+            <line x1="110" y1="200" x2="160" y2="200" stroke="var(--wire)" stroke-width="2"/>
+
+            <!-- SR Flip Flop Block -->
+            <rect x="290" y="85" width="100" height="110" rx="6" fill="var(--bg-secondary)" stroke="var(--wire)" stroke-width="2" id="svgFlipFlop"/>
+            <text x="340" y="115" text-anchor="middle" font-size="14" font-weight="bold" fill="var(--accent)">SR LATCH</text>
+            <text x="305" y="112" font-size="10" font-weight="bold">R</text>
+            <text x="305" y="178" font-size="10" font-weight="bold">S</text>
+            <text x="375" y="112" font-size="10" font-weight="bold">Q</text>
+            <text x="375" y="178" font-size="10" font-weight="bold">Q̄</text>
+
+            <!-- Lines from Comparators to SR latch -->
+            <line x1="230" y1="110" x2="290" y2="110" stroke="var(--wire)" stroke-width="2" id="wireCompToR"/>
+            <line x1="230" y1="180" x2="290" y2="180" stroke="var(--wire)" stroke-width="2" id="wireCompToS"/>
+
+            <!-- Output Inverting Buffer / Driver -->
+            <line x1="390" y1="110" x2="450" y2="110" stroke="var(--wire)" stroke-width="2.5" id="wireLatchToOut"/>
+            <polygon points="450,90 495,110 450,130" fill="var(--bg-secondary)" stroke="var(--wire)" stroke-width="2" id="svgOutBuffer"/>
+            <line x1="495" y1="110" x2="570" y2="110" stroke="var(--wire)" stroke-width="3" id="wireOutputPin"/>
+            <circle cx="570" cy="110" r="4" fill="var(--accent)"/>
+            <text x="590" y="114" font-size="12" font-weight="bold" fill="var(--accent)">PIN 3 (OUT)</text>
+
+            <!-- Discharge Transistor (NPN) connected to Q-bar -->
+            <line x1="390" y1="180" x2="440" y2="180" stroke="var(--wire)" stroke-width="2" id="wireLatchToDisch"/>
+            <g id="svgDischargeNpn" transform="translate(470, 180)">
+              <!-- NPN Symbol -->
+              <circle cx="0" cy="0" r="16" fill="var(--bg-secondary)" stroke="var(--wire)" stroke-width="1.5"/>
+              <line x1="-16" y1="0" x2="-6" y2="0" stroke="var(--wire)" stroke-width="2"/>
+              <line x1="-6" y1="-10" x2="-6" y2="10" stroke="var(--wire)" stroke-width="2.5"/>
+              <line x1="-6" y1="-6" x2="8" y2="-14" stroke="var(--wire)" stroke-width="2"/>
+              <line x1="-6" y1="6" x2="8" y2="14" stroke="var(--wire)" stroke-width="2"/>
+              <polygon points="4,10 8,14 2,14" fill="var(--wire)"/>
+            </g>
+            <line x1="478" y1="166" x2="570" y2="166" stroke="var(--wire)" stroke-width="2" id="wirePin7Disch"/>
+            <circle cx="570" cy="166" r="3" fill="var(--wire)"/>
+            <text x="590" y="170" font-size="10" font-weight="bold">PIN 7 (DISCH)</text>
+            <line x1="478" y1="194" x2="478" y2="235" stroke="var(--wire)" stroke-width="2"/>
+            <text x="495" y="235" font-size="9" fill="var(--text-muted)">GND</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- 4. Deep-Dive Explanations -->
+      <section style="margin-bottom:48px;">
+        <h2 class="section-title">Why the Semi Lab Circuit Excels</h2>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>1. The Potentiometer + Dual-Diode Innovation</h3>
+            <p>
+              In a standard 555 astable oscillator without diodes, charging occurs through (<i>R</i><sub>a</sub> + <i>R</i><sub>b</sub>) and discharging occurs through <i>R</i><sub>b</sub>. This makes it impossible to achieve duty cycles below 50%, and changing the duty cycle involuntarily alters the oscillation frequency.
+            </p>
+            <p>
+              By adding opposed fast switching diodes <strong>D1</strong> and <strong>D2</strong>, we split the potentiometer into two independent paths:
+            </p>
+            <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">
+              <li><strong>D1</strong> steers current only during charging (through <i>R</i><sub>a</sub>).</li>
+              <li><strong>D2</strong> steers current only during discharging (through <i>R</i><sub>b</sub>).</li>
+            </ul>
+            <p>
+              Because <i>R</i><sub>a</sub> + <i>R</i><sub>b</sub> = 100 k&Omega; at all times, the total resistance sum never changes. As a result, the frequency stays locked at <strong>1.44 kHz</strong> across the full 1% to 99% duty sweep!
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>2. The Flyback Diode &amp; Inductive Kickback</h3>
+            <p>
+              Fans and electric motors store energy in their magnetic field (<i>E</i> = <span class="inline-frac"><span class="num">1</span><span class="den">2</span></span> <i>L</i> &middot; <i>I</i><sup>2</sup>). When the power MOSFET turns OFF abruptly in under 50 nanoseconds, the rate of current collapse (<span class="inline-frac"><span class="num">d<i>i</i></span><span class="den">d<i>t</i></span></span>) is massive.
+            </p>
+            <p>
+              Faraday's Law of Induction dictates that the inductor generates an opposing voltage spike:
+            </p>
+            <div class="equation" style="margin:8px 0;"><i>V</i><sub>spike</sub> = -<i>L</i> &middot; <span class="math-frac"><span class="num">d<i>i</i></span><span class="den">d<i>t</i></span></span></div>
+            <p>
+              Without protection, this kickback spike can reach 100V–200V, exceeding the IRFZ44N's 55V drain-to-source rating and destroying the semiconductor. Diode <strong>D3</strong> forward-biases the instant the drain rises above <i>V</i><sub>cc</sub> + 0.7V, recirculating the stored magnetic current harmlessly through the motor coil until it dissipates.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Did You Know Tip -->
+      <div class="did-you-know animate-on-scroll">
+        <strong>Did you know?</strong> The NE555 timer IC was designed by legendary semiconductor engineer Hans Camenzind in 1971 for Signetics. It gets its name from the three matching 5 k&Omega; precision internal resistors that form the reference divider. Over 50 years later, billions of 555 timers are still manufactured every single year, making it the most successful integrated circuit in human history!
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <strong>Semi Lab</strong> — Interactive Electronics & Semiconductor Education
+        <p>Built for 555 Timer, MOSFET & PWM simulation. Precision workbench UI.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">3D Lab</a>
+        <a href="home.html">Home</a>
+        <a href="fan.html">Fan Regulator</a>
+        <a href="led.html">LED Dimmer</a>
+        <a href="mosfet.html">MOSFET</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-copy">
+        <p>© 2026 Semi Lab. Plain HTML/CSS/JS. No backend required.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // --- Interactive Astable Calculator Engine ---
+    (function() {
+      const elRa = document.getElementById('calcRa');
+      const elRb = document.getElementById('calcRb');
+      const elSliderRa = document.getElementById('sliderCalcRa');
+      const elC = document.getElementById('calcC');
+      const elVcc = document.getElementById('calcVcc');
+
+      const resThigh = document.getElementById('resThigh');
+      const resTlow = document.getElementById('resTlow');
+      const resPeriod = document.getElementById('resPeriod');
+      const resFreq = document.getElementById('resFreq');
+      const resDuty = document.getElementById('resDuty');
+      const resVavg = document.getElementById('resVavg');
+      const labelRtotal = document.getElementById('labelRtotal');
+      const btnReset = document.getElementById('btnCalcReset');
+      const canvas = document.getElementById('calcWaveCanvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+
+      function updateCalculator() {
+        const raK = Math.max(0.1, parseFloat(elRa.value) || 65);
+        const rbK = Math.max(0.1, parseFloat(elRb.value) || 35);
+        const cNf = Math.max(0.01, parseFloat(elC.value) || 10);
+        const vcc = Math.max(1, parseFloat(elVcc.value) || 12);
+
+        const rTotalK = raK + rbK;
+        if (labelRtotal) labelRtotal.textContent = `R_total = ${rTotalK.toFixed(1)} kΩ`;
+
+        // Physics formulas
+        // t_high = 0.693 * Ra * C
+        // with Ra in kOhm and C in nF: t_high in microseconds = 0.693 * (Ra * 1e3) * (C * 1e-9) = 0.693 * Ra * C * 1e-6 seconds
+        const tHighSec = 0.693 * (raK * 1e3) * (cNf * 1e-9);
+        const tLowSec = 0.693 * (rbK * 1e3) * (cNf * 1e-9);
+        const periodSec = tHighSec + tLowSec;
+        const freqHz = 1.44 / ((rTotalK * 1e3) * (cNf * 1e-9));
+        const duty = (raK / rTotalK) * 100;
+        const vAvg = (duty / 100) * vcc;
+
+        // Display results
+        if (resThigh) resThigh.textContent = `${(tHighSec * 1000).toFixed(3)} ms`;
+        if (resTlow) resTlow.textContent = `${(tLowSec * 1000).toFixed(3)} ms`;
+        if (resPeriod) resPeriod.textContent = `${(periodSec * 1000).toFixed(3)} ms`;
+        if (resFreq) {
+          resFreq.textContent = freqHz >= 1000 ? `${(freqHz / 1000).toFixed(2)} kHz` : `${Math.round(freqHz)} Hz`;
+        }
+        if (resDuty) resDuty.textContent = `${duty.toFixed(1)} %`;
+        if (resVavg) resVavg.textContent = `${vAvg.toFixed(2)} V`;
+
+        drawWaveform(duty / 100, vcc);
+      }
+
+      function drawWaveform(dutyFrac, vcc) {
+        if (!ctx) return;
+        const w = canvas.width = canvas.parentElement.offsetWidth;
+        const h = canvas.height = canvas.parentElement.offsetHeight;
+        if (w === 0 || h === 0) return;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Grid
+        ctx.strokeStyle = 'rgba(100,116,139,0.15)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let x = 0; x < w; x += 40) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+        for (let y = 0; y < h; y += 30) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+        ctx.stroke();
+
+        const periodPx = 100;
+        const yHigh = h * 0.22;
+        const yLow = h * 0.78;
+        const y13 = yLow - (1/3) * (yLow - yHigh);
+        const y23 = yLow - (2/3) * (yLow - yHigh);
+
+        // Reference 1/3 and 2/3 threshold dashed lines
+        ctx.strokeStyle = 'rgba(16,185,129,0.4)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(0, y13); ctx.lineTo(w, y13);
+        ctx.moveTo(0, y23); ctx.lineTo(w, y23);
+        ctx.stroke();
+
+        // Capacitor ramp (exponential or triangular simulation)
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        for (let x = 0; x < w; x++) {
+          const cycleX = x % periodPx;
+          const isCharge = cycleX < (periodPx * dutyFrac);
+          let yCap;
+          if (isCharge) {
+            const frac = cycleX / (periodPx * dutyFrac);
+            yCap = y13 - frac * (y13 - y23);
+          } else {
+            const frac = (cycleX - (periodPx * dutyFrac)) / (periodPx * (1 - dutyFrac));
+            yCap = y23 + frac * (y13 - y23);
+          }
+          if (x === 0) ctx.moveTo(x, yCap);
+          else ctx.lineTo(x, yCap);
+        }
+        ctx.stroke();
+
+        // Square wave output (Pin 3)
+        ctx.strokeStyle = '#2563eb';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        for (let x = 0; x < w; x++) {
+          const cycleX = x % periodPx;
+          const y = cycleX < (periodPx * dutyFrac) ? yHigh : yLow;
+          if (x === 0) ctx.moveTo(x, y);
+          else {
+            const prevCycleX = (x - 1) % periodPx;
+            const prevY = prevCycleX < (periodPx * dutyFrac) ? yHigh : yLow;
+            if (prevY !== y) {
+              ctx.lineTo(x, prevY);
+              ctx.lineTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+        }
+        ctx.stroke();
+
+        // Average DC line
+        const avgY = yLow - dutyFrac * (yLow - yHigh);
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(0, avgY);
+        ctx.lineTo(w, avgY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Sync slider and inputs
+      if (elSliderRa) {
+        elSliderRa.addEventListener('input', function() {
+          const dutyVal = parseFloat(this.value);
+          elRa.value = dutyVal.toFixed(1);
+          elRb.value = (100 - dutyVal).toFixed(1);
+          updateCalculator();
+        });
+      }
+
+      [elRa, elRb, elC, elVcc].forEach(inp => {
+        if (inp) inp.addEventListener('input', updateCalculator);
+      });
+
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          elRa.value = 65;
+          elRb.value = 35;
+          if (elSliderRa) elSliderRa.value = 65;
+          elC.value = 10;
+          elVcc.value = 12;
+          updateCalculator();
+        });
+      }
+
+      window.addEventListener('resize', () => {
+        const duty = (parseFloat(elRa.value) / (parseFloat(elRa.value) + parseFloat(elRb.value)));
+        drawWaveform(duty, parseFloat(elVcc.value));
+      });
+
+      updateCalculator();
+    })();
+
+    // --- Interactive 555 State Machine Stepper ---
+    (function() {
+      const steps = [
+        {
+          title: "Step 1: Capacitor Charging Phase (Ton)",
+          badge: "Step 1 of 4",
+          text: "<strong>Step 1: Charging Ramp (Ton)</strong><br>Current leaves +Vcc, flows through upper potentiometer branch <code>Ra</code>, and passes forward-biased diode <code>D1</code> into timing capacitor <code>C1</code>. The capacitor voltage starts ramping upwards from <strong>1/3 Vcc (4.0V)</strong> toward <strong>2/3 Vcc (8.0V)</strong>. The SR latch is SET, Pin 7 discharge transistor is OFF, and Pin 3 output is <strong>HIGH (+12V)</strong>, driving the MOSFET gate ON.",
+          activeComp: null,
+          qState: true,
+          dischOn: false
+        },
+        {
+          title: "Step 2: Upper Comparator Trigger (2/3 Vcc)",
+          badge: "Step 2 of 4",
+          text: "<strong>Step 2: Upper Comparator Threshold Trip</strong><br>As <code>C1</code> charges, its voltage reaches exactly <strong>2/3 Vcc (8.0V)</strong> at Pin 6 (Threshold). Upper Comparator A trips HIGH, delivering a RESET pulse to the SR flip-flop. The flip-flop flips: output <code>Q</code> goes LOW (0V) and inverted output <code>Q̄</code> goes HIGH.",
+          activeComp: "upper",
+          qState: false,
+          dischOn: true
+        },
+        {
+          title: "Step 3: Capacitor Discharging Phase (Toff)",
+          badge: "Step 3 of 4",
+          text: "<strong>Step 3: Discharge Ramp Through Rb</strong><br>With <code>Q̄</code> HIGH, the internal NPN discharge transistor Q7 saturates, clamping Pin 7 to ground. Timing capacitor <code>C1</code> now discharges through forward-biased diode <code>D2</code> and lower potentiometer segment <code>Rb</code> into Pin 7. Pin 3 output is <strong>LOW (0V)</strong>, so the MOSFET gate discharges to 0V and turns OFF.",
+          activeComp: null,
+          qState: false,
+          dischOn: true
+        },
+        {
+          title: "Step 4: Lower Comparator Trigger (1/3 Vcc)",
+          badge: "Step 4 of 4",
+          text: "<strong>Step 4: Lower Comparator Trigger Trip & Reset</strong><br>As <code>C1</code> discharges, its voltage drops to <strong>1/3 Vcc (4.0V)</strong> at Pin 2 (Trigger). Lower Comparator B trips HIGH, sending a SET pulse to the SR flip-flop. The latch toggles back: Pin 3 goes <strong>HIGH</strong>, discharge transistor Q7 turns OFF, and Step 1 begins again immediately. The cycle repeats at 1.44 kHz!",
+          activeComp: "lower",
+          qState: true,
+          dischOn: false
+        }
+      ];
+
+      let currentStep = 0;
+      let autoPlayTimer = null;
+
+      const elStepBadge = document.getElementById('stepCounterBadge');
+      const elStepTitle = document.getElementById('stepTitle');
+      const elStepExplanation = document.getElementById('stepExplanation');
+      const btnPrev = document.getElementById('btnPrevStep');
+      const btnNext = document.getElementById('btnNextStep');
+      const btnAuto = document.getElementById('btnAutoPlaySteps');
+
+      const svgCompUpper = document.getElementById('svgCompUpper');
+      const svgCompLower = document.getElementById('svgCompLower');
+      const wireCompToR = document.getElementById('wireCompToR');
+      const wireCompToS = document.getElementById('wireCompToS');
+      const wireOutputPin = document.getElementById('wireOutputPin');
+      const wirePin7Disch = document.getElementById('wirePin7Disch');
+
+      function renderStep(idx) {
+        currentStep = (idx + steps.length) % steps.length;
+        const s = steps[currentStep];
+
+        if (elStepBadge) elStepBadge.textContent = s.badge;
+        if (elStepTitle) elStepTitle.textContent = s.title;
+        if (elStepExplanation) elStepExplanation.innerHTML = s.text;
+
+        // SVG diagram highlights
+        if (svgCompUpper) {
+          svgCompUpper.setAttribute('fill', s.activeComp === 'upper' ? 'var(--danger)' : 'var(--bg-secondary)');
+        }
+        if (wireCompToR) {
+          wireCompToR.setAttribute('stroke', s.activeComp === 'upper' ? 'var(--danger)' : 'var(--wire)');
+          wireCompToR.setAttribute('stroke-width', s.activeComp === 'upper' ? '3' : '2');
+        }
+
+        if (svgCompLower) {
+          svgCompLower.setAttribute('fill', s.activeComp === 'lower' ? 'var(--success)' : 'var(--bg-secondary)');
+        }
+        if (wireCompToS) {
+          wireCompToS.setAttribute('stroke', s.activeComp === 'lower' ? 'var(--success)' : 'var(--wire)');
+          wireCompToS.setAttribute('stroke-width', s.activeComp === 'lower' ? '3' : '2');
+        }
+
+        if (wireOutputPin) {
+          wireOutputPin.setAttribute('stroke', s.qState ? 'var(--accent)' : 'var(--text-muted)');
+        }
+
+        if (wirePin7Disch) {
+          wirePin7Disch.setAttribute('stroke', s.dischOn ? 'var(--warning)' : 'var(--text-muted)');
+        }
+      }
+
+      if (btnNext) btnNext.addEventListener('click', () => renderStep(currentStep + 1));
+      if (btnPrev) btnPrev.addEventListener('click', () => renderStep(currentStep - 1));
+
+      if (btnAuto) {
+        btnAuto.addEventListener('click', function() {
+          if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+            this.textContent = 'Auto-Play ⟳';
+          } else {
+            this.textContent = 'Stop Auto-Play ⏹';
+            autoPlayTimer = setInterval(() => {
+              renderStep(currentStep + 1);
+            }, 2500);
+          }
+        });
+      }
+
+      renderStep(0);
+    })();
+  </script>
+</body>
+</html>
